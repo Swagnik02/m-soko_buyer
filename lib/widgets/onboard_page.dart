@@ -3,7 +3,7 @@ import 'package:m_soko/authentication/login_screen.dart';
 import 'package:m_soko/common/colors.dart';
 
 class OnboardPage extends StatelessWidget {
-  final PageController controller; // Add this line
+  final PageController controller;
   final int pageIndex;
   final String imageUrl;
   final String desc1;
@@ -11,7 +11,8 @@ class OnboardPage extends StatelessWidget {
   final String desc3;
 
   const OnboardPage({
-    required this.controller, // Add this line
+    super.key,
+    required this.controller,
     required this.pageIndex,
     required this.imageUrl,
     required this.desc1,

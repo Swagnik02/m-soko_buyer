@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations, dead_code
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_soko/authentication/onboarding_screen.dart';
