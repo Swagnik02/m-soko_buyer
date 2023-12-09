@@ -50,7 +50,7 @@ class OnboardPage extends StatelessWidget {
                   pageIndex == 2
                       ? Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                          return const LoginScreen();
+                          return LoginScreen();
                         }))
                       : controller.animateToPage(pageIndex + 1,
                           duration: const Duration(milliseconds: 500),
