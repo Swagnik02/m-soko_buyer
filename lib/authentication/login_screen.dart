@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/common/colors.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -6,23 +7,37 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(34, 31, 30, 1),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          Image.asset('assets/auth_header.png'),
+          Container(
+            margin: const EdgeInsets.fromLTRB(30, 50, 0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+                const Text(
+                  'Welcome to\nSokoni!',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Container(
+                  width: 35,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: ColorConstants.orange500,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                )
+              ],
             ),
-            Image.asset('assets/images/login.png'),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
