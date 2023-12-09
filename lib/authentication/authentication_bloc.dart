@@ -38,11 +38,14 @@ class AuthenticationBloc
       yield AuthenticationLoadingState();
 
       try {
-        // Call your authentication service here
-        // Example: authService.login(event.email, event.password);
-
-        // If successful, yield AuthenticationSuccessState
-        yield AuthenticationSuccessState();
+        // Perform your authentication logic here
+        if (event.email == 'admin@gmail.com' && event.password == 'adminpass') {
+          // Simulating a successful login
+          yield AuthenticationSuccessState();
+        } else {
+          // Simulating a failed login
+          yield AuthenticationFailureState(error: 'Invalid credentials');
+        }
       } catch (e) {
         // If failed, yield AuthenticationFailureState
         yield AuthenticationFailureState(error: 'Login failed');

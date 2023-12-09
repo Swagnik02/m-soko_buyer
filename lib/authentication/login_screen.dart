@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/authentication/authentication_bloc.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,13 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider(
       create: (context) => AuthenticationBloc(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             if (state is AuthenticationSuccessState) {
-              // Navigate to the next screen or perform actions on success
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
             } else if (state is AuthenticationFailureState) {
-              // Show error message or handle failure
+              Fluttertoast.showToast(msg: 'Login failed: ${state.error}');
             }
           },
           builder: (context, state) {
@@ -148,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    // Dispatch LoginEvent when the login button is pressed
                                     BlocProvider.of<AuthenticationBloc>(context)
                                         .add(
                                       LoginEvent(
