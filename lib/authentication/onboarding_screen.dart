@@ -26,7 +26,7 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(34, 31, 30, 1),
+      backgroundColor: const Color(0xFF08215E),
       body: BlocBuilder<OnboardingBloc, OnboardingStates>(
         builder: (context, state) {
           return Stack(
