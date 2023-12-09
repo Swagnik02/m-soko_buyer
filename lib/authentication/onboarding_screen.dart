@@ -1,68 +1,198 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:m_soko/authentication/sign_in_page.dart';
 
-// Define events for the onboarding screen
-abstract class OnboardingEvent {}
-
-class NextEvent extends OnboardingEvent {}
-
-// Define states for the onboarding screen
-abstract class OnboardingState {}
-
-class InitialState extends OnboardingState {}
-
-class SecondScreenState extends OnboardingState {}
-
-class ThirdScreenState extends OnboardingState {}
-
-// Define the onboarding BLoC
-class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  OnboardingBloc() : super(InitialState());
-
-  @override
-  Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
-    if (event is NextEvent) {
-      if (state is InitialState) {
-        yield SecondScreenState();
-      } else if (state is SecondScreenState) {
-        yield ThirdScreenState();
-      }
-    }
+class OnboardingBloc extends Bloc<OnboardingEvents, OnboardingStates> {
+  OnboardingBloc() : super(OnboardingStates()) {
+    on<OnboardingEvents>((event, emit) {
+      return emit(OnboardingStates(pageIndex: state.pageIndex));
+    });
   }
 }
 
-// Define the onboarding screen widget
-class OnboardingScreen extends StatelessWidget {
-  final OnboardingBloc bloc = OnboardingBloc();
+class OnboardingStates {
+  int pageIndex;
 
-  OnboardingScreen({super.key});
+  OnboardingStates({this.pageIndex = 0});
+}
+
+class OnboardingEvents {}
+
+class Onboarding extends StatelessWidget {
+  final PageController controller = PageController(initialPage: 0);
+  Onboarding({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => bloc,
-      child: BlocBuilder<OnboardingBloc, OnboardingState>(
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(34, 31, 30, 1),
+      body: BlocBuilder<OnboardingBloc, OnboardingStates>(
         builder: (context, state) {
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              PageView(
+                controller: controller,
+                onPageChanged: (value) {
+                  state.pageIndex = value;
+                  BlocProvider.of<OnboardingBloc>(context)
+                      .add(OnboardingEvents());
+                },
                 children: [
-                  if (state is InitialState) Text('Onboarding Screen 1'),
-                  if (state is SecondScreenState) Text('Onboarding Screen 2'),
-                  if (state is ThirdScreenState) Text('Onboarding Screen 3'),
-                  ElevatedButton(
-                    onPressed: () {
-                      bloc.add(NextEvent());
-                    },
-                    child: Text('Next'),
+                  _page(
+                    context: context,
+                    pageIndex: 0,
+                    imageUrl: 'assets/images/page1.png',
+                    title: 'Boost Productivity',
+                    desc:
+                        'Elevate your productivity to new heights and grow with us',
+                  ),
+                  _page(
+                    context: context,
+                    pageIndex: 1,
+                    imageUrl: 'assets/images/page2.png',
+                    title: 'Work Seamlessly',
+                    desc: 'Get your work done seamlessly without interruption',
+                  ),
+                  _page(
+                    context: context,
+                    pageIndex: 2,
+                    imageUrl: 'assets/images/page3.png',
+                    title: 'Achieve Higher Goals',
+                    desc:
+                        'By boosting your producivity we help you achieve higher goals',
                   ),
                 ],
               ),
-            ),
+              Positioned(
+                bottom: 150,
+                child: DotsIndicator(
+                  dotsCount: 3,
+                  position:
+                      BlocProvider.of<OnboardingBloc>(context).state.pageIndex,
+                  decorator: DotsDecorator(
+                    color: Colors.white.withOpacity(0.2),
+                    activeColor: Colors.white,
+                    size: const Size.square(9.0),
+                    activeSize: const Size(36.0, 9.0),
+                    activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),
+    );
+  }
+
+  Widget _page({
+    required pageIndex,
+    required imageUrl,
+    required title,
+    required desc,
+    required BuildContext context,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          imageUrl,
+        ),
+        const SizedBox(height: 40),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 50,
+          ),
+          child: Text(
+            desc,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        const SizedBox(height: 120),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Row(
+            mainAxisAlignment: pageIndex == 2
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceBetween,
+            children: [
+              Visibility(
+                visible: pageIndex !=
+                    2, // don't show on page with index 2 (last page)
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const Login();
+                    }));
+                  },
+                  child: Text(
+                    'Skip',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white.withOpacity(0.5),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  pageIndex == 2
+                      ? Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                          return const Login();
+                        }))
+                      : controller.animateToPage(pageIndex + 1,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.decelerate);
+                },
+                child: pageIndex == 2
+                    ? Container(
+                        width: 150,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(239, 137, 95, 1),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: const Text(
+                          'Get Started',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        width: 60,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(239, 137, 95, 1),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }
