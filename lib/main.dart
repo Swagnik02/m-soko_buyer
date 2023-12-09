@@ -36,6 +36,6 @@ class MyAppRoot extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isLoggedIn = false;
 
-    return isLoggedIn ? const HomeScreen() : Onboarding();
+    return isLoggedIn ? const HomeScreen() : OnboardingScreen();
   }
 }
