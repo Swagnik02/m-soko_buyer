@@ -1,7 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:m_soko/authentication/sign_in_page.dart';
+import 'package:m_soko/authentication/login_screen.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvents, OnboardingStates> {
   OnboardingBloc() : super(OnboardingStates()) {
@@ -132,7 +132,7 @@ class Onboarding extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return const Login();
+                      return const LoginScreen();
                     }));
                   },
                   child: Text(
@@ -151,7 +151,7 @@ class Onboarding extends StatelessWidget {
                   pageIndex == 2
                       ? Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                          return const Login();
+                          return const LoginScreen();
                         }))
                       : controller.animateToPage(pageIndex + 1,
                           duration: const Duration(milliseconds: 500),
