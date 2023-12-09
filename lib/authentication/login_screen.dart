@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    // Dispatch LoginEvent when the login button is pressed
+                                    Fluttertoast.showToast(msg: 'btn pressed');
                                     BlocProvider.of<AuthenticationBloc>(context)
                                         .add(
                                       LoginEvent(
@@ -160,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         password: passwordController.text,
                                       ),
                                     );
+                                    Fluttertoast.showToast(msg: 'btn pressed2');
                                   },
                                   child: Container(
                                     height: 40,

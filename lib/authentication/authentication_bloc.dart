@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // Events
 abstract class AuthenticationEvent {}
@@ -41,9 +42,11 @@ class AuthenticationBloc
         // Perform your authentication logic here
         if (event.email == 'admin@gmail.com' && event.password == 'adminpass') {
           // Simulating a successful login
+          Fluttertoast.showToast(msg: 'Authenticated');
           yield AuthenticationSuccessState();
         } else {
           // Simulating a failed login
+          Fluttertoast.showToast(msg: 'Invalid credentials');
           yield AuthenticationFailureState(error: 'Invalid credentials');
         }
       } catch (e) {
