@@ -51,7 +51,7 @@ class OnboardPage extends StatelessWidget {
                 onTap: () {
                   pageIndex == 2
                       ? context.read<AuthBloc>().add(
-                            const AuthEventShouldRegister(),
+                            const AuthEventShouldLogin(),
                           )
                       : controller.animateToPage(pageIndex + 1,
                           duration: const Duration(milliseconds: 500),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:m_soko/authentication/Views/login_view.dart';
 import 'package:m_soko/authentication/Views/onboarding_screen.dart';
 import 'package:m_soko/authentication/Views/register_view.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
@@ -60,6 +61,8 @@ class HomePage extends StatelessWidget {
         // }
         else if (state is AuthStateRegistering) {
           return const RegisterView();
+        } else if (state is AuthStateLoging) {
+          return const LoginView();
         } else {
           return const Scaffold(
             body: CircularProgressIndicator(),

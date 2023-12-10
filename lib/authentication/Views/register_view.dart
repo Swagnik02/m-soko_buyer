@@ -98,7 +98,7 @@ class _RegisterViewState extends State<RegisterView> {
                       TextButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(
-                                const AuthEventLogOut(),
+                                const AuthEventShouldLogin(),
                               );
                         },
                         child: Text(
