@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,6 +6,7 @@ import 'package:m_soko/authentication/auth_services/auth_exceptions.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_state.dart';
+import 'package:m_soko/common/colors.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -14,20 +16,28 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  bool isPasswordVisible1 = false;
+  bool isPasswordVisible2 = false;
+  late final TextEditingController _fname;
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _confirmPassword;
 
   @override
   void initState() {
+    _fname = TextEditingController();
     _email = TextEditingController();
     _password = TextEditingController();
+    _confirmPassword = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
+    _fname.dispose();
     _email.dispose();
     _password.dispose();
+    _confirmPassword.dispose();
     super.dispose();
   }
 
@@ -48,70 +58,358 @@ class _RegisterViewState extends State<RegisterView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('register'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('register_view_prompt'),
-                TextField(
-                  controller: _email,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  autofocus: true,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: 'email_text_field_placeholder',
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        body: Stack(
+          children: [
+            // header part
+            Positioned(
+              top: -30,
+              child: Image.asset('assets/auth_header.png'),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  const Text(
+                    'Create new\naccount',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                TextField(
-                  controller: _password,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    hintText: 'password_text_field_placeholder',
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 35,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: ColorConstants.orange500,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      TextButton(
-                        onPressed: () async {
-                          final email = _email.text;
-                          final password = _password.text;
-                          context.read<AuthBloc>().add(
-                                AuthEventRegister(
-                                  email,
-                                  password,
-                                ),
-                              );
+                ],
+              ),
+            ),
+
+            // main part
+            Container(
+              margin: const EdgeInsets.fromLTRB(30, 275, 30, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //name
+                  const Text(
+                    'Full name',
+                    textAlign: TextAlign.right,
+                  ),
+                  TextField(
+                    controller: _fname,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.blue700),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 16.0),
+                    ),
+                  ),
+
+                  // email
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Email',
+                    textAlign: TextAlign.right,
+                  ),
+                  TextField(
+                    controller: _email,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.blue700),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 16.0),
+                    ),
+                  ),
+
+                  // password
+                  const SizedBox(height: 8),
+                  const Text('Password'),
+                  TextField(
+                    controller: _password,
+                    obscureText: !isPasswordVisible1,
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.blue700),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 16.0),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isPasswordVisible1
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible1 = !isPasswordVisible1;
+                          });
                         },
-                        child: Text(
-                          'register',
+                      ),
+                    ),
+                  ),
+
+                  // confirm password
+                  const SizedBox(height: 8),
+                  const Text('Confirm Password'),
+                  TextField(
+                    controller: _confirmPassword,
+                    obscureText: !isPasswordVisible2,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.blue700),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 16.0,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isPasswordVisible2
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible2 = !isPasswordVisible2;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // seperator
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: Colors.grey,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          context.read<AuthBloc>().add(
-                                const AuthEventShouldLogin(),
-                              );
-                        },
-                        child: Text(
-                          'register_view_already_registered',
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Text('or'),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
+
+                  // Social login
+                  const SizedBox(height: 10),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person),
+                      SizedBox(width: 16),
+                      Icon(Icons.person),
+                    ],
+                  ),
+
+                  // Sign Up Button
+                  const SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    ColorConstants.blue700),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () async {
+                                // Fluttertoast.showToast(msg: 'btn pressed');
+                                final email = _email.text;
+                                final password = _password.text;
+                                context.read<AuthBloc>().add(
+                                      AuthEventLogIn(
+                                        email,
+                                        password,
+                                      ),
+                                    );
+                              },
+                              child: Container(
+                                height: 35,
+                                child: const Center(
+                                  child: Text(
+                                    'Sign Up!',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 25),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // switch to login
+                      const SizedBox(height: 5),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'By signing up, you agree to our ',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Terms And Policy',
+                              style: const TextStyle(
+                                color: Colors.blue,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Implement your navigation or action here
+                                  print('Navigate to Terms And Policy');
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Have an account?'),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Fluttertoast.showToast(
+                                msg: 'Login Screen',
+                              );
+                              context.read<AuthBloc>().add(
+                                    const AuthEventShouldLogin(),
+                                  );
+                            },
+                            style: ButtonStyle(
+                              side: MaterialStateProperty.all(
+                                const BorderSide(
+                                  color: Colors.blue,
+                                  width: 2.0,
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      0), // Set the radius to 0
+                                ),
+                              ),
+                            ),
+                            child: const Text('Register'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
+        //  Padding(
+
+        //   padding: const EdgeInsets.all(16.0),
+        //   child: SingleChildScrollView(
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text('register_view_prompt'),
+        //         TextField(
+        //           controller: _email,
+        //           enableSuggestions: false,
+        //           autocorrect: false,
+        //           autofocus: true,
+        //           keyboardType: TextInputType.emailAddress,
+        //           decoration: InputDecoration(
+        //             hintText: 'email_text_field_placeholder',
+        //           ),
+        //         ),
+        //         TextField(
+        //           controller: _password,
+        //           obscureText: true,
+        //           enableSuggestions: false,
+        //           autocorrect: false,
+        //           decoration: InputDecoration(
+        //             hintText: 'password_text_field_placeholder',
+        //           ),
+        //         ),
+        //         Center(
+        //           child: Column(
+        //             children: [
+        //               TextButton(
+        //                 onPressed: () async {
+        //                   final email = _email.text;
+        //                   final password = _password.text;
+        //                   context.read<AuthBloc>().add(
+        //                         AuthEventRegister(
+        //                           email,
+        //                           password,
+        //                         ),
+        //                       );
+        //                 },
+        //                 child: Text(
+        //                   'register',
+        //                 ),
+        //               ),
+        //               TextButton(
+        //                 onPressed: () {
+        //                   context.read<AuthBloc>().add(
+        //                         const AuthEventShouldLogin(),
+        //                       );
+        //                 },
+        //                 child: Text(
+        //                   'register_view_already_registered',
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
