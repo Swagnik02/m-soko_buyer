@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/authentication/Views/login_view.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
+import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 import 'package:m_soko/common/colors.dart';
 
 class OnboardPage extends StatelessWidget {
@@ -49,10 +50,9 @@ class OnboardPage extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   pageIndex == 2
-                      ? Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                          return LoginView();
-                        }))
+                      ? context.read<AuthBloc>().add(
+                            const AuthEventShouldRegister(),
+                          )
                       : controller.animateToPage(pageIndex + 1,
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.decelerate);

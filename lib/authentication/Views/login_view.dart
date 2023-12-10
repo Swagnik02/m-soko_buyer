@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/authentication/Views/onboarding_screen.dart';
+import 'package:m_soko/authentication/Views/register_view.dart';
 import 'package:m_soko/authentication/auth_services/auth_exceptions.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
@@ -8,7 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -204,7 +206,6 @@ class _LoginViewState extends State<LoginView> {
                               Fluttertoast.showToast(
                                 msg: 'Register Screen',
                               );
-
                               context.read<AuthBloc>().add(
                                     const AuthEventShouldRegister(),
                                   );
