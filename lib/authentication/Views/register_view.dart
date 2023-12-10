@@ -171,12 +171,12 @@ class _RegisterViewState extends State<RegisterView> {
                     controller: _confirmPassword,
                     obscureText: !isPasswordVisible2,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: ColorConstants.blue700),
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(
                         vertical: 10.0,
                         horizontal: 16.0,
                       ),
@@ -238,7 +238,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 0),
+                      const SizedBox(width: 0),
                       GestureDetector(
                         onTap: () {
                           Fluttertoast.showToast(msg: 'Google signup');
@@ -334,7 +334,7 @@ class _RegisterViewState extends State<RegisterView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text('Have an account?'),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           TextButton(
