@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
+import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,8 +12,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: const Center(
-        child: Text('Welcome to the Home Screen!'),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            context.read<AuthBloc>().add(
+                  const AuthEventLogOut(),
+                );
+          },
+          child: Text('Logout'),
+        ),
       ),
     );
   }

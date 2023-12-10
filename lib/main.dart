@@ -49,12 +49,10 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const HomeScreen();
-        }
-        // else if (state is AuthStateNeedsVerification) {
-        //   return const VerifyEmailView();
-        // }
-        else if (state is AuthStateLoggedOut) {
-          return const RegisterView();
+        } else if (state is AuthStateNeedsVerification) {
+          return const HomeScreen();
+        } else if (state is AuthStateLoggedOut) {
+          return const OnboardingScreen();
         }
         // else if (state is AuthStateForgotPassword) {
         //   return const ForgotPasswordView();

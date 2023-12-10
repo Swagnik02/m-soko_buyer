@@ -24,6 +24,8 @@ class _LoginViewState extends State<LoginView> {
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _email.text = 'abc@gmail.com';
+    _password.text = 'password02';
     super.initState();
   }
 
