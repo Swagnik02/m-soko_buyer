@@ -63,12 +63,10 @@ class _RegisterViewState extends State<RegisterView> {
         body: Stack(
           children: [
             // header part
-            Positioned(
-              top: -30,
-              child: Image.asset('assets/auth_header.png'),
-            ),
+            Image.asset('assets/register_header.png'),
+
             Container(
-              margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+              margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -96,7 +94,7 @@ class _RegisterViewState extends State<RegisterView> {
 
             // main part
             Container(
-              margin: const EdgeInsets.fromLTRB(30, 275, 30, 0),
+              margin: const EdgeInsets.fromLTRB(30, 250, 30, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -221,19 +219,44 @@ class _RegisterViewState extends State<RegisterView> {
                     ],
                   ),
 
-                  // Social login
-                  const SizedBox(height: 10),
-                  const Row(
+                  // social login
+                  const SizedBox(height: 4),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.person),
-                      SizedBox(width: 16),
-                      Icon(Icons.person),
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Facebook signup');
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/fb_sign.png',
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 0),
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Google signup');
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/google_sign.png',
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-
-                  // Sign Up Button
-                  const SizedBox(height: 10),
+                  // Sign Up button
+                  const SizedBox(height: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -277,7 +300,7 @@ class _RegisterViewState extends State<RegisterView> {
                         ],
                       ),
                       // switch to login
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 4),
                       RichText(
                         text: TextSpan(
                           children: [
@@ -332,8 +355,7 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      0), // Set the radius to 0
+                                  borderRadius: BorderRadius.circular(0),
                                 ),
                               ),
                             ),

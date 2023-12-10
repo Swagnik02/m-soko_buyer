@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_exceptions.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
@@ -79,8 +80,10 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
             ),
+
+            // main part
             Container(
-              margin: const EdgeInsets.fromLTRB(30, 300, 30, 0),
+              margin: const EdgeInsets.fromLTRB(30, 320, 30, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,18 +94,30 @@ class _LoginViewState extends State<LoginView> {
                   TextField(
                     controller: _email,
                     decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.blue700),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
                       border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 16.0),
                     ),
                   ),
-                  const SizedBox(height: 16),
+
+                  // password
+                  const SizedBox(height: 8),
                   const Text('Password'),
                   TextField(
                     controller: _password,
                     obscureText: !isPasswordVisible,
                     decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.blue700),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
                       border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 16.0),
                       suffixIcon: IconButton(
                         icon: Icon(
                           isPasswordVisible
@@ -117,7 +132,34 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+
+                  // forgot pass
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Forgot Password?',
+                              style: const TextStyle(
+                                color: Colors.blue,
+                                fontSize: 12,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Fluttertoast.showToast(
+                                      msg: 'Forgot password');
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // seperator
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -139,16 +181,45 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  const Row(
+
+                  // social login
+                  const SizedBox(height: 10),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.person),
-                      SizedBox(width: 16),
-                      Icon(Icons.person),
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Facebook login');
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/fb_sign.png',
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 0),
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(msg: 'Google login');
+                        },
+                        child: Container(
+                          // padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/google_sign.png',
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  // Log In button
+                  const SizedBox(height: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -178,7 +249,7 @@ class _LoginViewState extends State<LoginView> {
                                     );
                               },
                               child: Container(
-                                height: 40,
+                                height: 35,
                                 child: const Center(
                                   child: Text(
                                     'Login',
@@ -191,7 +262,9 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+
+                      // Switch to Register section
+                      const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -217,8 +290,7 @@ class _LoginViewState extends State<LoginView> {
                               ),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      0), // Set the radius to 0
+                                  borderRadius: BorderRadius.circular(0),
                                 ),
                               ),
                             ),
