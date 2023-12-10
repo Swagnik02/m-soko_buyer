@@ -5,7 +5,7 @@ import 'package:m_soko/authentication/auth_services/auth_user.dart';
 import 'package:m_soko/firebase_options.dart';
 
 import 'package:firebase_auth/firebase_auth.dart'
-    show FirebaseAuth, FirebaseAuthException;
+    show FirebaseAuth, FirebaseAuthException, User;
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -19,14 +19,17 @@ class FirebaseAuthProvider implements AuthProvider {
   Future<AuthUser> createUser({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      User? uss = FirebaseAuth.instance.currentUser;
       final user = currentUser;
       if (user != null) {
+        await uss?.updateDisplayName(name);
         return user;
       } else {
         throw UserNotLoggedInAuthException();

@@ -278,10 +278,12 @@ class _RegisterViewState extends State<RegisterView> {
                                 // Fluttertoast.showToast(msg: 'btn pressed');
                                 final email = _email.text;
                                 final password = _password.text;
+                                final name = _fname.text;
                                 context.read<AuthBloc>().add(
                                       AuthEventRegister(
                                         email,
                                         password,
+                                        name,
                                       ),
                                     );
                               },
