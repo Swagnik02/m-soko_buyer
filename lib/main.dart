@@ -48,9 +48,9 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
-          return const HomeScreen();
+          return HomeScreen();
         } else if (state is AuthStateNeedsVerification) {
-          return const HomeScreen();
+          return HomeScreen();
         } else if (state is AuthStateLoggedOut) {
           return const OnboardingScreen();
         }

@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:m_soko/authentication/auth_services/auth_service.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'package:m_soko/authentication/auth_services/auth_service.dart';
+import 'package:m_soko/home/bottom_navigation_bar.dart';
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   String get userId => AuthService.firebase().currentUser!.id;
   String get userName => AuthService.firebase().currentUser!.name;
 
-  const HomeScreen({Key? key}) : super(key: key);
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
+      backgroundColor: Colors.blue[900],
       body: Center(
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(
-                      const AuthEventLogOut(),
-                    );
-              },
-              child: Text('Logout'),
-            ),
-            Text(userId),
-            Text(userName),
-          ],
-        ),
+        child: Text('Content goes here'),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }
