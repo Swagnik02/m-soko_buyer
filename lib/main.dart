@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:m_soko/authentication/Views/login_view.dart';
 import 'package:m_soko/authentication/Views/onboarding_screen.dart';
 import 'package:m_soko/authentication/Views/register_view.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
@@ -9,7 +8,6 @@ import 'package:m_soko/authentication/auth_services/bloc/auth_state.dart';
 import 'package:m_soko/authentication/auth_services/firebase_auth_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/home/home_screen.dart';
-import 'package:m_soko/widgets/onboard_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
