@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/authentication/login_screen.dart';
+import 'package:m_soko/authentication/Views/login_view.dart';
+
 import 'package:m_soko/common/colors.dart';
 
 class OnboardPage extends StatelessWidget {
@@ -50,7 +51,7 @@ class OnboardPage extends StatelessWidget {
                   pageIndex == 2
                       ? Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                          return LoginScreen();
+                          return LoginView();
                         }))
                       : controller.animateToPage(pageIndex + 1,
                           duration: const Duration(milliseconds: 500),
