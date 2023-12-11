@@ -84,11 +84,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return ProductsScreen();
+        return Theme(
+          data: ThemeData(
+            primaryColor: ColorConstants.blue700,
+            hintColor: ColorConstants.yellow500,
+          ),
+          child: ProductsScreen(),
+        );
       case 1:
-        return PropertiesScreen();
+        return Theme(
+          data: ThemeData(
+            primaryColor: ColorConstants.green700,
+            hintColor: ColorConstants.yellow500,
+          ),
+          child: PropertiesScreen(),
+        );
       case 2:
-        return ServicesScreen();
+        return Theme(
+          data: ThemeData(
+            primaryColor:
+                ColorConstants.orange700, // Change to your desired color
+            hintColor: ColorConstants.yellow500,
+          ),
+          child: ServicesScreen(),
+        );
       default:
         return Container();
     }

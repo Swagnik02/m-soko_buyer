@@ -26,7 +26,7 @@ class _PropertiesBottomNavigationBarState
           BottomNavigationBar(
             backgroundColor: Colors.transparent,
             selectedItemColor: Colors.white,
-            unselectedItemColor: ColorConstants.blue900,
+            unselectedItemColor: Colors.black,
             currentIndex: _currentIndex,
             type: BottomNavigationBarType.fixed,
             iconSize: 35.0,
@@ -97,7 +97,7 @@ class _PropertiesBottomNavigationBarState
         padding: EdgeInsets.all(0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: ColorConstants.blue700,
+          color: ColorConstants.green800,
         ),
       ),
     );

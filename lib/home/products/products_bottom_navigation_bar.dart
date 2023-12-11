@@ -26,7 +26,7 @@ class _ProductsBottomNavigationBarState
           BottomNavigationBar(
             backgroundColor: Colors.transparent,
             selectedItemColor: Colors.white,
-            unselectedItemColor: ColorConstants.blue900,
+            unselectedItemColor: Colors.black,
             currentIndex: _currentIndex,
             type: BottomNavigationBarType.fixed,
             iconSize: 35.0,
