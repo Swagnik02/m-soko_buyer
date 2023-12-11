@@ -78,7 +78,7 @@ class _ProductsBottomNavigationBarState
       child: Container(
         width: itemWidth,
         height: 6.0,
-        color: ColorConstants.yellow500,
+        color: ColorConstants.yellow400,
       ),
     );
   }
