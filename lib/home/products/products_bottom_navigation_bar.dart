@@ -17,18 +17,20 @@ class _ProductsBottomNavigationBarState
   @override
   Widget build(BuildContext context) {
     return Container(
-      // decoration: const BoxDecoration(
-      //   color: Colors.blue,
-      // ),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
       child: Stack(
         children: [
+          _buildRedCircleIndicator(),
           BottomNavigationBar(
-            // backgroundColor: Colors.transparent,
-            selectedItemColor: Colors.black,
+            backgroundColor: Colors.transparent,
+            selectedItemColor: Colors.white,
             unselectedItemColor: ColorConstants.blue900,
             currentIndex: _currentIndex,
             type: BottomNavigationBarType.fixed,
             iconSize: 35.0,
+            elevation: 0,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_2_rounded),
@@ -59,7 +61,6 @@ class _ProductsBottomNavigationBarState
               // You can use Navigator or any navigation logic here
             },
           ),
-          _buildRedCircleIndicator(),
           _buildSelectedLabelIndicator(),
         ],
       ),
@@ -67,9 +68,9 @@ class _ProductsBottomNavigationBarState
   }
 
   Widget _buildSelectedLabelIndicator() {
-    double itemWidth = MediaQuery.of(context).size.width / 8;
+    double itemWidth = MediaQuery.of(context).size.width / 8.5;
     double indicatorPosition =
-        _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 3;
+        _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 2.8;
 
     return Positioned(
       bottom: 2,
@@ -77,7 +78,7 @@ class _ProductsBottomNavigationBarState
       child: Container(
         width: itemWidth,
         height: 6.0,
-        color: ColorConstants.yellow400,
+        color: ColorConstants.yellow500,
       ),
     );
   }
@@ -96,7 +97,7 @@ class _ProductsBottomNavigationBarState
         padding: EdgeInsets.all(0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color.fromARGB(50, 8, 32, 94),
+          color: ColorConstants.blue700,
         ),
       ),
     );
