@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
+import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
+import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/home/products/products_bottom_navigation_bar.dart';
 import 'package:m_soko/home/products/products_page.dart';
 import 'package:m_soko/home/properties/properties_bottom_navigation_bar.dart';
@@ -36,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildTopBarButton("Products", 0),
                       _buildTopBarButton("Properties", 1),
                       _buildTopBarButton("Services", 2),
+                      _buildTopBarButton("out", 3),
                     ],
                   ),
                 )),
@@ -120,6 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: ServicesScreen(),
         );
+      case 3:
+        return LogoutScreen();
       default:
         return Container();
     }
@@ -134,7 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return ServicesBottomNavigationBar();
       default:
-        return Container();
+        // return Container();
+        return ProductsBottomNavigationBar();
     }
   }
 }
