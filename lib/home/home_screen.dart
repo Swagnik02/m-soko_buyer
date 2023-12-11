@@ -21,22 +21,30 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
-        child: Container(
-          color: Colors.blue, // Customize the color as per your design
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildTopBarButton("Products", 0),
-              _buildTopBarButton("Properties", 1),
-              _buildTopBarButton("Services", 2),
-            ],
-          ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            PreferredSize(
+              preferredSize: Size.fromHeight(80.0),
+              child: Container(
+                color: Colors.blue, // Customize the color as per your design
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildTopBarButton("Products", 0),
+                    _buildTopBarButton("Properties", 1),
+                    _buildTopBarButton("Services", 2),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: _buildBody(),
+            ),
+          ],
         ),
       ),
-      body: _buildBody(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
@@ -71,26 +79,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody() {
-    // Implement the body content based on the selected index (_currentIndex)
-    // You can use a switch statement or if-else conditions to switch between the content.
-    // For example:
     switch (_currentIndex) {
       case 0:
-        return ProductsScreen(); // Create a separate widget for Products
+        return ProductsScreen();
       case 1:
-        return PropertiesScreen(); // Create a separate widget for Properties
+        return PropertiesScreen();
       case 2:
-        return ServicesScreen(); // Create a separate widget for Services
+        return ServicesScreen();
       default:
-        return Container(); // Default case, can be an empty container or an error widget
+        return Container();
     }
   }
 
   Widget _buildBottomNavigationBar() {
-    // Implement your bottom navigation bar based on the selected index (_currentIndex)
-    // Each section (Products, Properties, Services) will have its own set of options.
-    // You can create separate widgets for each set of options.
-    // For example:
     switch (_currentIndex) {
       case 0:
         return ProductsBottomNavigationBar();
@@ -99,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return ServicesBottomNavigationBar();
       default:
-        return Container(); // Default case, can be an empty container or an error widget
+        return Container();
     }
   }
 }
