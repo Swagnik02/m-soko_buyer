@@ -62,8 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: _currentIndex == index ? Colors.white : Colors.transparent,
-              width: 2.0,
+              color: _currentIndex == index
+                  ? ColorConstants.yellow500
+                  : Colors.transparent,
+              width: 6.0,
             ),
           ),
         ),
