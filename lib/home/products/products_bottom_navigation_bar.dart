@@ -22,7 +22,7 @@ class _ProductsBottomNavigationBarState
       ),
       child: Stack(
         children: [
-          _buildRedCircleIndicator(),
+          _buildCircleIndicator(),
           BottomNavigationBar(
             backgroundColor: Colors.transparent,
             selectedItemColor: Colors.white,
@@ -83,7 +83,7 @@ class _ProductsBottomNavigationBarState
     );
   }
 
-  Widget _buildRedCircleIndicator() {
+  Widget _buildCircleIndicator() {
     double itemWidth = MediaQuery.of(context).size.width / 5;
     double indicatorPosition =
         _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 5.5;
