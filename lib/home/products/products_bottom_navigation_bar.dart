@@ -24,7 +24,7 @@ class _ProductsBottomNavigationBarState
         children: [
           BottomNavigationBar(
             // backgroundColor: Colors.transparent,
-            selectedItemColor: ColorConstants.blue900,
+            selectedItemColor: Colors.black,
             unselectedItemColor: ColorConstants.blue900,
             currentIndex: _currentIndex,
             type: BottomNavigationBarType.fixed,
@@ -59,6 +59,7 @@ class _ProductsBottomNavigationBarState
               // You can use Navigator or any navigation logic here
             },
           ),
+          _buildRedCircleIndicator(),
           _buildSelectedLabelIndicator(),
         ],
       ),
@@ -77,6 +78,26 @@ class _ProductsBottomNavigationBarState
         width: itemWidth,
         height: 6.0,
         color: ColorConstants.yellow400,
+      ),
+    );
+  }
+
+  Widget _buildRedCircleIndicator() {
+    double itemWidth = MediaQuery.of(context).size.width / 5;
+    double indicatorPosition =
+        _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 5.5;
+
+    return Positioned(
+      bottom: 20,
+      left: indicatorPosition,
+      child: Container(
+        width: 50.0,
+        height: 50.0,
+        padding: EdgeInsets.all(0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color.fromARGB(50, 8, 32, 94),
+        ),
       ),
     );
   }

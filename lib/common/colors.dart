@@ -9,7 +9,7 @@ class ColorConstants {
   static const Color blue400 = Color(0xFF3C599D);
   static const Color blue500 = Color(0xFF062184);
   static const Color blue600 = Color(0xFF002B78);
-  static const Color blue700 = Color(0xFF08215A);
+  static const Color blue700 = Color(0xFF08215E);
   static const Color blue800 = Color(0xFF061A49);
   static const Color blue900 = Color(0xFF051437);
 
