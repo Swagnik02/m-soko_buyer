@@ -13,95 +13,130 @@ class ProductsScreen extends StatelessWidget {
           child: Column(
             children: [
               // search box
-              Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  color: ColorConstants.blue50,
-                  border: Border.all(color: ColorConstants.blue200),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(CupertinoIcons.search,
-                          color: ColorConstants.blue700),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          "Search for products",
-                          style: TextStyle(
-                            fontSize: 19,
-                            color: ColorConstants.blue700,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.camera_alt_outlined,
-                        color: ColorConstants.blue700,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(CupertinoIcons.mic,
-                          color: ColorConstants.blue700),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
+              _searchBox(),
+              const SizedBox(height: 15),
               // categories
-              const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                    ProductsMainCategoryWidget(
-                      imagePath: 'assets/soko-logo_circle.png',
-                      categoryName: 'Electronics',
-                    ),
-                  ],
-                ),
-              ),
+              _mainCategories(),
+              const SizedBox(height: 15),
+              // Advertisement
+              _advertisement(),
+              const SizedBox(height: 15),
+              // Filters
+              _filters(),
+              const SizedBox(height: 15),
+              // 2nd Category
+              _secondCategory(),
+              const SizedBox(height: 15),
+              // top rated
+              _topRated(),
+              const SizedBox(height: 15),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _searchBox() {
+    return Container(
+      height: 60,
+      decoration: BoxDecoration(
+        color: ColorConstants.blue50,
+        border: Border.all(color: ColorConstants.blue200),
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(CupertinoIcons.search, color: ColorConstants.blue700),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                "Search for products",
+                style: TextStyle(
+                  fontSize: 19,
+                  color: ColorConstants.blue700,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.camera_alt_outlined,
+              color: ColorConstants.blue700,
+            ),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(CupertinoIcons.mic, color: ColorConstants.blue700),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _mainCategories() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Electronics',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _advertisement() {
+    return Container();
+  }
+
+  Widget _filters() {
+    return Container();
+  }
+
+  Widget _secondCategory() {
+    return Container();
+  }
+
+  Widget _topRated() {
+    return Container();
   }
 }
