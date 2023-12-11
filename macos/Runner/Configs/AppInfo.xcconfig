@@ -8,7 +8,7 @@
 PRODUCT_NAME = m_soko
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.mSoko
+PRODUCT_BUNDLE_IDENTIFIER = in.rig-group.mSoko
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 in.rig-group. All rights reserved.
