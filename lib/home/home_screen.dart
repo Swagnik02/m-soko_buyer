@@ -26,20 +26,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             PreferredSize(
-              preferredSize: Size.fromHeight(80.0),
-              child: Container(
-                color: ColorConstants.blue700,
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildTopBarButton("Products", 0),
-                    _buildTopBarButton("Properties", 1),
-                    _buildTopBarButton("Services", 2),
-                  ],
-                ),
-              ),
-            ),
+                preferredSize: Size.fromHeight(80.0),
+                child: Container(
+                  color: _getTopBarColor(_currentIndex),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildTopBarButton("Products", 0),
+                      _buildTopBarButton("Properties", 1),
+                      _buildTopBarButton("Services", 2),
+                    ],
+                  ),
+                )),
             Expanded(
               child: _buildBody(),
             ),
@@ -48,6 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
+  }
+
+  Color _getTopBarColor(int index) {
+    switch (index) {
+      case 0:
+        return ColorConstants.blue700;
+      case 1:
+        return ColorConstants.green800;
+      case 2:
+        return ColorConstants.orange500;
+      default:
+        return ColorConstants.blue700;
+    }
   }
 
   Widget _buildTopBarButton(String title, int index) {
