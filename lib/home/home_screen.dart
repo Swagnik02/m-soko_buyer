@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/home/products/products_bottom_navigation_bar.dart';
