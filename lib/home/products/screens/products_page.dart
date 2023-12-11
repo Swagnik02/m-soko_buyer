@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/products/widgets/products_categories.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
@@ -32,7 +33,7 @@ class ProductsScreen extends StatelessWidget {
                         child: Text(
                           "Search for products",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 19,
                             color: ColorConstants.blue700,
                           ),
                         ),
@@ -56,7 +57,47 @@ class ProductsScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
               // categories
+              const SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                    ProductsMainCategoryWidget(
+                      imagePath: 'assets/soko-logo_circle.png',
+                      categoryName: 'Electronics',
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
