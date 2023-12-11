@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ProductsScreen extends StatelessWidget {
+class PropertiesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text('Properties'),
       ),
       body: Center(
         child: Text(
-          'PRODUCTS',
+          'PROPERTIES',
           style: TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
