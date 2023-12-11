@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1050375667505",
+    "project_id": "msoko-seller",
+    "storage_bucket": "msoko-seller.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050375667505:android:8296936e3ad63cc2387a10",
+        "android_client_info": {
+          "package_name": "com.example.msoko_seller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlaQ_2bifPPGaAv3W34veUOfCREfvO2IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050375667505:android:083474b4d5a63605387a10",
+        "android_client_info": {
+          "package_name": "in.riggroup.m_soko"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlaQ_2bifPPGaAv3W34veUOfCREfvO2IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
