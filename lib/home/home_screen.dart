@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
+import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bottom_navigation_bar.dart';
 import 'package:m_soko/home/products/products_page.dart';
 import 'package:m_soko/home/properties/properties_bottom_navigation_bar.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
             PreferredSize(
               preferredSize: Size.fromHeight(80.0),
               child: Container(
-                color: Colors.blue, // Customize the color as per your design
+                color: ColorConstants.blue700,
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

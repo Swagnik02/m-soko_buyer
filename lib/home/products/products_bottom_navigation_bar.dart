@@ -1,46 +1,82 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:m_soko/common/colors.dart';
 
-class ProductsBottomNavigationBar extends StatelessWidget {
-  const ProductsBottomNavigationBar({super.key});
+class ProductsBottomNavigationBar extends StatefulWidget {
+  const ProductsBottomNavigationBar({Key? key}) : super(key: key);
+
+  @override
+  _ProductsBottomNavigationBarState createState() =>
+      _ProductsBottomNavigationBarState();
+}
+
+class _ProductsBottomNavigationBarState
+    extends State<ProductsBottomNavigationBar> {
+  int _currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.blue, // Customize the background color
-      ),
-      child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(0.6),
-        currentIndex: 2, // Assuming "Home" is the default selected item
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+      // decoration: const BoxDecoration(
+      //   color: Colors.blue,
+      // ),
+      child: Stack(
+        children: [
+          BottomNavigationBar(
+            // backgroundColor: Colors.transparent,
+            selectedItemColor: ColorConstants.blue900,
+            unselectedItemColor: ColorConstants.blue900,
+            currentIndex: _currentIndex,
+            type: BottomNavigationBarType.fixed,
+            iconSize: 35.0,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_2_rounded),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.text_bubble),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.payment),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.menu_rounded),
+                label: '',
+              ),
+            ],
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+              // Handle navigation to different screens based on the selected index
+              // You can use Navigator or any navigation logic here
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.headset_mic),
-            label: 'Support',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            label: 'Payments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'Others',
-          ),
+          _buildSelectedLabelIndicator(),
         ],
-        onTap: (index) {
-          // Handle navigation to different screens based on the selected index
-          // You can use Navigator or any navigation logic here
-        },
+      ),
+    );
+  }
+
+  Widget _buildSelectedLabelIndicator() {
+    double itemWidth = MediaQuery.of(context).size.width / 8;
+    double indicatorPosition =
+        _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 3;
+
+    return Positioned(
+      bottom: 2,
+      left: indicatorPosition,
+      child: Container(
+        width: itemWidth,
+        height: 6.0,
+        color: ColorConstants.yellow400,
       ),
     );
   }

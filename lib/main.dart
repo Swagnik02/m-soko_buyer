@@ -19,6 +19,7 @@ void main() {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: ColorConstants.blue700, // Set your primary color here
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider<AuthBloc>(
@@ -30,6 +31,10 @@ void main() {
       },
     ),
   );
+}
+
+class ColorConstants {
+  static const blue700 = Color(0xFF1976D2);
 }
 
 class HomePage extends StatelessWidget {
