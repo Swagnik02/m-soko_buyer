@@ -36,8 +36,8 @@ class ProductsMainCategoryWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                imagePath,
+              Image(
+                image: NetworkImage(imagePath),
                 width: 50,
                 height: 50,
               ),

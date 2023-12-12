@@ -99,8 +99,7 @@ class ProductsScreen extends StatelessWidget {
             child: Row(
               children: categories.map((category) {
                 return ProductsMainCategoryWidget(
-                  imagePath:
-                      'assets/products_category_icons/prd_cat_electronics.png',
+                  imagePath: category['categoryImage'],
                   categoryName: category['categoryName'],
                 );
               }).toList(),
