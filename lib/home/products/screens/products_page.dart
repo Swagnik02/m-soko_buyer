@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/products_categories.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -143,34 +144,6 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Future<List<Map<String, dynamic>>> fetchAdvertisementsFromFirestore() async {
-    var querySnapshot =
-        await FirebaseFirestore.instance.collection('advertisement').get();
-
-    // Filter documents with 'adType' equal to 'product'
-    var filteredDocs = querySnapshot.docs
-        .where((doc) => doc['adType'] != null && doc['adType'] == 'product');
-
-    return filteredDocs.map((doc) {
-      return {
-        'brandName': doc['brandName'],
-        'bannerImage': doc['bannerImage'],
-      };
-    }).toList();
-  }
-
-  Widget buildDotIndicator(int index) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 10,
-      height: 10,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.blue.withOpacity(index == 0 ? 1 : 0.5),
-      ),
-    );
-  }
-
   Widget _filters() {
     return Container();
   }
@@ -181,17 +154,5 @@ class ProductsScreen extends StatelessWidget {
 
   Widget _topRated() {
     return Container();
-  }
-
-  Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
-    var querySnapshot =
-        await FirebaseFirestore.instance.collection('product_categories').get();
-
-    return querySnapshot.docs.map((doc) {
-      return {
-        'categoryName': doc['categoryName'],
-        'categoryImage': doc['categoryImage'],
-      };
-    }).toList();
   }
 }
