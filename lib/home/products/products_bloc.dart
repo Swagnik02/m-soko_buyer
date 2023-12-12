@@ -31,7 +31,7 @@ Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
 Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
     String category) async {
   var querySnapshot =
-      await FirebaseFirestore.instance.collection('products').get();
+      await FirebaseFirestore.instance.collection('product_items').get();
 
   var filteredDocs =
       querySnapshot.docs.where((doc) => doc['prdItemCategory'] == category);
