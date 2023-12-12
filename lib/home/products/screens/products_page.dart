@@ -144,12 +144,14 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Future<List<Map<String, dynamic>>> fetchAdvertisementsFromFirestore() async {
-    print('Before Firestore call');
     var querySnapshot =
         await FirebaseFirestore.instance.collection('advertisement').get();
-    print('After Firestore call');
 
-    return querySnapshot.docs.map((doc) {
+    // Filter documents with 'adType' equal to 'product'
+    var filteredDocs = querySnapshot.docs
+        .where((doc) => doc['adType'] != null && doc['adType'] == 'product');
+
+    return filteredDocs.map((doc) {
       return {
         'brandName': doc['brandName'],
         'bannerImage': doc['bannerImage'],
@@ -182,10 +184,8 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
-    print('Before Firestore call');
     var querySnapshot =
         await FirebaseFirestore.instance.collection('product_categories').get();
-    print('After Firestore call');
 
     return querySnapshot.docs.map((doc) {
       return {
