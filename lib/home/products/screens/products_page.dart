@@ -21,16 +21,17 @@ class ProductsScreen extends StatelessWidget {
               const SizedBox(height: 15),
               // Advertisement
               _advertisement(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 8),
+
               // Filters
-              _filters(),
-              const SizedBox(height: 15),
-              // 2nd Category
-              _secondCategory(),
-              const SizedBox(height: 15),
-              // top rated
-              _topRated(),
-              const SizedBox(height: 15),
+              // _filters(),
+              // const SizedBox(height: 15),
+              // // 2nd Category
+              // _secondCategory(),
+              // const SizedBox(height: 15),
+              // // top rated
+              // _topRated(),
+              // const SizedBox(height: 15),
             ],
           ),
         ),
@@ -111,19 +112,60 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget _advertisement() {
-    return Container(); // Implement your advertisement widget
+    return Container(
+      height: 170,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              height: 150,
+              child: PageView.builder(
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Image.asset(
+                    'assets/prd_ad_1.png',
+                    // fit: BoxFit.cover,
+                  );
+                },
+              ),
+            ),
+          ),
+          // SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              3,
+              (index) => buildDotIndicator(index),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDotIndicator(int index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      width: 10,
+      height: 10,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.blue.withOpacity(index == 0 ? 1 : 0.5),
+      ),
+    );
   }
 
   Widget _filters() {
-    return Container(); // Implement your filters widget
+    return Container();
   }
 
   Widget _secondCategory() {
-    return Container(); // Implement your second category widget
+    return Container();
   }
 
   Widget _topRated() {
-    return Container(); // Implement your top-rated widget
+    return Container();
   }
 
   Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
