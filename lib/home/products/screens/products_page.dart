@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
+import 'package:m_soko/home/products/widgets/filter_items.dart';
 import 'package:m_soko/home/products/widgets/products_categories.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -24,7 +26,7 @@ class ProductsScreen extends StatelessWidget {
               const SizedBox(height: 8),
 
               // Filters
-              // _filters(),
+              _filters(context),
               // const SizedBox(height: 15),
               // // 2nd Category
               // _secondCategory(),
@@ -143,15 +145,39 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget _filters() {
-    return Container();
+  Widget _filters(BuildContext context) {
+    return Row(
+      children: [
+        FilterItem(
+            label: 'Recently Viewed',
+            onPressedAction: () {
+              Fluttertoast.showToast(msg: 'Recently Viewed');
+            },
+            isSelected: true),
+        FilterItem(
+            label: 'Categories',
+            onPressedAction: () {
+              Fluttertoast.showToast(msg: 'Categories');
+            }),
+        FilterItem(
+            label: 'Top Offers',
+            onPressedAction: () {
+              Fluttertoast.showToast(msg: 'Top Offers');
+            }),
+        FilterItem(
+            label: 'New',
+            onPressedAction: () {
+              Fluttertoast.showToast(msg: 'New');
+            }),
+      ],
+    );
   }
+}
 
-  Widget _secondCategory() {
-    return Container();
-  }
+Widget _secondCategory() {
+  return Container();
+}
 
-  Widget _topRated() {
-    return Container();
-  }
+Widget _topRated() {
+  return Container();
 }
