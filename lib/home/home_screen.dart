@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/logout.dart';
-import 'package:m_soko/home/products/products_bottom_navigation_bar.dart';
+import 'package:m_soko/home/products/widgets/products_bottom_navigation_bar.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
 import 'package:m_soko/home/properties/properties_bottom_navigation_bar.dart';
 import 'package:m_soko/home/properties/properties_screen.dart';

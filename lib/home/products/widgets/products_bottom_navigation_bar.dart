@@ -57,8 +57,12 @@ class _ProductsBottomNavigationBarState
               setState(() {
                 _currentIndex = index;
               });
-              // Handle navigation to different screens based on the selected index
-              // You can use Navigator or any navigation logic here
+              if (index == 0) {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ProfilePage()),
+                // );
+              }
             },
           ),
           _buildSelectedLabelIndicator(),
