@@ -20,7 +20,7 @@ void main() {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: ColorConstants.blue900,
+        primaryColor: ColorConstants.blue700,
         // primarySwatch: Colors.blue,
       ),
       home: BlocProvider<AuthBloc>(

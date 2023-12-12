@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/common/colors.dart';
 
 class MainCategoryPage extends StatelessWidget {
   final String title;
-  final String mainCatType;
 
   MainCategoryPage({
     required this.title,
-    required this.mainCatType,
   });
 
   @override
@@ -29,7 +26,7 @@ class MainCategoryPage extends StatelessWidget {
           ),
         ),
         body: Center(
-          child: Text('This is the $mainCatType main category page.'),
+          child: Text('This is the $title main category page.'),
         ),
       ),
     );

@@ -5,13 +5,11 @@ import 'package:m_soko/home/products/screens/main_categories_page.dart';
 class ProductsMainCategoryWidget extends StatelessWidget {
   final String imagePath;
   final String categoryName;
-  final String mainCatType;
 
   const ProductsMainCategoryWidget({
     Key? key,
     required this.imagePath,
     required this.categoryName,
-    required this.mainCatType,
   }) : super(key: key);
 
   @override
@@ -22,7 +20,6 @@ class ProductsMainCategoryWidget extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => MainCategoryPage(
               title: categoryName,
-              mainCatType: '',
             ),
           ),
         );

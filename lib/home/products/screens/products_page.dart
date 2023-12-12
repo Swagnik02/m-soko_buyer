@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
@@ -83,58 +84,59 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget _mainCategories() {
-    return const SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-            mainCatType: 'electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Mobiles',
-            mainCatType: 'electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-            mainCatType: 'electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-            mainCatType: 'electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-            mainCatType: 'electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-            mainCatType: 'electronics',
-          ),
-        ],
-      ),
+    return FutureBuilder(
+      // Replace this with your actual method to fetch categories from Firestore
+      future: fetchCategoriesFromFirestore(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          var categories = snapshot.data as List<Map<String, dynamic>>;
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: categories.map((category) {
+                return ProductsMainCategoryWidget(
+                  imagePath: 'assets/soko-logo_circle.png',
+                  categoryName: category['categoryName'],
+                );
+              }).toList(),
+            ),
+          );
+        }
+      },
     );
   }
 
   Widget _advertisement() {
-    return Container();
+    return Container(); // Implement your advertisement widget
   }
 
   Widget _filters() {
-    return Container();
+    return Container(); // Implement your filters widget
   }
 
   Widget _secondCategory() {
-    return Container();
+    return Container(); // Implement your second category widget
   }
 
   Widget _topRated() {
-    return Container();
+    return Container(); // Implement your top-rated widget
+  }
+
+  Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
+    print('Before Firestore call');
+    var querySnapshot =
+        await FirebaseFirestore.instance.collection('product_categories').get();
+    print('After Firestore call');
+
+    return querySnapshot.docs.map((doc) {
+      return {
+        'categoryName': doc['categoryName'],
+        'categoryImage': doc['categoryImage'],
+      };
+    }).toList();
   }
 }
