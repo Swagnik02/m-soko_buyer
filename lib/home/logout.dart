@@ -52,8 +52,8 @@ class LogoutScreen extends StatelessWidget {
               ),
               // for (var document in documents!)
               //   CategoryWidget(data: document.data() as Map<String, dynamic>),
-              for (var document in documents!)
-                ShowProducts(data: document.data() as Map<String, dynamic>),
+              // for (var document in documents!)
+              //   ShowProducts(data: document.data() as Map<String, dynamic>),
             ],
           );
         },
@@ -240,23 +240,27 @@ Future<void> addProducts() async {
     return categoryList[random.nextInt(categoryList.length)];
   }
 
-  // Create 30 random product entries
-  for (int i = 0; i < 30; i++) {
+  // Create 30 logical product entries
+  for (int i = 0; i < 100; i++) {
     String randomUID = DateTime.now().millisecondsSinceEpoch.toString() +
         generateRandom3DigitNumber();
 
+    String category = getRandomCategory();
+    String productName = '';
+    productName = '$category Product $i';
+
     await categories.doc(randomUID).set({
-      'prdItemCategory': getRandomCategory(),
-      'prdItemDesc': 'Cook food',
+      'prdItemCategory': category,
+      'prdItemDesc': 'Description for $productName',
       'prdItemImage1': '',
       'prdItemImage2': '',
       'prdItemImage3': '',
-      'prdItemName': 'Cooker',
-      'prdItemPrice': '1000',
+      'prdItemName': productName,
+      'prdItemPrice': (i + 1) * 100,
     });
   }
 
-  print('30 products added successfully!');
+  print('100 products added successfully!');
 }
 
 class ShowProducts extends StatelessWidget {

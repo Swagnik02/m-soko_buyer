@@ -31,6 +31,8 @@ class SelectedCategoryPage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
+            } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+              return Center(child: Text('No data found'));
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
@@ -40,7 +42,7 @@ class SelectedCategoryPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(products[index]['prdItemName']),
-                    subtitle: Text(products[index]['prdItemPrice']),
+                    subtitle: Text(products[index]['prdItemPrice'].toString()),
                   );
                 },
               );
