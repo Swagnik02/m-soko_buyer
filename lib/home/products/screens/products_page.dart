@@ -149,11 +149,12 @@ class ProductsScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         FilterItem(
-            label: 'Recently Viewed',
-            onPressedAction: () {
-              Fluttertoast.showToast(msg: 'Recently Viewed');
-            },
-            isSelected: true),
+          label: 'Recently Viewed',
+          onPressedAction: () {
+            Fluttertoast.showToast(msg: 'Recently Viewed');
+          },
+          isSelected: true,
+        ),
         FilterItem(
             label: 'Categories',
             onPressedAction: () {

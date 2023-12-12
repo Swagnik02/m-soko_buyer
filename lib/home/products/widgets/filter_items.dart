@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/common/colors.dart';
 
 class FilterItem extends StatelessWidget {
   final String label;
