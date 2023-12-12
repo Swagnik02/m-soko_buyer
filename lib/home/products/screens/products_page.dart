@@ -24,7 +24,6 @@ class ProductsScreen extends StatelessWidget {
               // Advertisement
               _advertisement(),
               const SizedBox(height: 8),
-
               // Filters
               _filters(context),
               // const SizedBox(height: 15),
@@ -147,6 +146,7 @@ class ProductsScreen extends StatelessWidget {
 
   Widget _filters(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         FilterItem(
             label: 'Recently Viewed',

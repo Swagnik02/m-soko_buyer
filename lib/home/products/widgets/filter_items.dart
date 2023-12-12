@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/common/colors.dart';
 
 class FilterItem extends StatelessWidget {
   final String label;
@@ -18,19 +19,21 @@ class FilterItem extends StatelessWidget {
         onPressedAction();
       },
       child: Container(
-        padding: EdgeInsets.all(8),
+        height: 42,
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isSelected ? Colors.blue : Colors.transparent,
-              width: 2.0,
-            ),
+          color: isSelected ? Colors.blue : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isSelected ? Colors.blue : Colors.black54,
+            width: 1.0,
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.blue : Colors.black,
+            color: isSelected ? Colors.white : Colors.black54,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
         ),
