@@ -18,7 +18,7 @@ class ProductsMainCategoryWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => MainCategoryPage(
+            builder: (context) => SelectedCategoryPage(
               title: categoryName,
             ),
           ),

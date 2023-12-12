@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/home/products/products_bloc.dart';
 
-class MainCategoryPage extends StatelessWidget {
+class SelectedCategoryPage extends StatelessWidget {
   final String title;
 
-  MainCategoryPage({
+  SelectedCategoryPage({
     required this.title,
   });
 
@@ -25,8 +26,26 @@ class MainCategoryPage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: Center(
-          child: Text('This is the $title main category page.'),
+        body: FutureBuilder<List<Map<String, dynamic>>>(
+          future: futureCheckSelectedCategoryProducts(title),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              List<Map<String, dynamic>> products = snapshot.data!;
+              return ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(products[index]['prdItemName']),
+                    subtitle: Text(products[index]['prdItemPrice']),
+                  );
+                },
+              );
+            }
+          },
         ),
       ),
     );

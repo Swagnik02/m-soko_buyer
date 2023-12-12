@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +15,7 @@ class LogoutScreen extends StatelessWidget {
       ),
       body: StreamBuilder(
         stream:
-            FirebaseFirestore.instance.collection('advertisement').snapshots(),
+            FirebaseFirestore.instance.collection('product_items').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -35,7 +37,8 @@ class LogoutScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Call a function to add categories
-                  addCategories();
+                  // addCategories();
+                  addProducts();
                 },
                 child: Text('Add Categories'),
               ),
@@ -50,7 +53,7 @@ class LogoutScreen extends StatelessWidget {
               // for (var document in documents!)
               //   CategoryWidget(data: document.data() as Map<String, dynamic>),
               for (var document in documents!)
-                CategoryWidget(data: document.data() as Map<String, dynamic>),
+                ShowProducts(data: document.data() as Map<String, dynamic>),
             ],
           );
         },
@@ -63,7 +66,7 @@ Future<void> addCategories() async {
   CollectionReference categories =
       FirebaseFirestore.instance.collection('advertisement');
 
-  await categories.doc('prop_ad_01').set({
+  await categories.doc('prop_ad_0').set({
     'brandName': 'House',
     'bannerImage':
         'https://firebasestorage.googleapis.com/v0/b/msoko-seller.appspot.com/o/ad_banners%2Fprop_ad_1.png?alt=media&token=c39ab5c0-26a9-4ffa-96c9-447f188c39c6',
@@ -196,6 +199,82 @@ class CategoryWidget extends StatelessWidget {
         Image(image: NetworkImage(data['bannerImage'])),
         // Text('categoryImage: ${data['categoryImage']}'),
         SizedBox(height: 16),
+      ],
+    );
+  }
+}
+
+Future<void> addProducts() async {
+  CollectionReference categories =
+      FirebaseFirestore.instance.collection('product_items');
+
+  // Function to generate a random 3-digit number
+  String generateRandom3DigitNumber() {
+    Random random = Random();
+    return random.nextInt(900).toString() + 100.toString();
+  }
+
+  // List of categories
+  List<String> categoryList = [
+    'Electronics',
+    'Mobiles',
+    'Fashion',
+    'Personal Care',
+    'Footwear',
+    'Baby Products',
+    'Home',
+    'Eyewear',
+    'Furniture',
+    'Jewellery',
+    'Luggage Bags',
+    'Packaging',
+    'Tools',
+    'Grocery',
+    'Sport',
+    'Medicine',
+  ];
+
+  // Function to get a random category
+  String getRandomCategory() {
+    Random random = Random();
+    return categoryList[random.nextInt(categoryList.length)];
+  }
+
+  // Create 30 random product entries
+  for (int i = 0; i < 30; i++) {
+    String randomUID = DateTime.now().millisecondsSinceEpoch.toString() +
+        generateRandom3DigitNumber();
+
+    await categories.doc(randomUID).set({
+      'prdItemCategory': getRandomCategory(),
+      'prdItemDesc': 'Cook food',
+      'prdItemImage1': '',
+      'prdItemImage2': '',
+      'prdItemImage3': '',
+      'prdItemName': 'Cooker',
+      'prdItemPrice': '1000',
+    });
+  }
+
+  print('30 products added successfully!');
+}
+
+class ShowProducts extends StatelessWidget {
+  final Map<String, dynamic> data;
+
+  const ShowProducts({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Category Name: ${data['prdItemCategory']}'),
+        Image(image: NetworkImage(data['prdItemImage1'])),
+        Text('Product Description: ${data['prdItemDesc']}'),
+        Text('Product Name: ${data['prdItemName']}'),
+        Text('Product Price: ${data['prdItemPrice']}'),
+        // Add more Text widgets for other fields as needed
       ],
     );
   }

@@ -27,3 +27,23 @@ Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
     };
   }).toList();
 }
+
+Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
+    String category) async {
+  var querySnapshot =
+      await FirebaseFirestore.instance.collection('products').get();
+
+  var filteredDocs =
+      querySnapshot.docs.where((doc) => doc['prdItemCategory'] == category);
+
+  return filteredDocs.map((doc) {
+    return {
+      'prdItemDesc': doc['prdItemDesc'],
+      'prdItemImage1': doc['prdItemImage1'],
+      'prdItemImage2': doc['prdItemImage2'],
+      'prdItemImage3': doc['prdItemImage3'],
+      'prdItemName': doc['prdItemName'],
+      'prdItemPrice': doc['prdItemPrice'],
+    };
+  }).toList();
+}
