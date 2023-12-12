@@ -83,41 +83,39 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget _mainCategories() {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           ProductsMainCategoryWidget(
             imagePath: 'assets/soko-logo_circle.png',
             categoryName: 'Electronics',
+            mainCatType: 'electronics',
+          ),
+          ProductsMainCategoryWidget(
+            imagePath: 'assets/soko-logo_circle.png',
+            categoryName: 'Mobiles',
+            mainCatType: 'electronics',
           ),
           ProductsMainCategoryWidget(
             imagePath: 'assets/soko-logo_circle.png',
             categoryName: 'Electronics',
+            mainCatType: 'electronics',
           ),
           ProductsMainCategoryWidget(
             imagePath: 'assets/soko-logo_circle.png',
             categoryName: 'Electronics',
+            mainCatType: 'electronics',
           ),
           ProductsMainCategoryWidget(
             imagePath: 'assets/soko-logo_circle.png',
             categoryName: 'Electronics',
+            mainCatType: 'electronics',
           ),
           ProductsMainCategoryWidget(
             imagePath: 'assets/soko-logo_circle.png',
             categoryName: 'Electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
-          ),
-          ProductsMainCategoryWidget(
-            imagePath: 'assets/soko-logo_circle.png',
-            categoryName: 'Electronics',
+            mainCatType: 'electronics',
           ),
         ],
       ),
