@@ -86,7 +86,6 @@ class ProductsScreen extends StatelessWidget {
 
   Widget _mainCategories() {
     return FutureBuilder(
-      // Replace this with your actual method to fetch categories from Firestore
       future: fetchCategoriesFromFirestore(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -112,36 +111,50 @@ class ProductsScreen extends StatelessWidget {
   }
 
   Widget _advertisement() {
-    return Container(
-      height: 170,
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Container(
-              height: 150,
-              child: PageView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Image.asset(
-                    'assets/prd_ad_1.png',
-                    // fit: BoxFit.cover,
-                  );
-                },
-              ),
+    return FutureBuilder(
+      future: fetchAdvertisementsFromFirestore(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          var advertisements = snapshot.data as List<Map<String, dynamic>>;
+          return Container(
+            height: 170,
+            child: PageView.builder(
+              itemCount: advertisements.length,
+              itemBuilder: (context, index) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    height: 150,
+                    child: Image.network(
+                      advertisements[index]['bannerImage'],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-          // SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              3,
-              (index) => buildDotIndicator(index),
-            ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
+  }
+
+  Future<List<Map<String, dynamic>>> fetchAdvertisementsFromFirestore() async {
+    print('Before Firestore call');
+    var querySnapshot =
+        await FirebaseFirestore.instance.collection('advertisement').get();
+    print('After Firestore call');
+
+    return querySnapshot.docs.map((doc) {
+      return {
+        'brandName': doc['brandName'],
+        'bannerImage': doc['bannerImage'],
+      };
+    }).toList();
   }
 
   Widget buildDotIndicator(int index) {
