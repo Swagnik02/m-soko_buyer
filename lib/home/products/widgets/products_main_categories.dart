@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/selected_categories_page.dart';
-import 'package:m_soko/home/products/widgets/page_transitions.dart';
 
 class ProductsMainCategoryWidget extends StatelessWidget {
   final String imagePath;
