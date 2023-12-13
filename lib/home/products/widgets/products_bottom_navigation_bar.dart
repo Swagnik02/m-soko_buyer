@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/home_screen.dart';
-import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
-import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsBottomNavigationBar extends StatefulWidget {
   const ProductsBottomNavigationBar({Key? key}) : super(key: key);
