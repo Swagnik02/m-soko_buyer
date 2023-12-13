@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
               CircleAvatar(
                 radius: 50.0,
                 backgroundImage: AssetImage(
-                    'assets/profile_image.jpg'), // Replace with your image asset
+                    'assets/soko-logo_circle.png'), // Replace with your image asset
               ),
               SizedBox(height: 20.0),
               Text(

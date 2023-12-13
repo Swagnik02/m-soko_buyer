@@ -15,7 +15,7 @@ class ProductsBottomNavigationBar extends StatefulWidget {
 
 class _ProductsBottomNavigationBarState
     extends State<ProductsBottomNavigationBar> {
-  int _currentIndex = 2;
+  int prodNavBarIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _ProductsBottomNavigationBarState
       backgroundColor: Colors.transparent,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.black,
-      currentIndex: _currentIndex,
+      currentIndex: prodNavBarIndex,
       type: BottomNavigationBarType.fixed,
       iconSize: 35.0,
       elevation: 0,
@@ -66,7 +66,7 @@ class _ProductsBottomNavigationBarState
       ],
       onTap: (index) {
         setState(() {
-          _currentIndex = index;
+          prodNavBarIndex = index;
         });
         // added onIndexChange here to let home_screen listen to the index canhges
         widget.onIndexChanged();
@@ -77,7 +77,8 @@ class _ProductsBottomNavigationBarState
   Widget _buildSelectedLabelIndicator() {
     double itemWidth = MediaQuery.of(context).size.width / 8.5;
     double indicatorPosition =
-        _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 2.8;
+        prodNavBarIndex * MediaQuery.of(context).size.width / 5 +
+            itemWidth / 2.8;
 
     return Positioned(
       bottom: 2,
@@ -93,7 +94,8 @@ class _ProductsBottomNavigationBarState
   Widget _buildCircleIndicator() {
     double itemWidth = MediaQuery.of(context).size.width / 5;
     double indicatorPosition =
-        _currentIndex * MediaQuery.of(context).size.width / 5 + itemWidth / 5.5;
+        prodNavBarIndex * MediaQuery.of(context).size.width / 5 +
+            itemWidth / 5.5;
 
     return Positioned(
       bottom: 20,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
@@ -24,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String get userId => AuthService.firebase().currentUser!.id;
   String get userName => AuthService.firebase().currentUser!.name;
 
-  int _currentIndex = 0;
+  int _topBarIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // added onIndexChange to listen to changes
         onIndexChanged: () {
           setState(() {
-            navBarIndex = _currentIndex;
+            navBarIndex = _topBarIndex;
           });
         },
       ),
@@ -46,15 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // conditions set to open pages
   //according to the value of indexes
   //navBarIndex = index of bottomNavBar
-  //_CurrentIndex = index of TopBar
+  //_topBarIndex = index of TopBar
 
-  //
   Widget _selectedNavPage() {
     switch (navBarIndex) {
       case 0:
         return ProfilePage();
       case 1:
-        switch (_currentIndex) {
+        switch (_topBarIndex) {
           case 0: // Products Section
             return SupportPage();
           case 1: // Property Section
@@ -79,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
         PreferredSize(
             preferredSize: Size.fromHeight(80.0),
             child: Container(
-              color: _getTopBarColor(_currentIndex),
+              color: _getTopBarColor(_topBarIndex),
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: navBarIndex == 2 ? _TopNavBar() : Container(),
             )),
@@ -118,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _currentIndex = index;
+          _topBarIndex = index;
         });
       },
       child: Container(
@@ -126,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: _currentIndex == index
+              color: _topBarIndex == index
                   ? ColorConstants.yellow400
                   : Colors.transparent,
               width: 6.0,
@@ -146,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody() {
-    switch (_currentIndex) {
+    switch (_topBarIndex) {
       case 0:
         return ProductsScreen();
       case 1:
@@ -161,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // added onIndexChanged as argument changed
   Widget _buildBottomNavigationBar() {
-    switch (_currentIndex) {
+    switch (_topBarIndex) {
       case 0:
         return ProductsBottomNavigationBar(onIndexChanged: _selectedNavPage);
       case 1:

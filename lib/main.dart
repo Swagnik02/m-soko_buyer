@@ -32,6 +32,7 @@ void main() {
       },
     ),
   );
+  printValuesAtIntervals();
 }
 
 class HomePage extends StatelessWidget {
@@ -71,4 +72,16 @@ class HomePage extends StatelessWidget {
       },
     );
   }
+}
+
+void printValuesAtIntervals() {
+  int counter = 0;
+
+  void printCurrentValue() {
+    print('Current Value: $navBarIndex');
+
+    Future.delayed(Duration(milliseconds: 1000), printCurrentValue);
+  }
+
+  printCurrentValue();
 }
