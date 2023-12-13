@@ -35,7 +35,7 @@ class _ProductsBottomNavigationBarState
       child: Stack(
         children: [
           _buildCircleIndicator(),
-          _bottomNavigationBar(), // Removed the Future<Widget> wrapper
+          _bottomNavigationBar(),
           _buildSelectedLabelIndicator(),
         ],
       ),
