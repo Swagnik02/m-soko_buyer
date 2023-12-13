@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
+import 'package:m_soko/home/products/widgets/page_transitions.dart';
 
 class ProductsBottomNavigationBar extends StatefulWidget {
   const ProductsBottomNavigationBar({Key? key}) : super(key: key);
@@ -58,10 +60,15 @@ class _ProductsBottomNavigationBarState
                 _currentIndex = index;
               });
               if (index == 0) {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const ProfilePage()),
-                // );
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        ProfilePage(),
+                    transitionsBuilder:
+                        customTransition(const Offset(-1.0, 0.0)),
+                  ),
+                );
               }
             },
           ),

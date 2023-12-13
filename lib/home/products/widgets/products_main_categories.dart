@@ -23,7 +23,7 @@ class ProductsMainCategoryWidget extends StatelessWidget {
               title: categoryName,
             );
           },
-          transitionsBuilder: smoothTransition(),
+          transitionsBuilder: customTransition(const Offset(0, 0)),
         ));
       },
       child: Padding(
