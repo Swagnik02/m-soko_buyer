@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/home_screen.dart';
 
 class ServicesBottomNavigationBar extends StatefulWidget {
   const ServicesBottomNavigationBar({Key? key}) : super(key: key);
@@ -57,8 +58,21 @@ class _ServicesBottomNavigationBarState
               setState(() {
                 _currentIndex = index;
               });
-              // Handle navigation to different screens based on the selected index
-              // You can use Navigator or any navigation logic here
+              if (index == 0) {
+                navBarIndex = _currentIndex;
+              }
+              if (index == 1) {
+                navBarIndex = _currentIndex;
+              }
+              if (index == 2) {
+                navBarIndex = _currentIndex;
+              }
+              if (index == 3) {
+                navBarIndex = _currentIndex;
+              }
+              if (index == 4) {
+                navBarIndex = _currentIndex;
+              }
             },
           ),
           _buildSelectedLabelIndicator(),

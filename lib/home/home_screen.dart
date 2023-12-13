@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return _home();
       case 3:
         return PaymentsPage();
+
       default:
         return Container();
     }
