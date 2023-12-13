@@ -1,40 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/common/colors.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            _customAppBar(),
+            Expanded(
+              child: _profileBody(),
+            ),
+          ],
+        ),
       ),
-      body: const SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage(
-                    'assets/soko-logo_circle.png'), // Replace with your image asset
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'John Doe', // Replace with the user's name
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
+    );
+  }
+
+  Widget _profileBody() {
+    // Implement your profile body here
+    return Container();
+  }
+
+  Widget _customAppBar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(80.0),
+      child: Container(
+        color: ColorConstants.blue700,
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              'assets/soko-logo.png',
+              height: 51,
+            ),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    // Handle notification icon tap
+                  },
+                  child: Icon(Icons.notifications, color: Colors.white),
                 ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'john.doe@example.com', // Replace with the user's email
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.grey,
+                SizedBox(width: 16),
+                InkWell(
+                  onTap: () {
+                    // Handle search icon tap
+                  },
+                  child: Icon(Icons.search, color: Colors.white),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );
