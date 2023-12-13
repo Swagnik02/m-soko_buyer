@@ -6,11 +6,8 @@ import 'package:m_soko/home/products/screens/bottomNavigationItems/call_page.dar
 import 'package:m_soko/home/products/screens/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/support_page.dart';
-import 'package:m_soko/home/products/widgets/products_bottom_navigation_bar.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
-import 'package:m_soko/home/properties/properties_bottom_navigation_bar.dart';
 import 'package:m_soko/home/properties/properties_screen.dart';
-import 'package:m_soko/home/services/services_bottom_navigation_bar.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,28 +19,22 @@ class _HomeScreenState extends State<HomeScreen> {
   String get userId => AuthService.firebase().currentUser!.id;
   String get userName => AuthService.firebase().currentUser!.name;
 
+  int navBarIndex = 2;
   int _topBarIndex = 0;
-  int _navBarIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _navBarIndex == 2 ? _home() : _slectedNavHome(),
+        child: navBarIndex == 2 ? _home() : _slectedNavHome(),
       ),
-      bottomNavigationBar: BottomNavBar(
-        onIndexChanged: (int changedIndex) {
-          setState(() {
-            _navBarIndex = changedIndex;
-          });
-        },
-      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
   // conditions set to open pages
   //according to the value of indexes
-  //_navBarIndex = index of bottomNavBar
+  //navBarIndex = index of bottomNavBar
   //_topBarIndex = index of TopBar
 
   Widget _slectedNavHome() {
@@ -95,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _selectedNavPage() {
-    switch (_navBarIndex) {
+    switch (navBarIndex) {
       case 0:
         return ProfilePage();
       case 1:
@@ -126,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               color: _getTopBarColor(_topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: _navBarIndex == 2 ? _TopNavBar() : Container(),
+              child: navBarIndex == 2 ? _TopNavBar() : Container(),
             )),
         Expanded(
           child: _buildBody(),
@@ -209,28 +200,60 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (_topBarIndex) {
       case 0:
         return BottomNavBar(
-          onIndexChanged: (int _prodNavBarIndex) {
-            _selectedNavPage();
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
           },
+          circleIndicatorColor: ColorConstants.blue700,
+          iconIndex0: Icons.person,
+          iconIndex1: Icons.chat,
+          iconIndex2: Icons.home,
+          iconIndex3: Icons.payment,
+          iconIndex4: Icons.menu,
         );
       case 1:
         return BottomNavBar(
-          onIndexChanged: (int _prodNavBarIndex) {
-            _selectedNavPage();
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
           },
+          circleIndicatorColor: ColorConstants.green800,
+          iconIndex0: Icons.person,
+          iconIndex1: Icons.chat,
+          iconIndex2: Icons.home,
+          iconIndex3: Icons.payment,
+          iconIndex4: Icons.menu,
         );
       case 2:
         return BottomNavBar(
-          onIndexChanged: (int _prodNavBarIndex) {
-            _selectedNavPage();
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
           },
+          circleIndicatorColor: ColorConstants.orange500,
+          iconIndex0: Icons.person,
+          iconIndex1: Icons.chat,
+          iconIndex2: Icons.home,
+          iconIndex3: Icons.payment,
+          iconIndex4: Icons.menu,
         );
       default:
         // return Container();
         return BottomNavBar(
-          onIndexChanged: (int _prodNavBarIndex) {
-            _selectedNavPage();
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
           },
+          circleIndicatorColor: Colors.blue,
+          iconIndex0: Icons.person,
+          iconIndex1: Icons.chat,
+          iconIndex2: Icons.home,
+          iconIndex3: Icons.payment,
+          iconIndex4: Icons.menu,
         );
     }
   }

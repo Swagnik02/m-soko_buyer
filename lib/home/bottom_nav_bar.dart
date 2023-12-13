@@ -4,9 +4,23 @@ import 'package:m_soko/common/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   final Function(int mainNavBarIndex) onIndexChanged;
+  final IconData iconIndex0;
+  final IconData iconIndex1;
+  final IconData iconIndex2;
+  final IconData iconIndex3;
+  final IconData iconIndex4;
+  final Color circleIndicatorColor;
 
-  const BottomNavBar({Key? key, required this.onIndexChanged})
-      : super(key: key);
+  const BottomNavBar({
+    Key? key,
+    required this.onIndexChanged,
+    required this.iconIndex0,
+    required this.iconIndex1,
+    required this.iconIndex2,
+    required this.iconIndex3,
+    required this.iconIndex4,
+    required this.circleIndicatorColor,
+  }) : super(key: key);
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -40,25 +54,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
       type: BottomNavigationBarType.fixed,
       iconSize: 35.0,
       elevation: 0,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.person_2_rounded),
+          icon: Icon(widget.iconIndex0),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.text_bubble),
+          icon: Icon(widget.iconIndex1),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(widget.iconIndex2),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.payment),
+          icon: Icon(widget.iconIndex3),
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.menu_rounded),
+          icon: Icon(widget.iconIndex4),
           label: '',
         ),
       ],
@@ -66,7 +80,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
         setState(() {
           mainNavBarIndex = index;
         });
-        // Call the callback to notify the parent (HomeScreen) about the indices change
         widget.onIndexChanged(mainNavBarIndex);
       },
     );
@@ -104,7 +117,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         padding: EdgeInsets.all(0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: ColorConstants.blue700,
+          color: widget.circleIndicatorColor,
         ),
       ),
     );
