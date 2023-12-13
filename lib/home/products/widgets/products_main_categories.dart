@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/selected_categories_page.dart';
+import 'package:m_soko/home/products/widgets/page_transitions.dart';
 
 class ProductsMainCategoryWidget extends StatelessWidget {
   final String imagePath;
@@ -22,15 +23,7 @@ class ProductsMainCategoryWidget extends StatelessWidget {
               title: categoryName,
             );
           },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
-            var tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
-            return SlideTransition(position: offsetAnimation, child: child);
-          },
+          // transitionsBuilder: smoothTransition(),
         ));
       },
       child: Padding(

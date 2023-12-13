@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
-import 'package:m_soko/home/products/widgets/products_categories.dart';
+import 'package:m_soko/home/products/widgets/products_main_categories.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
