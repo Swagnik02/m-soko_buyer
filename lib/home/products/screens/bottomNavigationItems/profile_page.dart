@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/home/products/widgets/products_bottom_navigation_bar.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -38,7 +37,6 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: ProductsBottomNavigationBar(),
     );
   }
 }

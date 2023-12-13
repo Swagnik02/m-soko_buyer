@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/home_screen.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
@@ -25,7 +26,7 @@ class _ProductsBottomNavigationBarState
       child: Stack(
         children: [
           _buildCircleIndicator(),
-          _bottomNavigationBar(), // Removed the Future<Widget> wrapper
+          _bottomNavigationBar(),
           _buildSelectedLabelIndicator(),
         ],
       ),
@@ -68,14 +69,19 @@ class _ProductsBottomNavigationBarState
           _currentIndex = index;
         });
         if (index == 0) {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  ProfilePage(),
-              transitionsBuilder: customTransition(const Offset(0.0, 0.0)),
-            ),
-          );
+          navBarIndex = _currentIndex;
+        }
+        if (index == 1) {
+          navBarIndex = _currentIndex;
+        }
+        if (index == 2) {
+          navBarIndex = _currentIndex;
+        }
+        if (index == 3) {
+          navBarIndex = _currentIndex;
+        }
+        if (index == 4) {
+          navBarIndex = _currentIndex;
         }
       },
     );
@@ -117,3 +123,14 @@ class _ProductsBottomNavigationBarState
     );
   }
 }
+
+
+
+          // Navigator.push(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation, secondaryAnimation) =>
+          //         ProfilePage(),
+          //     transitionsBuilder: customTransition(const Offset(0.0, 0.0)),
+          //   ),
+          // );
