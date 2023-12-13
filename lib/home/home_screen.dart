@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
@@ -32,10 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: navBarIndex == 2 ? _home() : _selectedNavPage(),
       ),
       bottomNavigationBar: ProductsBottomNavigationBar(
-        // added onIndexChange to listen to changes
-        onIndexChanged: () {
+        onIndexChanged: (int prodIndex) {
           setState(() {
-            navBarIndex = _topBarIndex;
+            navBarIndex = prodIndex;
           });
         },
       ),
@@ -161,14 +161,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBottomNavigationBar() {
     switch (_topBarIndex) {
       case 0:
-        return ProductsBottomNavigationBar(onIndexChanged: _selectedNavPage);
+        return ProductsBottomNavigationBar(
+          onIndexChanged: (int prodNavBarIndex) {
+            _selectedNavPage();
+          },
+        );
       case 1:
         return PropertiesBottomNavigationBar();
       case 2:
         return ServicesBottomNavigationBar();
       default:
         // return Container();
-        return ProductsBottomNavigationBar(onIndexChanged: _selectedNavPage);
+        return ProductsBottomNavigationBar(
+          onIndexChanged: (int prodNavBarIndex) {
+            _selectedNavPage();
+          },
+        );
     }
   }
 }

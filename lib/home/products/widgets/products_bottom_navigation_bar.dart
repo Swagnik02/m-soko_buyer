@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 
 class ProductsBottomNavigationBar extends StatefulWidget {
-  final VoidCallback onIndexChanged;
+  final Function(int prodNavBarIndex) onIndexChanged;
 
   const ProductsBottomNavigationBar({Key? key, required this.onIndexChanged})
       : super(key: key);
@@ -68,8 +68,8 @@ class _ProductsBottomNavigationBarState
         setState(() {
           prodNavBarIndex = index;
         });
-        // added onIndexChange here to let home_screen listen to the index canhges
-        widget.onIndexChanged();
+        // Call the callback to notify the parent (HomeScreen) about the indices change
+        widget.onIndexChanged(prodNavBarIndex);
       },
     );
   }
