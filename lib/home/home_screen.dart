@@ -99,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (_currentIndex) {
       case 0:
         return ProductsScreen();
+
       case 1:
         return PropertiesScreen();
       case 2:
@@ -113,18 +114,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBottomNavigationBar() {
     switch (_currentIndex) {
       case 0:
-        return const ProductsBottomNavigationBar(
-          currentIndex: 2,
-        );
+        return const ProductsBottomNavigationBar();
       case 1:
         return PropertiesBottomNavigationBar();
       case 2:
         return ServicesBottomNavigationBar();
       default:
         // return Container();
-        return ProductsBottomNavigationBar(
-          currentIndex: 2,
-        );
+        return ProductsBottomNavigationBar();
     }
   }
 }

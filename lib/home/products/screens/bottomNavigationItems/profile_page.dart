@@ -38,9 +38,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: ProductsBottomNavigationBar(
-        currentIndex: 0,
-      ),
+      bottomNavigationBar: ProductsBottomNavigationBar(),
     );
   }
 }

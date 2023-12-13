@@ -23,7 +23,7 @@ class ProductsScreen extends StatelessWidget {
               const SizedBox(height: 15),
               // Advertisement
               _advertisement(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               // Filters
               _filters(context),
               // const SizedBox(height: 15),
@@ -122,17 +122,17 @@ class ProductsScreen extends StatelessWidget {
         } else {
           var advertisements = snapshot.data as List<Map<String, dynamic>>;
           return Container(
-            height: 170,
+            height: 135,
             child: PageView.builder(
               itemCount: advertisements.length,
               itemBuilder: (context, index) {
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Container(
-                    height: 150,
+                    height: 135,
                     child: Image.network(
                       advertisements[index]['bannerImage'],
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 );

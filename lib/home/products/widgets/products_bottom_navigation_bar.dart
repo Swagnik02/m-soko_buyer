@@ -2,14 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
-import 'package:m_soko/main.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsBottomNavigationBar extends StatefulWidget {
-  final int currentIndex;
-
-  const ProductsBottomNavigationBar({Key? key, required this.currentIndex})
-      : super(key: key);
+  const ProductsBottomNavigationBar({Key? key}) : super(key: key);
 
   @override
   _ProductsBottomNavigationBarState createState() =>
@@ -21,12 +17,6 @@ class _ProductsBottomNavigationBarState
   int _currentIndex = 2;
 
   @override
-  void initState() {
-    super.initState();
-    _currentIndex = widget.currentIndex;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -35,7 +25,7 @@ class _ProductsBottomNavigationBarState
       child: Stack(
         children: [
           _buildCircleIndicator(),
-          _bottomNavigationBar(),
+          _bottomNavigationBar(), // Removed the Future<Widget> wrapper
           _buildSelectedLabelIndicator(),
         ],
       ),
@@ -87,9 +77,6 @@ class _ProductsBottomNavigationBarState
             ),
           );
         }
-        // if (index == 2) {
-        //   Navigator.pop(context);
-        // }
       },
     );
   }
