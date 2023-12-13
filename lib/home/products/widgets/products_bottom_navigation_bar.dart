@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/home/home_screen.dart';
 
 class ProductsBottomNavigationBar extends StatefulWidget {
-  const ProductsBottomNavigationBar({Key? key}) : super(key: key);
+  final VoidCallback onIndexChanged;
+
+  const ProductsBottomNavigationBar({Key? key, required this.onIndexChanged})
+      : super(key: key);
 
   @override
   _ProductsBottomNavigationBarState createState() =>
@@ -66,21 +68,8 @@ class _ProductsBottomNavigationBarState
         setState(() {
           _currentIndex = index;
         });
-        if (index == 0) {
-          navBarIndex = _currentIndex;
-        }
-        if (index == 1) {
-          navBarIndex = _currentIndex;
-        }
-        if (index == 2) {
-          navBarIndex = _currentIndex;
-        }
-        if (index == 3) {
-          navBarIndex = _currentIndex;
-        }
-        if (index == 4) {
-          navBarIndex = _currentIndex;
-        }
+        // added onIndexChange here to let home_screen listen to the index canhges
+        widget.onIndexChanged();
       },
     );
   }
@@ -121,14 +110,3 @@ class _ProductsBottomNavigationBarState
     );
   }
 }
-
-
-
-          // Navigator.push(
-          //   context,
-          //   PageRouteBuilder(
-          //     pageBuilder: (context, animation, secondaryAnimation) =>
-          //         ProfilePage(),
-          //     transitionsBuilder: customTransition(const Offset(0.0, 0.0)),
-          //   ),
-          // );

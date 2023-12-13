@@ -13,7 +13,7 @@ import 'package:m_soko/home/properties/properties_screen.dart';
 import 'package:m_soko/home/services/services_bottom_navigation_bar.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
-int navBarIndex = 2;
+int navBarIndex = 2; //global variable to maintain the indexing fo the nav bar
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,21 +32,34 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: navBarIndex == 2 ? _home() : _selectedNavPage(),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: ProductsBottomNavigationBar(
+        // added onIndexChange to listen to changes
+        onIndexChanged: () {
+          setState(() {
+            navBarIndex = _currentIndex;
+          });
+        },
+      ),
     );
   }
 
+  // conditions set to open pages
+  //according to the value of indexes
+  //navBarIndex = index of bottomNavBar
+  //_CurrentIndex = index of TopBar
+
+  //
   Widget _selectedNavPage() {
     switch (navBarIndex) {
       case 0:
         return ProfilePage();
       case 1:
         switch (_currentIndex) {
-          case 0:
+          case 0: // Products Section
             return SupportPage();
-          case 1:
+          case 1: // Property Section
             return CallPage();
-          case 2:
+          case 2: // Services Section
             return SupportPage();
           default:
             return Container();
@@ -84,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _buildTopBarButton("Products", 0),
         _buildTopBarButton("Properties", 1),
         _buildTopBarButton("Services", 2),
-        _buildTopBarButton("out", 3),
       ],
     );
   }
@@ -141,24 +153,24 @@ class _HomeScreenState extends State<HomeScreen> {
         return PropertiesScreen();
       case 2:
         return ServicesScreen();
-      case 3:
-        return LogoutScreen();
+
       default:
         return Container();
     }
   }
 
+  // added onIndexChanged as argument changed
   Widget _buildBottomNavigationBar() {
     switch (_currentIndex) {
       case 0:
-        return const ProductsBottomNavigationBar();
+        return ProductsBottomNavigationBar(onIndexChanged: _selectedNavPage);
       case 1:
         return PropertiesBottomNavigationBar();
       case 2:
         return ServicesBottomNavigationBar();
       default:
         // return Container();
-        return ProductsBottomNavigationBar();
+        return ProductsBottomNavigationBar(onIndexChanged: _selectedNavPage);
     }
   }
 }
