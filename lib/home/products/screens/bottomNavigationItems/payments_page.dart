@@ -11,7 +11,7 @@ class PaymentsPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            navBarIndex = 2;
+            // _navBarIndex = 2;
             print('Button pressed!');
           },
           child: Text('Press Me'),

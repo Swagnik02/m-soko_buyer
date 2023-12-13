@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/bottom_nav_bar.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
@@ -12,8 +13,6 @@ import 'package:m_soko/home/properties/properties_screen.dart';
 import 'package:m_soko/home/services/services_bottom_navigation_bar.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
-int navBarIndex = 2; //global variable to maintain the indexing fo the nav bar
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -24,17 +23,18 @@ class _HomeScreenState extends State<HomeScreen> {
   String get userName => AuthService.firebase().currentUser!.name;
 
   int _topBarIndex = 0;
+  int _navBarIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: navBarIndex == 2 ? _home() : _slectedNavHome(),
+        child: _navBarIndex == 2 ? _home() : _slectedNavHome(),
       ),
-      bottomNavigationBar: ProductsBottomNavigationBar(
-        onIndexChanged: (int prodIndex) {
+      bottomNavigationBar: BottomNavBar(
+        onIndexChanged: (int changedIndex) {
           setState(() {
-            navBarIndex = prodIndex;
+            _navBarIndex = changedIndex;
           });
         },
       ),
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // conditions set to open pages
   //according to the value of indexes
-  //navBarIndex = index of bottomNavBar
+  //_navBarIndex = index of bottomNavBar
   //_topBarIndex = index of TopBar
 
   Widget _slectedNavHome() {
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _selectedNavPage() {
-    switch (navBarIndex) {
+    switch (_navBarIndex) {
       case 0:
         return ProfilePage();
       case 1:
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               color: _getTopBarColor(_topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: navBarIndex == 2 ? _TopNavBar() : Container(),
+              child: _navBarIndex == 2 ? _TopNavBar() : Container(),
             )),
         Expanded(
           child: _buildBody(),
@@ -208,19 +208,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBottomNavigationBar() {
     switch (_topBarIndex) {
       case 0:
-        return ProductsBottomNavigationBar(
-          onIndexChanged: (int prodNavBarIndex) {
+        return BottomNavBar(
+          onIndexChanged: (int _prodNavBarIndex) {
             _selectedNavPage();
           },
         );
       case 1:
-        return PropertiesBottomNavigationBar();
+        return BottomNavBar(
+          onIndexChanged: (int _prodNavBarIndex) {
+            _selectedNavPage();
+          },
+        );
       case 2:
-        return ServicesBottomNavigationBar();
+        return BottomNavBar(
+          onIndexChanged: (int _prodNavBarIndex) {
+            _selectedNavPage();
+          },
+        );
       default:
         // return Container();
-        return ProductsBottomNavigationBar(
-          onIndexChanged: (int prodNavBarIndex) {
+        return BottomNavBar(
+          onIndexChanged: (int _prodNavBarIndex) {
             _selectedNavPage();
           },
         );
