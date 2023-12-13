@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/logout.dart';
+import 'package:m_soko/home/products/screens/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/support_page.dart';
@@ -40,12 +41,20 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return ProfilePage();
       case 1:
-        return SupportPage();
+        switch (_currentIndex) {
+          case 0:
+            return SupportPage();
+          case 1:
+            return CallPage();
+          case 2:
+            return SupportPage();
+          default:
+            return Container();
+        }
       case 2:
         return _home();
       case 3:
         return PaymentsPage();
-
       default:
         return Container();
     }
