@@ -25,56 +25,59 @@ class _ProductsBottomNavigationBarState
       child: Stack(
         children: [
           _buildCircleIndicator(),
-          BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.black,
-            currentIndex: _currentIndex,
-            type: BottomNavigationBarType.fixed,
-            iconSize: 35.0,
-            elevation: 0,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_rounded),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.text_bubble),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.payment),
-                label: '',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.menu_rounded),
-                label: '',
-              ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-              if (index == 0) {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        ProfilePage(),
-                    transitionsBuilder:
-                        customTransition(const Offset(-1.0, 0.0)),
-                  ),
-                );
-              }
-            },
-          ),
+          _bottomNavigationBar(), // Removed the Future<Widget> wrapper
           _buildSelectedLabelIndicator(),
         ],
       ),
+    );
+  }
+
+  Widget _bottomNavigationBar() {
+    return BottomNavigationBar(
+      backgroundColor: Colors.transparent,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.black,
+      currentIndex: _currentIndex,
+      type: BottomNavigationBarType.fixed,
+      iconSize: 35.0,
+      elevation: 0,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_2_rounded),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.text_bubble),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.payment),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.menu_rounded),
+          label: '',
+        ),
+      ],
+      onTap: (index) {
+        setState(() {
+          _currentIndex = index;
+        });
+        if (index == 0) {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  ProfilePage(),
+              transitionsBuilder: customTransition(const Offset(-1.0, 0.0)),
+            ),
+          );
+        }
+      },
     );
   }
 
