@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
+import 'package:m_soko/main.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsBottomNavigationBar extends StatefulWidget {
-  const ProductsBottomNavigationBar({Key? key}) : super(key: key);
+  final int currentIndex;
+
+  const ProductsBottomNavigationBar({Key? key, required this.currentIndex})
+      : super(key: key);
 
   @override
   _ProductsBottomNavigationBarState createState() =>
@@ -15,6 +19,12 @@ class ProductsBottomNavigationBar extends StatefulWidget {
 class _ProductsBottomNavigationBarState
     extends State<ProductsBottomNavigationBar> {
   int _currentIndex = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.currentIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +83,13 @@ class _ProductsBottomNavigationBarState
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
                   ProfilePage(),
-              transitionsBuilder: customTransition(const Offset(-1.0, 0.0)),
+              transitionsBuilder: customTransition(const Offset(0.0, 0.0)),
             ),
           );
         }
+        // if (index == 2) {
+        //   Navigator.pop(context);
+        // }
       },
     );
   }
