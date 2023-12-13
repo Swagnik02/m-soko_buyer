@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/home/bottom_nav_bar.dart';
+import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/home/products/screens/bottomNavigationItems/profile_page.dart';
