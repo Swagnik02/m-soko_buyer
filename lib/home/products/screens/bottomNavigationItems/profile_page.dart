@@ -28,8 +28,8 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: [
             // App Bar
-            _customAppBar(),
-            SizedBox(height: 10),
+            // customAppBar(),
+            // SizedBox(height: 10),
 
             // main body
             Padding(
@@ -164,42 +164,6 @@ class ProfilePage extends StatelessWidget {
           child: Text('Log Out'),
         ),
       ],
-    );
-  }
-
-  Widget _customAppBar() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(80.0),
-      child: Container(
-        color: ColorConstants.blue700,
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              'assets/soko-logo.png',
-              height: 51,
-            ),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    // Handle notification icon tap
-                  },
-                  child: Icon(Icons.notifications, color: Colors.white),
-                ),
-                SizedBox(width: 16),
-                InkWell(
-                  onTap: () {
-                    // Handle search icon tap
-                  },
-                  child: Icon(Icons.search, color: Colors.white),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: navBarIndex == 2 ? _home() : _selectedNavPage(),
+        child: navBarIndex == 2 ? _home() : _slectedNavHome(),
       ),
       bottomNavigationBar: ProductsBottomNavigationBar(
         onIndexChanged: (int prodIndex) {
@@ -45,6 +45,23 @@ class _HomeScreenState extends State<HomeScreen> {
   //according to the value of indexes
   //navBarIndex = index of bottomNavBar
   //_topBarIndex = index of TopBar
+
+  Widget _slectedNavHome() {
+    return Column(
+      children: [
+        PreferredSize(
+            preferredSize: Size.fromHeight(80.0),
+            child: Container(
+              color: _getTopBarColor(_topBarIndex),
+              // padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: _customAppBar(),
+            )),
+        Expanded(
+          child: _selectedNavPage(),
+        ),
+      ],
+    );
+  }
 
   Widget _selectedNavPage() {
     switch (navBarIndex) {
@@ -77,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             preferredSize: Size.fromHeight(80.0),
             child: Container(
               color: _getTopBarColor(_topBarIndex),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              // padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: navBarIndex == 2 ? _TopNavBar() : Container(),
             )),
         Expanded(
@@ -177,5 +194,41 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
     }
+  }
+
+  Widget _customAppBar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(80.0),
+      child: Container(
+        color: ColorConstants.blue700,
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              'assets/soko-logo.png',
+              height: 51,
+            ),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    // Handle notification icon tap
+                  },
+                  child: Icon(Icons.notifications, color: Colors.white),
+                ),
+                SizedBox(width: 16),
+                InkWell(
+                  onTap: () {
+                    // Handle search icon tap
+                  },
+                  child: Icon(Icons.search, color: Colors.white),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
