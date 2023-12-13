@@ -2,23 +2,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
-import 'package:m_soko/common/colors.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   String get userId => AuthService.firebase().currentUser!.id;
+
   String get userName => AuthService.firebase().currentUser!.name;
+
   String get email => AuthService.firebase().currentUser!.email;
 
   // String get mobile => AuthService.firebase().currentUser!.mobile;
   String mobile = '+27 9034566774';
+
   String city = 'Kolkata';
+
   String pin = '731303';
+
   String state = 'West Bengal';
+
   String country = 'India';
+
   String n = '4';
 
   @override
