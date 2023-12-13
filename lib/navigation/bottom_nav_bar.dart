@@ -14,12 +14,12 @@ class BottomNavBar extends StatefulWidget {
   const BottomNavBar({
     Key? key,
     required this.onIndexChanged,
-    required this.iconIndex0,
-    required this.iconIndex1,
-    required this.iconIndex2,
-    required this.iconIndex3,
-    required this.iconIndex4,
-    required this.circleIndicatorColor,
+    this.iconIndex0 = Icons.person,
+    this.iconIndex1 = CupertinoIcons.text_bubble,
+    this.iconIndex2 = Icons.home,
+    this.iconIndex3 = Icons.payment,
+    this.iconIndex4 = Icons.menu,
+    this.circleIndicatorColor = ColorConstants.blue700,
   }) : super(key: key);
 
   @override

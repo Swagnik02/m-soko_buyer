@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/authentication/auth_services/auth_service.dart';
 import 'package:m_soko/common/colors.dart';
@@ -205,12 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
               navBarIndex = changedIndex;
             });
           },
-          circleIndicatorColor: ColorConstants.blue700,
-          iconIndex0: Icons.person,
-          iconIndex1: Icons.chat,
-          iconIndex2: Icons.home,
-          iconIndex3: Icons.payment,
-          iconIndex4: Icons.menu,
         );
       case 1:
         return BottomNavBar(
@@ -220,11 +215,9 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           circleIndicatorColor: ColorConstants.green800,
-          iconIndex0: Icons.person,
-          iconIndex1: Icons.chat,
-          iconIndex2: Icons.home,
-          iconIndex3: Icons.payment,
-          iconIndex4: Icons.menu,
+          iconIndex1: CupertinoIcons.phone,
+          iconIndex3: Icons.bookmark_border,
+          iconIndex4: CupertinoIcons.text_bubble,
         );
       case 2:
         return BottomNavBar(
@@ -234,11 +227,6 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           circleIndicatorColor: ColorConstants.orange500,
-          iconIndex0: Icons.person,
-          iconIndex1: Icons.chat,
-          iconIndex2: Icons.home,
-          iconIndex3: Icons.payment,
-          iconIndex4: Icons.menu,
         );
       default:
         // return Container();
@@ -248,12 +236,6 @@ class _HomeScreenState extends State<HomeScreen> {
               navBarIndex = changedIndex;
             });
           },
-          circleIndicatorColor: Colors.blue,
-          iconIndex0: Icons.person,
-          iconIndex1: Icons.chat,
-          iconIndex2: Icons.home,
-          iconIndex3: Icons.payment,
-          iconIndex4: Icons.menu,
         );
     }
   }

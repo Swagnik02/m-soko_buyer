@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/home/home_screen.dart';
 
 class PaymentsPage extends StatelessWidget {
   @override
