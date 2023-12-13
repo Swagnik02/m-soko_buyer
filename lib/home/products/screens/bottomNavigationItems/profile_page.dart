@@ -27,10 +27,6 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // App Bar
-            // customAppBar(),
-            // SizedBox(height: 10),
-
             // main body
             Padding(
               padding: const EdgeInsets.all(10.0),

@@ -54,10 +54,41 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               color: _getTopBarColor(_topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: _customAppBar(),
+              child: _customAppBar(_topBarIndex),
             )),
         Expanded(
           child: _selectedNavPage(),
+        ),
+      ],
+    );
+  }
+
+  Widget _customAppBar(int topBarIndex) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.asset(
+          topBarIndex == 2
+              ? 'assets/app_bar_logo_black.png'
+              : 'assets/soko-logo.png',
+          height: 51,
+        ),
+        Row(
+          children: [
+            InkWell(
+              onTap: () {
+                // Handle notification icon tap
+              },
+              child: Icon(Icons.notifications, color: Colors.white),
+            ),
+            SizedBox(width: 16),
+            InkWell(
+              onTap: () {
+                // Handle search icon tap
+              },
+              child: Icon(Icons.search, color: Colors.white),
+            ),
+          ],
         ),
       ],
     );
@@ -194,41 +225,5 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
     }
-  }
-
-  Widget _customAppBar() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(80.0),
-      child: Container(
-        color: ColorConstants.blue700,
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              'assets/soko-logo.png',
-              height: 51,
-            ),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    // Handle notification icon tap
-                  },
-                  child: Icon(Icons.notifications, color: Colors.white),
-                ),
-                SizedBox(width: 16),
-                InkWell(
-                  onTap: () {
-                    // Handle search icon tap
-                  },
-                  child: Icon(Icons.search, color: Colors.white),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
