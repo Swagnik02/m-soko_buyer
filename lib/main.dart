@@ -8,6 +8,7 @@ import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
 import 'package:m_soko/authentication/auth_services/bloc/auth_state.dart';
 import 'package:m_soko/authentication/auth_services/firebase_auth_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/home_screen.dart';
 
 void main() {
@@ -20,7 +21,8 @@ void main() {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: ColorConstants.blue700,
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.blue,
+
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
@@ -31,10 +33,6 @@ void main() {
       },
     ),
   );
-}
-
-class ColorConstants {
-  static const blue700 = Color(0xFF1976D2);
 }
 
 class HomePage extends StatelessWidget {
