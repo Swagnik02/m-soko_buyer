@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/products/screens/categorised_offered_products.dart';
 import 'package:m_soko/home/products/screens/selected_categories_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
@@ -150,7 +151,15 @@ class SpecialOfferedCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Add your onTap handling logic here
+        Navigator.of(context).push(PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return CategorizedOfferedProducts(
+              title: prdCategory,
+              discountInPercentage: discountPercentage,
+            );
+          },
+          transitionsBuilder: customTransition(const Offset(0, 0)),
+        ));
       },
       child: Container(
         width: 180,
