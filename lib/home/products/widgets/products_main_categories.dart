@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/selected_categories_page.dart';
@@ -30,37 +31,84 @@ class ProductsMainCategoryWidget extends StatelessWidget {
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5),
-        child: index == 0
-            ? Container(
-                width: 76,
-                height: 82,
-                decoration: BoxDecoration(
-                  color: ColorConstants.yellow50,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: NetworkImage(imagePath),
-                      width: 50,
-                      height: 50,
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      categoryName,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11),
-                    ),
-                  ],
-                ),
-              )
-            : _allCategoryStyle(),
+        child: (() {
+          switch (index) {
+            case 0:
+              return _allCategoryStyleSmallIcons();
+            case 1:
+              return _allCategoryGridStyle();
+            case 2:
+              return _categoryRecentlyViewStyle();
+            default:
+              return _allCategoryStyleSmallIcons();
+          }
+        })(),
       ),
     );
   }
 
-  Widget _allCategoryStyle() {
+  Widget _categoryRecentlyViewStyle() {
+    return Container(
+      width: 120,
+      height: 130,
+      child: Material(
+        elevation: 2,
+        borderRadius: BorderRadius.circular(10),
+        // color: ColorConstants.yellow50,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            index == 2
+                ? Image.asset(
+                    imagePath,
+                    width: 110,
+                    height: 110,
+                  )
+                : Image(
+                    image: NetworkImage(imagePath),
+                    width: 110,
+                    height: 110,
+                  ),
+            // SizedBox(height: 8),
+            Text(
+              categoryName,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _allCategoryStyleSmallIcons() {
+    return Container(
+      width: 76,
+      height: 82,
+      decoration: BoxDecoration(
+        color: ColorConstants.yellow50,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image(
+            image: NetworkImage(imagePath),
+            width: 50,
+            height: 50,
+          ),
+          SizedBox(height: 8),
+          Text(
+            categoryName,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 11),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _allCategoryGridStyle() {
     return Column(
       children: [
         Container(

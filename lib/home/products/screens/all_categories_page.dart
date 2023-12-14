@@ -23,8 +23,9 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
               Navigator.of(context).pop();
             },
           ),
+          // actions: [Icon(Icons.search)],
           title: Text(
-            'Categories',
+            'All Categories',
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -33,7 +34,10 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
           child: Padding(
               padding: EdgeInsets.all(16),
               child: Column(
-                children: [_mainCategories()],
+                children: [
+                  _mainCategories(),
+                  _recentlyViewed(),
+                ],
               )),
         ),
       ),
@@ -72,6 +76,55 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
           );
         }
       },
+    );
+  }
+
+  Widget _recentlyViewed() {
+    return Container(
+      height: 200,
+      width: double.infinity,
+      // color: Colors.red,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Recently Viewed',
+            style: TextStyle(
+              fontSize: 23,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ProductsMainCategoryWidget(
+                    imagePath: 'assets/tests/Mobiles.png',
+                    categoryName: 'Mobiles',
+                    index: 2,
+                  ),
+                  ProductsMainCategoryWidget(
+                    imagePath: 'assets/tests/smartWatch.png',
+                    categoryName: 'Smart Watches',
+                    index: 2,
+                  ),
+                  ProductsMainCategoryWidget(
+                    imagePath: 'assets/tests/Headphones.png',
+                    categoryName: 'Headphones',
+                    index: 2,
+                  ),
+                  ProductsMainCategoryWidget(
+                    imagePath: 'assets/tests/Laptops.png',
+                    categoryName: 'Laptops',
+                    index: 2,
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
