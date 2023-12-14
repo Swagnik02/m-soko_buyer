@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
+import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
 import 'package:m_soko/home/products/widgets/products_main_categories.dart';
+import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
@@ -158,7 +160,12 @@ class ProductsScreen extends StatelessWidget {
         FilterItem(
             label: 'Categories',
             onPressedAction: () {
-              Fluttertoast.showToast(msg: 'Categories');
+              Navigator.of(context).push(PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return AllCategoriesPage();
+                },
+                transitionsBuilder: customTransition(const Offset(0, 0)),
+              ));
             }),
         FilterItem(
             label: 'Top Offers',

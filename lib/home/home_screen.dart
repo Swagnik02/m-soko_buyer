@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             preferredSize: Size.fromHeight(80.0),
             child: Container(
               color: _getTopBarColor(_topBarIndex),
-              // padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: _customAppBar(_topBarIndex),
             )),
         Expanded(
