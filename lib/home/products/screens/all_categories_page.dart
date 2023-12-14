@@ -31,14 +31,24 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  _mainCategories(),
-                  _recentlyViewed(),
-                ],
-              )),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.center,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.blue],
+              ),
+            ),
+            child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    _mainCategories(),
+                    _recentlyViewed(),
+                    _specialOffers(),
+                  ],
+                )),
+          ),
         ),
       ),
     );
@@ -58,6 +68,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
             // color: Colors.red,
             height: 400,
             child: GridView.builder(
+              primary: false,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 // crossAxisSpacing: 8.0,
@@ -76,6 +87,106 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
           );
         }
       },
+    );
+  }
+
+  Widget _specialOffers() {
+    return Container(
+      // color: Colors.red,
+      height: 800,
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Special Offers',
+            style: TextStyle(
+              fontSize: 23,
+            ),
+          ),
+          // _container(),
+          Container(
+            height: 600,
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(20),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+              children: <Widget>[
+                ProductsMainCategoryWidget(
+                  imagePath: 'assets/tests/Mobiles.png',
+                  categoryName: 'Mobiles',
+                  index: 2,
+                ),
+                ProductsMainCategoryWidget(
+                  imagePath: 'assets/tests/smartWatch.png',
+                  categoryName: 'Smart Watches',
+                  index: 2,
+                ),
+                ProductsMainCategoryWidget(
+                  imagePath: 'assets/tests/Headphones.png',
+                  categoryName: 'Headphones',
+                  index: 2,
+                ),
+                ProductsMainCategoryWidget(
+                  imagePath: 'assets/tests/Laptops.png',
+                  categoryName: 'Laptops',
+                  index: 2,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _container() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.white, Colors.blue],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 150, // Adjust the width as needed
+              height: 150, // Adjust the height as needed
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/your_image.jpg'), // Replace with your image path
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'First Text',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Second Text',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
