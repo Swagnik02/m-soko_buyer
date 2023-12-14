@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/categorised_offered_products.dart';
