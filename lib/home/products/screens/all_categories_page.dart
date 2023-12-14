@@ -50,21 +50,24 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
           return Text('Error: ${snapshot.error}');
         } else {
           var categories = snapshot.data as List<Map<String, dynamic>>;
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: categories.map((category) {
-                return Container(
-                  child: Column(children: [
-                    Image(
-                      image: NetworkImage(category['categoryImage']),
-                      width: 50,
-                      height: 50,
-                    ),
-                    Text(category['categoryName'])
-                  ]),
+          return Container(
+            // color: Colors.red,
+            height: 400,
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                // crossAxisSpacing: 8.0,
+                mainAxisSpacing: 8.0,
+              ),
+              // scrollDirection: Axis.vertical,
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                return ProductsMainCategoryWidget(
+                  imagePath: categories[index]['categoryImage'],
+                  categoryName: categories[index]['categoryName'],
+                  index: 1,
                 );
-              }).toList(),
+              },
             ),
           );
         }
