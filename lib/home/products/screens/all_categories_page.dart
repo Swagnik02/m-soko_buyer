@@ -143,7 +143,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
   Widget _specialOffers() {
     return Container(
       // color: Colors.red,
-      height: 800,
+      height: 530,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
