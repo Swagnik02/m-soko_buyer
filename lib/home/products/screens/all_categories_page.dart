@@ -16,14 +16,12 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          leading: InkWell(
-            onTap: () {
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
           ),
           title: Text(
             'Categories',
@@ -31,14 +29,12 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
           ),
         ),
         body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _mainCategories(),
-              ],
-            ),
-          ),
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [_mainCategories()],
+              )),
         ),
       ),
     );
@@ -55,12 +51,18 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
         } else {
           var categories = snapshot.data as List<Map<String, dynamic>>;
           return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+            scrollDirection: Axis.vertical,
+            child: Column(
               children: categories.map((category) {
-                return ProductsMainCategoryWidget(
-                  imagePath: category['categoryImage'],
-                  categoryName: category['categoryName'],
+                return Container(
+                  child: Column(children: [
+                    Image(
+                      image: NetworkImage(category['categoryImage']),
+                      width: 50,
+                      height: 50,
+                    ),
+                    Text(category['categoryName'])
+                  ]),
                 );
               }).toList(),
             ),
