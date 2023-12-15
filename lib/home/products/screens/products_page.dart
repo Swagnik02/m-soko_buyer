@@ -5,6 +5,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
+import 'package:m_soko/home/products/widgets/products_advertisement.dart';
 import 'package:m_soko/home/products/widgets/products_main_categories.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
@@ -24,7 +25,7 @@ class ProductsScreen extends StatelessWidget {
               _mainCategories(),
               const SizedBox(height: 15),
               // Advertisement
-              _advertisement(),
+              advertisement_block(),
               const SizedBox(height: 12),
               // Filters
               _filters(context),
@@ -106,39 +107,6 @@ class ProductsScreen extends StatelessWidget {
                   categoryName: category['categoryName'],
                 );
               }).toList(),
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  Widget _advertisement() {
-    return FutureBuilder(
-      future: fetchAdvertisementsFromFirestore(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          var advertisements = snapshot.data as List<Map<String, dynamic>>;
-          return Container(
-            height: 135,
-            child: PageView.builder(
-              itemCount: advertisements.length,
-              itemBuilder: (context, index) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    height: 135,
-                    child: Image.network(
-                      advertisements[index]['bannerImage'],
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                );
-              },
             ),
           );
         }
