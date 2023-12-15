@@ -86,7 +86,7 @@ class SelectedCategoryPage extends StatelessWidget {
           List<Map<String, dynamic>> products = snapshot.data!;
           return Container(
             // color: Colors.red,
-            height: products.length / 2 * 300,
+            height: (products.length / 2 * 400) - 150,
             child: GridView.builder(
               primary: false,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -97,7 +97,7 @@ class SelectedCategoryPage extends StatelessWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return ProductThumbnail(
-                  itemImage: 'assets/tests/mobiles/realmeNarzo.png',
+                  itemImage: 'assets/tests/T-shirts.png',
                   // itemName: (products[index]['prdItemName']),
                   itemSubCategory: 'Smartphone',
                   itemName: 'Realme Narzo',
