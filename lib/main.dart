@@ -22,7 +22,6 @@ void main() {
       theme: ThemeData(
         primaryColor: ColorConstants.blue700,
         // primarySwatch: Colors.blue,
-
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
