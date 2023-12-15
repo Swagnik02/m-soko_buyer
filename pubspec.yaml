@@ -75,6 +75,8 @@ flutter:
     - assets/
     - assets/auth/
     - assets/tests/
+    - assets/tests/mobiles
+
 
     # - assets/products_category_icons/
   #   - images/a_dot_ham.jpeg

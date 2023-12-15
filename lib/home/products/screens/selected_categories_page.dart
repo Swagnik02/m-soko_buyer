@@ -74,36 +74,44 @@ class SelectedCategoryPage extends StatelessWidget {
 
   Widget _mainBody() {
     return FutureBuilder<List<Map<String, dynamic>>>(
-        future: futureCheckSelectedCategoryProducts(title),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-            return Center(child: Text('No data found'));
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            List<Map<String, dynamic>> products = snapshot.data!;
-            return Container(
-              // color: Colors.red,
-              height: products.length / 2 * 300,
-              child: GridView.builder(
-                primary: false,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.75,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return ProductThumbnail(
-                    // prdCategoryImage: (products[index]['prdItemName']),
-                    prdCategory: (products[index]['prdItemPrice']).toString(),
-                  );
-                },
-              ),
-            );
-          }
-        });
+      future: futureCheckSelectedCategoryProducts(title),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+          return Center(child: Text('No data found'));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          List<Map<String, dynamic>> products = snapshot.data!;
+          return Container(
+            // color: Colors.red,
+            height: products.length / 2 * 300,
+            child: GridView.builder(
+              primary: false,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.58,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return ProductThumbnail(
+                  itemImage: 'assets/tests/mobiles/realmeNarzo.png',
+                  // itemName: (products[index]['prdItemName']),
+                  itemSubCategory: 'Smartphone',
+                  itemName: 'Realme Narzo',
+                  itemPrice: '17000',
+                  // itemPrice: (products[index]['prdItemPrice']).toString(),
+                  itemShippingCharge: '100',
+                  itemDiscountPercentage: '40',
+                  itemOrderCount: '40',
+                );
+              },
+            ),
+          );
+        }
+      },
+    );
   }
 }
