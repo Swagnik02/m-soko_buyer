@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
+import 'package:get/get.dart';
+import 'package:m_soko/authentication/onBoardingScreen/onBoardingController.dart';
 import 'package:m_soko/common/colors.dart';
 
 class OnboardPage extends StatelessWidget {
@@ -24,6 +23,7 @@ class OnboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final onBoardingController = Get.find<OnBoardingController>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -49,13 +49,7 @@ class OnboardPage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  pageIndex == 2
-                      ? context.read<AuthBloc>().add(
-                            const AuthEventShouldLogin(),
-                          )
-                      : controller.animateToPage(pageIndex + 1,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.decelerate);
+                  onBoardingController.nextButtonFunc(context);
                 },
                 child: Container(
                   width: 150,

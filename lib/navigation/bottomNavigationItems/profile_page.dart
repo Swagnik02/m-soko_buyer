@@ -1,10 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:m_soko/authentication/auth_services/auth_service.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
+import 'package:get/get.dart';
+import 'package:m_soko/routes/appRoutes.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
@@ -14,11 +14,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String get userId => AuthService.firebase().currentUser!.id;
-
-  String get userName => AuthService.firebase().currentUser!.name;
-
-  String get email => AuthService.firebase().currentUser!.email;
+  // String get userId => AuthService.firebase().currentUser!.id;
+  //
+  // String get userName => AuthService.firebase().currentUser!.name;
+  //
+  // String get email => AuthService.firebase().currentUser!.email;
 
   // String get mobile => AuthService.firebase().currentUser!.mobile;
   String mobile = '+27 9034566774';
@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hello $userName!',
+                    'Hello userName!',
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Icon(CupertinoIcons.mail),
             SizedBox(width: 5),
-            Text(email),
+            // Text(email),
           ],
         ),
         SizedBox(height: 25),
@@ -164,12 +164,12 @@ class _ProfilePageState extends State<ProfilePage> {
         SizedBox(height: 3),
         InkWell(
           onTap: () {
-            context.read<AuthBloc>().add(
-                  const AuthEventLogOut(),
-                );
+            FirebaseAuth.instance
+                .signOut()
+                .then((value) => Get.offAllNamed(AppRoutes.loginScreen));
             Fluttertoast.showToast(msg: 'Logged Out');
           },
-          child: Text('Log Out'),
+          child: const Text('Log Out'),
         ),
       ],
     );

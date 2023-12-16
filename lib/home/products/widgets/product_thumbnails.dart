@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
 import 'package:m_soko/main.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
@@ -40,7 +42,7 @@ class ProductThumbnail extends StatelessWidget {
         elevation: 4,
         borderRadius: BorderRadius.circular(6),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 9),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 9),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -75,10 +77,11 @@ class ProductThumbnail extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
-                    '$currencySymbol $itemPrice',
+                    '${GlobalUtil.currencySymbol} $itemPrice',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 19,
@@ -86,10 +89,11 @@ class ProductThumbnail extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Shipping per box: $currencySymbol$itemShippingCharge',
+                    'Shipping per box: ${GlobalUtil.currencySymbol}$itemShippingCharge',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 13,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Row(
