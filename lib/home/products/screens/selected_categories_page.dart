@@ -25,7 +25,7 @@ class SelectedCategoryPage extends StatelessWidget {
           scrollDirection: Axis.vertical,
           child: Container(
             child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(12),
                 child: Column(
                   children: [
                     _topBar(),
