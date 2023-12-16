@@ -5,8 +5,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
+import 'package:get/get.dart';
 
 class LogoutScreen extends StatelessWidget {
   @override
@@ -46,9 +45,9 @@ class LogoutScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  context.read<AuthBloc>().add(
-                        const AuthEventLogOut(),
-                      );
+                  // context.read<AuthBloc>().add(
+                  //       const AuthEventLogOut(),
+                  //     );
                 },
                 child: Text('Logout'),
               ),

@@ -23,20 +23,19 @@ class SelectedCategoryPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Container(
-            child: Padding(
-                padding: EdgeInsets.all(12),
-                child: Column(
-                  children: [
-                    _topBar(context),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: advertisement_block(),
-                    ),
-                    _mainBody(),
-                  ],
-                )),
-          ),
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+              padding: EdgeInsets.all(12),
+              child: Column(
+                children: [
+                  _topBar(context),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: advertisement_block(),
+                  ),
+                  _mainBody(),
+                ],
+              )),
         ),
       ),
     );
@@ -143,6 +142,7 @@ class SelectedCategoryPage extends StatelessWidget {
             height: (products.length / 2 * 400) - 150,
             child: GridView.builder(
               primary: false,
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.58,
