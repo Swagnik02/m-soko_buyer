@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
+import 'package:m_soko/main.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductThumbnail extends StatelessWidget {
@@ -35,15 +36,11 @@ class ProductThumbnail extends StatelessWidget {
           transitionsBuilder: customTransition(const Offset(0, 0)),
         ));
       },
-      child: Container(
-        // width: 180,
-        // height: 230,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(6),
-        ),
+      child: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(6),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 9),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -81,7 +78,7 @@ class ProductThumbnail extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    itemPrice,
+                    '$currencySymbol $itemPrice',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 19,
@@ -89,7 +86,7 @@ class ProductThumbnail extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    itemShippingCharge,
+                    'Shipping per box: $currencySymbol$itemShippingCharge',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 13,

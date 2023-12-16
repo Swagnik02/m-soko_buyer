@@ -90,10 +90,11 @@ class SelectedCategoryPage extends StatelessWidget {
             child: GridView.builder(
               primary: false,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.58,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0),
+                crossAxisCount: 2,
+                childAspectRatio: 0.58,
+                crossAxisSpacing: 18.0,
+                mainAxisSpacing: 20.0,
+              ),
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return ProductThumbnail(
