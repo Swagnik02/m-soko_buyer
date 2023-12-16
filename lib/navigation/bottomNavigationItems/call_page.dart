@@ -9,10 +9,7 @@ class CallPage extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            // navBarIndex = 2;
-            print('Button pressed!');
-          },
+          onPressed: () {},
           child: Text('Press Me'),
         ),
       ),

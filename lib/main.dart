@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/home_screen.dart';
 
+final String currencySymbol = '₹';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -22,7 +23,6 @@ void main() {
       theme: ThemeData(
         primaryColor: ColorConstants.blue700,
         // primarySwatch: Colors.blue,
-
       ),
       home: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc(FirebaseAuthProvider()),
