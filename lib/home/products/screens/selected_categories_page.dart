@@ -139,7 +139,7 @@ class SelectedCategoryPage extends StatelessWidget {
           List<Map<String, dynamic>> products = snapshot.data!;
           return Container(
             // color: Colors.red,
-            height: (products.length / 2 * 400) - 150,
+            height: (products.length / 2) * 700,
             child: GridView.builder(
               primary: false,
               physics: const NeverScrollableScrollPhysics(),
@@ -152,15 +152,16 @@ class SelectedCategoryPage extends StatelessWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return ProductThumbnail(
-                  itemImage: 'assets/tests/mobiles/realmeNarzo.png',
-                  // itemName: (products[index]['prdItemName']),
-                  itemSubCategory: 'Smartphone',
-                  itemName: 'Realme Narzo',
-                  itemPrice: '17000',
-                  // itemPrice: (products[index]['prdItemPrice']).toString(),
-                  itemShippingCharge: '100',
-                  itemDiscountPercentage: '40',
-                  itemOrderCount: '40',
+                  itemImage: (products[index]['itemImage']),
+                  itemSubCategory: (products[index]['itemSubCategory']),
+                  itemName: (products[index]['itemName']),
+                  itemPrice: (products[index]['itemPrice']).toString(),
+                  itemShippingCharge:
+                      (products[index]['itemShippingCharge']).toString(),
+                  itemDiscountPercentage:
+                      (products[index]['itemDiscountPercentage']).toString(),
+                  itemOrderCount:
+                      (products[index]['itemOrderCount']).toString(),
                 );
               },
             ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
-import 'package:m_soko/main.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductThumbnail extends StatelessWidget {
@@ -54,7 +52,7 @@ class ProductThumbnail extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
-                      image: AssetImage(itemImage),
+                      image: NetworkImage(itemImage),
                       fit: BoxFit.cover,
                     ),
                   ),

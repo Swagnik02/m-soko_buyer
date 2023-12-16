@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
+String lorem =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
 class LogoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,13 +36,16 @@ class LogoutScreen extends StatelessWidget {
             children: [
               // Image(
               //   image: NetworkImage(
-              //       'https://firebasestorage.googleapis.com/v0/b/msoko-seller.appspot.com/o/ad_banners%2Fprd_ad_1.png?alt=media&token=0dda43dd-29ed-4f71-a4c2-88804f5c463f'),
+              // 'https://firebasestorage.googleapis.com/v0/b/msoko-
+              // seller.appspot.com/o/ad_banners%2Fprd_ad_1.png?
+              // alt=media&token=0dda43dd-29ed-4f71-a4c2-88804f5c463f'),
               // ),
               ElevatedButton(
                 onPressed: () {
                   // Call a function to add categories
                   // addCategories();
                   addProducts();
+                  // addProductsItems();
                 },
                 child: Text('Add Categories'),
               ),
@@ -209,78 +215,46 @@ Future<void> addProducts() async {
   CollectionReference categories =
       FirebaseFirestore.instance.collection('product_items');
 
-  // Function to generate a random 3-digit number
   String generateRandom3DigitNumber() {
     Random random = Random();
     return random.nextInt(900).toString() + 100.toString();
   }
 
-  // List of categories
-  List<String> categoryList = [
-    'Electronics',
-    'Mobiles',
-    'Fashion',
-    'Personal Care',
-    'Footwear',
-    'Baby Products',
-    'Home',
-    'Eyewear',
-    'Furniture',
-    'Jewellery',
-    'Luggage Bags',
-    'Packaging',
-    'Tools',
-    'Grocery',
-    'Sport',
-    'Medicine',
-  ];
+  String randomUID = DateTime.now().millisecondsSinceEpoch.toString() +
+      generateRandom3DigitNumber();
+  String pid = 'p' +
+      DateTime.now().millisecondsSinceEpoch.toString() +
+      generateRandom3DigitNumber();
 
-  // Function to get a random category
-  String getRandomCategory() {
-    Random random = Random();
-    return categoryList[random.nextInt(categoryList.length)];
-  }
+  await categories.doc(randomUID).set(
+    {
+      // main Category
+      'prdItemCategory': 'Mobiles',
+      'pid': pid,
+      'UID': randomUID,
 
-  // Create 30 logical product entries
-  for (int i = 0; i < 100; i++) {
-    String randomUID = DateTime.now().millisecondsSinceEpoch.toString() +
-        generateRandom3DigitNumber();
+      // basic infos for thumbnail
+      'itemImage':
+          'https://firebasestorage.googleapis.com/v0/b/msoko-seller.appspot.com/o/items%2Fproducts%2Foneplus.png?alt=media&token=2bd832ee-a6b6-453f-8a74-554742088390',
+      'itemName':
+          'realme narzo N53 (Feather Black, 4GB+64GB) 33W Segment Fastest Charging | Slimmest Phone in Segment | 90 Hz Smooth Display',
+      'itemSubCategory': 'Smartphone',
+      'itemPrice': 10999,
+      'itemShippingCharge': 100,
+      'itemDiscountPercentage': 18,
+      'itemOrderCount': 40,
 
-    String category = getRandomCategory();
-    String productName = '';
-    productName = '$category Product $i';
+      // indetails
+      'itemImage1':
+          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71DSxfKzkJL._SX679_.jpg',
+      'itemImage2':
+          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71q9IlpreaL._SX679_.jpg',
+      'itemImage3':
+          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71IfqYJ8reL._SX679_.jpg',
 
-    await categories.doc(randomUID).set({
-      'prdItemCategory': category,
-      'prdItemDesc': 'Description for $productName',
-      'prdItemImage1': '',
-      'prdItemImage2': '',
-      'prdItemImage3': '',
-      'prdItemName': productName,
-      'prdItemPrice': (i + 1) * 100,
-    });
-  }
+      // specs/Highlights
 
-  print('100 products added successfully!');
-}
-
-class ShowProducts extends StatelessWidget {
-  final Map<String, dynamic> data;
-
-  const ShowProducts({required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Category Name: ${data['prdItemCategory']}'),
-        Image(image: NetworkImage(data['prdItemImage1'])),
-        Text('Product Description: ${data['prdItemDesc']}'),
-        Text('Product Name: ${data['prdItemName']}'),
-        Text('Product Price: ${data['prdItemPrice']}'),
-        // Add more Text widgets for other fields as needed
-      ],
-    );
-  }
+      // ratings and reviews
+    },
+  );
 }

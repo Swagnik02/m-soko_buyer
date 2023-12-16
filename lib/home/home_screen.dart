@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
@@ -133,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _buildTopBarButton("Products", 0),
         _buildTopBarButton("Properties", 1),
         _buildTopBarButton("Services", 2),
+        _buildTopBarButton("logout", 3),
       ],
     );
   }
@@ -189,6 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return PropertiesScreen();
       case 2:
         return ServicesScreen();
+      case 3:
+        return LogoutScreen();
 
       default:
         return Container();

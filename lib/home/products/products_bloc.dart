@@ -31,19 +31,36 @@ Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
 Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
     String category) async {
   var querySnapshot =
-      await FirebaseFirestore.instance.collection('product_items').get();
+      await FirebaseFirestore.instance.collection('product_Items').get();
 
   var filteredDocs =
       querySnapshot.docs.where((doc) => doc['prdItemCategory'] == category);
 
   return filteredDocs.map((doc) {
     return {
-      'prdItemDesc': doc['prdItemDesc'],
-      'prdItemImage1': doc['prdItemImage1'],
-      'prdItemImage2': doc['prdItemImage2'],
-      'prdItemImage3': doc['prdItemImage3'],
-      'prdItemName': doc['prdItemName'],
-      'prdItemPrice': doc['prdItemPrice'],
+// main Category
+      'prdItemCategory': doc['prdItemCategory'],
+      'pid': doc['pid'],
+      'UID': doc['UID'],
+
+// basic infos for thumbnail
+      'itemImage': doc['itemImage'],
+      'itemName': doc['itemName'],
+      'itemSubCategory': doc['itemSubCategory'],
+      'itemPrice': doc['itemPrice'],
+      'itemShippingCharge': doc['itemShippingCharge'],
+      'itemDiscountPercentage': doc['itemDiscountPercentage'],
+      'itemOrderCount': doc['itemOrderCount'],
+
+// indetails
+      'itemImage1': doc['itemImage1'],
+      'itemImage2': doc['itemImage2'],
+      'itemImage3': doc['itemImage3'],
+
+// specs/Highlights
+
+// ratings and reviews
+// Add the remaining fields here
     };
   }).toList();
 }
