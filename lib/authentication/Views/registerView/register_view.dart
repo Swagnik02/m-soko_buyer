@@ -1,13 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/authentication/Views/registerView/registerController.dart';
-import 'package:m_soko/authentication/auth_services/auth_exceptions.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_state.dart';
 import 'package:m_soko/common/colors.dart';
 
 class RegisterView extends StatefulWidget {
@@ -20,7 +15,7 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
-    final controller  = Get.put(RegisterController());
+    final controller = Get.put(RegisterController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -75,8 +70,8 @@ class _RegisterViewState extends State<RegisterView> {
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 16.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                   ),
                 ),
 
@@ -94,8 +89,8 @@ class _RegisterViewState extends State<RegisterView> {
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 16.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
                   ),
                 ),
 
@@ -119,7 +114,7 @@ class _RegisterViewState extends State<RegisterView> {
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
-                      onPressed: ()=> controller.togglePasswordFunc1(),
+                      onPressed: () => controller.togglePasswordFunc1(),
                     ),
                   ),
                 ),
@@ -291,9 +286,7 @@ class _RegisterViewState extends State<RegisterView> {
                             Fluttertoast.showToast(
                               msg: 'Login Screen',
                             );
-                            context.read<AuthBloc>().add(
-                              const AuthEventShouldLogin(),
-                            );
+                            Get.back();
                           },
                           style: ButtonStyle(
                             side: MaterialStateProperty.all(

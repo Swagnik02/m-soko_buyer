@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
 import 'package:m_soko/main.dart';
@@ -76,6 +77,7 @@ class ProductThumbnail extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
@@ -91,6 +93,7 @@ class ProductThumbnail extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 13,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Row(

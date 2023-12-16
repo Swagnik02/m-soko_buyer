@@ -2,21 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/authentication/Views/loginView/loginController.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_bloc.dart';
-import 'package:m_soko/authentication/auth_services/bloc/auth_event.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/routes/appRoutes.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
