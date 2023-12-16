@@ -49,6 +49,7 @@ dependencies:
   permission_handler: ^11.1.0
   get: ^4.6.6
   shared_preferences: ^2.2.2
+  logger:
 
 dev_dependencies:
   flutter_test:
