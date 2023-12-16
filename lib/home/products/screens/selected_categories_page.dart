@@ -97,7 +97,7 @@ class SelectedCategoryPage extends StatelessWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return ProductThumbnail(
-                  itemImage: 'assets/tests/T-shirts.png',
+                  itemImage: 'assets/tests/mobiles/realmeNarzo.png',
                   // itemName: (products[index]['prdItemName']),
                   itemSubCategory: 'Smartphone',
                   itemName: 'Realme Narzo',
