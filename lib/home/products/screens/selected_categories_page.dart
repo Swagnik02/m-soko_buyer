@@ -28,7 +28,7 @@ class SelectedCategoryPage extends StatelessWidget {
                 padding: EdgeInsets.all(12),
                 child: Column(
                   children: [
-                    _topBar(),
+                    _topBar(context),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: advertisement_block(),
@@ -42,29 +42,83 @@ class SelectedCategoryPage extends StatelessWidget {
     );
   }
 
-  Widget _topBar() {
+  Widget _topBar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3.0),
-            child: Container(
-              height: 54,
-              alignment: Alignment.center,
-              color: Colors.white,
-              child: Text('Sort by'),
+          child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Text('Sort by'),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.0),
+              child: Container(
+                height: 54,
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Sort by'),
+                    Icon(Icons.keyboard_arrow_down_sharp, size: 20.0),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3.0),
-            child: Container(
-              height: 54,
-              alignment: Alignment.center,
-              color: Colors.white,
-              child: Text('Filters'),
+          child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const Text('Filters'),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.0),
+              child: Container(
+                height: 54,
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Filters'),
+                    Icon(Icons.keyboard_arrow_down_sharp, size: 20.0),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
