@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // String get userName => AuthService.firebase().currentUser!.name;
 
   int navBarIndex = 2;
-  int _topBarIndex = 0;
+  int _topBarIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16.0,
             fontWeight: FontWeight.bold,

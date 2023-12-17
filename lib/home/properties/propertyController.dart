@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 
 class PropertyController extends GetxController {
   late TextEditingController searchController;
-  List homeImages = [];
+  // List homeImages = [];
 
   @override
   void onInit() {
     super.onInit();
     searchController = TextEditingController();
-    fetchDataFromFirebase();
+    // fetchHomeImageFromFirebase();
   }
 
   @override
@@ -21,28 +21,21 @@ class PropertyController extends GetxController {
     searchController.dispose();
   }
 
-  Future<void> fetchDataFromFirebase() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchHomeImageFromFirebase() async {
     var querySnapshot = await FirebaseFirestore.instance
         .collection('property_items')
         .doc('basic_images')
         .get();
-
-    if (querySnapshot.exists) {
-      // Retrieving data from the document
-      Map<String, dynamic>? data = querySnapshot.data();
-
-      if (data != null) {
-        // Extract only the values as List<dynamic>
-        List values = data.values.toList();
-
-        homeImages = values;
-        log(homeImages.toString());
-        update();
-      } else {
-        print('No data found in the Firestore document.');
-      }
-    } else {
-      print('Firestore document does not exist or has no data.');
-    }
+    return querySnapshot;
   }
+
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
+    var querySnapshot = await FirebaseFirestore.instance
+        .collection('property_items')
+        .get();
+
+    return querySnapshot;
+  }
+
 }

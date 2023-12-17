@@ -51,6 +51,7 @@ dependencies:
   shared_preferences: ^2.2.2
   logger:
   flutter_image_slideshow: ^0.1.6
+  intl:
 
 
 dev_dependencies:

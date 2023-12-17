@@ -120,14 +120,54 @@ class PropertiesScreenWidget {
     );
   }
 
-  static Widget propertiesBox() {
-    return Container(
-      padding: EdgeInsets.symmetric(
-          horizontal: Get.width * 0.02, vertical: Get.height * 0.01),
-      child: Column(
-        children: [
-          // Image.network(''),
-        ],
+  static Widget propertiesBox({
+    required String image,
+    required String rooms,
+    required String coveredArea,
+    required String sellingPrice,
+    required String location,
+    required String postDate,
+    required Function onTap,
+  }) {
+    return InkWell(
+      onTap: () => onTap(),
+      child: Container(
+        height: 240,
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        padding: EdgeInsets.symmetric(
+            horizontal: Get.width * 0.014, vertical: Get.height * 0.007),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 140,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: NetworkImage(image),
+                fit: BoxFit.fill,
+              )),
+            ),
+            const SizedBox(height: 8),
+            Text('$rooms Flat', style: const TextStyle(fontSize: 12)),
+            const SizedBox(height: 6),
+            Text(
+              'TZS $sellingPrice Cr | $coveredArea sqft',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(location, style: const TextStyle(fontSize: 12)),
+            Text(postDate,
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
     );
   }
