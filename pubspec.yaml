@@ -50,6 +50,8 @@ dependencies:
   get: ^4.6.6
   shared_preferences: ^2.2.2
   logger:
+  flutter_image_slideshow: ^0.1.6
+
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +81,7 @@ flutter:
     - assets/auth/
     - assets/tests/
     - assets/tests/mobiles/
+    - assets/PropertyImage/
 
 
     # - assets/products_category_icons/

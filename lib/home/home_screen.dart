@@ -7,7 +7,7 @@ import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
-import 'package:m_soko/home/properties/properties_screen.dart';
+import 'package:m_soko/home/properties/screens/properties_screen.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -104,6 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return _home();
       case 3:
         return PaymentsPage();
+      case 4:
+        return _home();
       default:
         return Container();
     }
