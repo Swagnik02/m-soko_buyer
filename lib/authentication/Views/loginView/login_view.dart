@@ -18,12 +18,14 @@ class LoginView extends StatelessWidget {
       body: Stack(
         children: [
           Image.asset('assets/auth_header.png'),
-          Container(
-            margin: const EdgeInsets.fromLTRB(30, 50, 0, 0),
+          
+
+                    Container(
+            margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: Get.height * 0.2),
+                const SizedBox(height: 30),
                 const Text(
                   'Welcome to\nSokoni!',
                   style: TextStyle(
@@ -32,7 +34,7 @@ class LoginView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: Get.height * 0.004),
+                const SizedBox(height: 5),
                 Container(
                   width: 35,
                   height: 8,

@@ -38,12 +38,12 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
 
   return filteredDocs.map((doc) {
     return {
-// main Category
+      // main Category
       'prdItemCategory': doc['prdItemCategory'],
       'pid': doc['pid'],
       'UID': doc['UID'],
 
-// basic infos for thumbnail
+      // basic infos for thumbnail
       'itemImage': doc['itemImage'],
       'itemName': doc['itemName'],
       'itemSubCategory': doc['itemSubCategory'],
@@ -52,15 +52,15 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
       'itemDiscountPercentage': doc['itemDiscountPercentage'],
       'itemOrderCount': doc['itemOrderCount'],
 
-// indetails
+      // indetails
       'itemImage1': doc['itemImage1'],
       'itemImage2': doc['itemImage2'],
       'itemImage3': doc['itemImage3'],
 
-// specs/Highlights
+      // specs/Highlights
 
-// ratings and reviews
-// Add the remaining fields here
+      // ratings and reviews
+      // Add the remaining fields here
     };
   }).toList();
 }

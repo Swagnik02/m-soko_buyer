@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:m_soko/routes/appRoutes.dart';
 
 class RegisterController extends GetxController {
   late final TextEditingController name;
