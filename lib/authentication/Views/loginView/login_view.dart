@@ -8,7 +8,6 @@ import 'package:m_soko/routes/appRoutes.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
@@ -18,9 +17,7 @@ class LoginView extends StatelessWidget {
       body: Stack(
         children: [
           Image.asset('assets/auth_header.png'),
-          
-
-                    Container(
+          Container(
             margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
