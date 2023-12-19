@@ -20,6 +20,8 @@ class ProductItemDetailPage extends StatefulWidget {
   State<ProductItemDetailPage> createState() => ProductItemDetailPageState();
 }
 
+int selectedImageIndex = 0;
+
 class ProductItemDetailPageState extends State<ProductItemDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
@@ -104,9 +106,6 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
         return Container();
     }
   }
-
-  int selectedImageIndex = 0;
-  double rating = 4.5;
 
   Widget _buildOverviewSection() {
     // Assuming `ProductModel` has a property `itemImages` that is a map of image URLs.
