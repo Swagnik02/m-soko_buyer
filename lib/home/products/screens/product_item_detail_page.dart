@@ -250,7 +250,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
-              color: Colors.grey[200],
+              // color: Colors.grey[200],
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -263,23 +263,41 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                   ),
                   const SizedBox(height: 8.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.,
                     children: [
-                      Text("Min Order: ${widget.productModel.itemOrderCount}"),
-                      Text("Max Order: ${widget.productModel.itemOrderCount}"),
+                      Text(
+                        "Min Order: ${widget.productModel.itemOrderCount} pieces",
+                        style: const TextStyle(
+                          fontSize: 13.0,
+                        ),
+                      ),
+                      const SizedBox(width: 30),
+                      Text(
+                        "< ${widget.productModel.itemOrderCount} pieces",
+                        style: const TextStyle(
+                          fontSize: 13.0,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8.0),
                   Text(
                     widget.productModel.name ?? '',
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
+                      fontSize: 14.0,
                     ),
                   ),
                 ],
               ),
             ),
+
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    _tabController.animateTo(1);
+                  });
+                },
+                child: Text('all details'))
           ],
         ),
       ),
