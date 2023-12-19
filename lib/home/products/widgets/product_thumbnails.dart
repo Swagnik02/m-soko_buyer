@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
+import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductThumbnail extends StatelessWidget {
@@ -27,15 +28,22 @@ class ProductThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return ProductItemDetailPage(
-              pId: itemPid,
-            );
-          },
-          transitionsBuilder: customTransition(const Offset(0, 0)),
-        ));
+      onTap: () async {
+        ProductModel? productModel = await collectProductData(itemPid);
+        if (productModel != null) {
+          Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return ProductItemDetailPage(
+                pId: itemPid,
+                productModel: productModel,
+              );
+            },
+            transitionsBuilder: customTransition(const Offset(0, 0)),
+          ));
+        } else {
+          // Handle the case when no product data is available
+          print('No product data available for $itemPid');
+        }
       },
       child: Material(
         elevation: 4,

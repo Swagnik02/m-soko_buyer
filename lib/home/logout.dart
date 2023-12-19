@@ -228,26 +228,24 @@ Future<void> addProducts() async {
       // main Category
       'prdItemCategory': 'Mobiles',
       'pid': randomUID,
-      // 'UID': randomUID,
 
       // basic infos for thumbnail
       'itemImage':
-          'https://firebasestorage.googleapis.com/v0/b/msoko-seller.appspot.com/o/items%2Fproducts%2Foneplus.png?alt=media&token=2bd832ee-a6b6-453f-8a74-554742088390',
-      'itemName':
-          'realme narzo N53 (Feather Black, 4GB+64GB) 33W Segment Fastest Charging | Slimmest Phone in Segment | 90 Hz Smooth Display',
+          'https://firebasestorage.googleapis.com/v0/b/msoko-seller.appspot.com/o/items%2Fproducts%2FvivoY56.png?alt=media&token=964d6194-ac17-4fdb-931f-c924d87bb3d3',
+      'itemName': 'Vivo Y56 5G (Black Engine, 8GB RAM, 128GB Storage)',
       'itemSubCategory': 'Smartphone',
-      'itemPrice': 10999,
-      'itemShippingCharge': 100,
-      'itemDiscountPercentage': 18,
-      'itemOrderCount': 40,
+      'itemPrice': 24999,
+      'itemShippingCharge': 140,
+      'itemDiscountPercentage': 28,
+      'itemOrderCount': 20,
 
       // indetails
       'itemImage1':
-          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71DSxfKzkJL._SX679_.jpg',
+          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71f09CjWVDL._SX679_.jpg',
       'itemImage2':
-          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71q9IlpreaL._SX679_.jpg',
+          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/61HcWX7loZL._SX679_.jpg',
       'itemImage3':
-          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/71IfqYJ8reL._SX679_.jpg',
+          'https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/51DOADQtN0L._SX679_.jpg',
 
       // specs/Highlights
 

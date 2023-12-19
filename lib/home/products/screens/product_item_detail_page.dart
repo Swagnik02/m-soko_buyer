@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/models/product_model.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
   final String pId;
+  final ProductModel productModel;
 
   const ProductItemDetailPage({
-    super.key,
+    Key? key,
     required this.pId,
-  });
+    required this.productModel,
+  }) : super(key: key);
 
   @override
   State<ProductItemDetailPage> createState() => ProductItemDetailPageState();
@@ -21,12 +24,16 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage> {
           title: Text(widget.pId),
         ),
         body: Container(
-
-            // logic = filter out the items which have
-            // prdDiscount = ${widget.discountInPercentage}
-            // and prdCategory = ${widget.title}
-
-            ),
+          child: Column(
+            children: [
+              Text(widget.productModel.name ?? 'Name not available'),
+              Text(widget.productModel.subCategory ??
+                  'Subcategory not available'),
+              Text(widget.productModel.price?.toString() ??
+                  'Price not available'),
+            ],
+          ),
+        ),
       ),
     );
   }
