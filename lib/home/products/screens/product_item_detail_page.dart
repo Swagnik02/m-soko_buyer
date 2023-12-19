@@ -104,12 +104,13 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     }
   }
 
+  int selectedImageIndex = 0;
+
   Widget _buildOverviewSection() {
     // Assuming `ProductModel` has a property `itemImages` that is a map of image URLs.
     Map<String, String>? photos = widget.productModel.itemImages;
 
     // Store the selected index
-    int selectedImageIndex = 0;
 
     // Create a list of Image.network widgets for preloading
     List<Widget> imageWidgets = [];
@@ -157,7 +158,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             ),
           ),
 
-// Large Image Container using PageView
+          // Large Image Container using PageView
           Container(
             height: 280,
             // margin: EdgeInsets.symmetric(vertical: 8.0),
@@ -188,7 +189,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                 String imageKey = photos!.keys.elementAt(index);
                 return GestureDetector(
                   onTap: () {
-                    Fluttertoast.showToast(msg: index.toString());
+                    // Fluttertoast.showToast(msg: index.toString());
 
                     setState(() {
                       selectedImageIndex = index;
@@ -201,7 +202,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                       border: Border.all(
                         color: selectedImageIndex == index
                             ? Colors.blue
-                            : Colors.red,
+                            : Colors.transparent,
                       ),
                     ),
                     child: Image.network(
