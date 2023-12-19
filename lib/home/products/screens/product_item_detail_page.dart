@@ -66,28 +66,24 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
         bottomNavigationBar: _selectedSectionIndex == 2
             ? null
             : BottomAppBar(
-                child: Container(
-                  height: 56.0,
-                  // padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Navigate to ChatNow page
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => ChatNowPage()));
-                        },
-                        child: Text("ChatNow"),
+                elevation: 0,
+                clipBehavior: Clip.antiAlias,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Colors.white,
+                        child: Center(child: Text('Chat Now')),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Navigate to Enquiry page
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => EnquiryPage()));
-                        },
-                        child: Text("Enquiry"),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.amber[500],
+                        child: Center(child: Text('Send Inquiry')),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
       ),
@@ -204,7 +200,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                       border: Border.all(
                         color: selectedImageIndex == index
                             ? Colors.blue
-                            : Colors.transparent,
+                            : Colors.red,
                       ),
                     ),
                     child: Image.network(
