@@ -211,6 +211,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             ),
             // Image Timeline
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 8),
               height: 60.0,
               child: ListView.builder(
                 primary: true,
@@ -231,8 +232,9 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                       margin: const EdgeInsets.symmetric(horizontal: 4.0),
                       decoration: BoxDecoration(
                         border: Border.all(
+                          width: 3,
                           color: selectedImageIndex == index
-                              ? Colors.blue
+                              ? ColorConstants.yellow200
                               : Colors.transparent,
                         ),
                       ),
@@ -248,8 +250,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
 
             // Price Tag, Min and Max Order, Product Name (Remaining details)
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               // color: Colors.grey[200],
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,13 +292,13 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
               ),
             ),
 
-            TextButton(
-                onPressed: () {
-                  setState(() {
-                    _tabController.animateTo(1);
-                  });
-                },
-                child: Text('all details'))
+            // TextButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         _tabController.animateTo(1);
+            //       });
+            //     },
+            //     child: Text('all details'))
           ],
         ),
       ),
