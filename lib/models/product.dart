@@ -89,3 +89,46 @@
 //     );
 //   }).toList();
 // }
+
+class ProductModel {
+  String prdItemCategory;
+  String pid;
+  String UID;
+
+  // Basic infos for thumbnail
+  String itemImage;
+  String itemName;
+  String itemSubCategory;
+  double itemPrice;
+  double itemShippingCharge;
+  double itemDiscountPercentage;
+  int itemOrderCount;
+
+  // In details
+  String itemImage1;
+  String itemImage2;
+  String itemImage3;
+
+  // Specs/Highlights
+  // Add more fields as needed
+
+  // Ratings and reviews
+  // Add the remaining fields here
+
+  ProductModel({
+    required this.prdItemCategory,
+    required this.pid,
+    required this.UID,
+    required this.itemImage,
+    required this.itemName,
+    required this.itemSubCategory,
+    required this.itemPrice,
+    required this.itemShippingCharge,
+    required this.itemDiscountPercentage,
+    required this.itemOrderCount,
+    required this.itemImage1,
+    required this.itemImage2,
+    required this.itemImage3,
+    // Add more constructor parameters as needed
+  });
+}

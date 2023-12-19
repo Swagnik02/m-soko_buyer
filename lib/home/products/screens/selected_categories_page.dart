@@ -152,6 +152,7 @@ class SelectedCategoryPage extends StatelessWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 return ProductThumbnail(
+                  itemPid: (products[index]['pid']),
                   itemImage: (products[index]['itemImage']),
                   itemSubCategory: (products[index]['itemSubCategory']),
                   itemName: (products[index]['itemName']),

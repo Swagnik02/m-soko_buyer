@@ -31,7 +31,7 @@ Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
 Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
     String category) async {
   var querySnapshot =
-      await FirebaseFirestore.instance.collection('product_Items').get();
+      await FirebaseFirestore.instance.collection('product_items').get();
 
   var filteredDocs =
       querySnapshot.docs.where((doc) => doc['prdItemCategory'] == category);
@@ -41,7 +41,6 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
       // main Category
       'prdItemCategory': doc['prdItemCategory'],
       'pid': doc['pid'],
-      'UID': doc['UID'],
 
       // basic infos for thumbnail
       'itemImage': doc['itemImage'],
@@ -64,3 +63,52 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
     };
   }).toList();
 }
+
+
+
+// Future<void> fetchProductDetails() async {
+//     try {
+//       var docSnapshot = await FirebaseFirestore.instance
+//           .collection('product_Items')
+//           .doc(uid)  // Replace 'pid' with 'uid' if the field name is 'uid'
+//           .get();
+
+//       if (docSnapshot.exists) {
+//         var doc = docSnapshot.data() as Map<String, dynamic>;
+//         ProductModel productDetails = ProductModel(
+//           prdItemCategory: doc['prdItemCategory'],
+//           pid: doc['pid'],
+//           UID: doc['UID'],
+//           itemImage: doc['itemImage'],
+//           itemName: doc['itemName'],
+//           itemSubCategory: doc['itemSubCategory'],
+//           itemPrice: doc['itemPrice'].toDouble(),
+//           itemShippingCharge: doc['itemShippingCharge'].toDouble(),
+//           itemDiscountPercentage: doc['itemDiscountPercentage'].toDouble(),
+//           itemOrderCount: doc['itemOrderCount'],
+//           itemImage1: doc['itemImage1'],
+//           itemImage2: doc['itemImage2'],
+//           itemImage3: doc['itemImage3'],
+//           // Add more fields as needed
+//         );
+
+//         // Now, navigate to the ProductItemDetailPage with the fetched details
+//         Navigator.of(context).push(PageRouteBuilder(
+//           pageBuilder: (context, animation, secondaryAnimation) {
+//             return ProductItemDetailPage(
+//               productModel: productDetails,
+//               title: productDetails.itemName,
+//               discountInPercentage: productDetails.itemDiscountPercentage,
+//             );
+//           },
+//           transitionsBuilder: customTransition(const Offset(0, 0)),
+//         ));
+//       } else {
+//         print('Product with UID $uid not found');
+//         // Handle the case where the product is not found
+//       }
+//     } catch (error) {
+//       print('Error fetching product details: $error');
+//       // Handle the error
+//     }
+//   }

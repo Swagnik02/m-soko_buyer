@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
-  final String title;
-  final int discountInPercentage;
+  final String pId;
 
   const ProductItemDetailPage({
     super.key,
-    required this.title,
-    required this.discountInPercentage,
+    required this.pId,
   });
 
   @override
@@ -20,8 +18,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-              '${widget.title} at upto ${widget.discountInPercentage}% off '),
+          title: Text(widget.pId),
         ),
         body: Container(
 

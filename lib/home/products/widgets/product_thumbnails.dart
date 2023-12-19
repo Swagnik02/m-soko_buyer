@@ -4,6 +4,7 @@ import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductThumbnail extends StatelessWidget {
+  final String itemPid;
   final String itemImage;
   final String itemName;
   final String itemSubCategory;
@@ -13,6 +14,7 @@ class ProductThumbnail extends StatelessWidget {
   final String itemOrderCount;
 
   ProductThumbnail({
+    required this.itemPid,
     required this.itemImage,
     required this.itemName,
     required this.itemSubCategory,
@@ -29,8 +31,7 @@ class ProductThumbnail extends StatelessWidget {
         Navigator.of(context).push(PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return ProductItemDetailPage(
-              title: itemName,
-              discountInPercentage: 80,
+              pId: itemPid,
             );
           },
           transitionsBuilder: customTransition(const Offset(0, 0)),

@@ -222,16 +222,13 @@ Future<void> addProducts() async {
 
   String randomUID = DateTime.now().millisecondsSinceEpoch.toString() +
       generateRandom3DigitNumber();
-  String pid = 'p' +
-      DateTime.now().millisecondsSinceEpoch.toString() +
-      generateRandom3DigitNumber();
 
   await categories.doc(randomUID).set(
     {
       // main Category
       'prdItemCategory': 'Mobiles',
-      'pid': pid,
-      'UID': randomUID,
+      'pid': randomUID,
+      // 'UID': randomUID,
 
       // basic infos for thumbnail
       'itemImage':
