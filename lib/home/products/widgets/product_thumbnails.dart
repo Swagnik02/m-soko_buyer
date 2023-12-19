@@ -1,17 +1,20 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
 import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
+import 'dart:developer';
 
 class ProductThumbnail extends StatelessWidget {
   final String itemPid;
   final String itemImage;
   final String itemName;
   final String itemSubCategory;
-  final String itemPrice;
+  final int itemPrice;
   final String itemShippingCharge;
-  final String itemDiscountPercentage;
+  final int? itemDiscountPercentage;
   final String itemOrderCount;
 
   ProductThumbnail({
@@ -22,11 +25,13 @@ class ProductThumbnail extends StatelessWidget {
     required this.itemPrice,
     required this.itemShippingCharge,
     required this.itemOrderCount,
-    this.itemDiscountPercentage = '',
+    this.itemDiscountPercentage,
   });
 
   @override
   Widget build(BuildContext context) {
+    double finalcost =
+        itemPrice - (itemPrice * (itemDiscountPercentage! / 100));
     return GestureDetector(
       onTap: () async {
         ProductModel? productModel = await collectProductData(itemPid);
@@ -42,7 +47,7 @@ class ProductThumbnail extends StatelessWidget {
           ));
         } else {
           // Handle the case when no product data is available
-          print('No product data available for $itemPid');
+          log('No product data available for $itemPid');
         }
       },
       child: Material(
@@ -88,7 +93,7 @@ class ProductThumbnail extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${GlobalUtil.currencySymbol} $itemPrice',
+                    '${GlobalUtil.currencySymbol} ${finalcost.floor()}',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 19,

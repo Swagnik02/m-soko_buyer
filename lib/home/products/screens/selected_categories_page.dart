@@ -156,11 +156,11 @@ class SelectedCategoryPage extends StatelessWidget {
                   itemImage: (products[index]['itemImage']),
                   itemSubCategory: (products[index]['itemSubCategory']),
                   itemName: (products[index]['itemName']),
-                  itemPrice: (products[index]['itemPrice']).toString(),
+                  itemPrice: (products[index]['itemPrice']),
                   itemShippingCharge:
                       (products[index]['itemShippingCharge']).toString(),
-                  itemDiscountPercentage:
-                      (products[index]['itemDiscountPercentage']).toString(),
+                  itemDiscountPercentage: (products[index]
+                      ['itemDiscountPercentage']),
                   itemOrderCount:
                       (products[index]['itemOrderCount']).toString(),
                 );
