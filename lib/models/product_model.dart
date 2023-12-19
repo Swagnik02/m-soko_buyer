@@ -12,9 +12,8 @@ class ProductModel {
   double? itemShippingCharge;
   double? itemDiscountPercentage;
   int? itemOrderCount;
-  String? itemImage1;
-  String? itemImage2;
-  String? itemImage3;
+
+  Map<String, String>? itemImages;
 
   // Constructor
   ProductModel({
@@ -28,9 +27,7 @@ class ProductModel {
     this.itemShippingCharge,
     this.itemDiscountPercentage,
     this.itemOrderCount,
-    this.itemImage1,
-    this.itemImage2,
-    this.itemImage3,
+    this.itemImages,
   });
 
   // Factory method to create a ProductModel from a Map
@@ -47,9 +44,8 @@ class ProductModel {
       itemDiscountPercentage:
           (data['itemDiscountPercentage'] as num?)?.toDouble(),
       itemOrderCount: data['itemOrderCount'],
-      itemImage1: data['itemImage1'],
-      itemImage2: data['itemImage2'],
-      itemImage3: data['itemImage3'],
+      itemImages: (data['itemImages'] as Map<String, dynamic>?)
+          ?.map((key, value) => MapEntry(key, value as String)),
     );
   }
 }

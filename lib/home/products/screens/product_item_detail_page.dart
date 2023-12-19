@@ -104,8 +104,8 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
   }
 
   Widget _buildOverviewSection() {
-    // // Assuming `ProductModel` has a property `photos` that is a list of image URLs.
-    // List<String> photos = widget.productModel.photos;
+    // Assuming `ProductModel` has a property `itemImages` that is a map of image URLs.
+    Map<String, String>? photos = widget.productModel.itemImages;
 
     return SingleChildScrollView(
       child: Column(
@@ -141,37 +141,44 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             ),
           ),
 
-          // // Image Carousel with Timeline
-          // Container(
-          //   height: 200.0, // Adjust height as needed
-          //   child: ListView.builder(
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: photos.length,
-          //     itemBuilder: (context, index) {
-          //       return GestureDetector(
-          //         onTap: () {
-          //           // Change the selected photo in the carousel
-          //           // You can implement this based on your carousel widget
-          //         },
-          //         child: Container(
-          //           margin: EdgeInsets.all(8.0),
-          //           width: 100.0, // Adjust width as needed
-          //           decoration: BoxDecoration(
-          //             border: Border.all(
-          //               color: index == 0
-          //                   ? Colors.blue // Highlight the selected photo
-          //                   : Colors.transparent,
-          //             ),
-          //           ),
-          //           child: Image.network(
-          //             photos[index],
-          //             fit: BoxFit.cover,
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
+          // Image Carousel with Timeline
+          Container(
+            height: 200.0, // Adjust height as needed
+            child: photos != null && photos.isNotEmpty
+                ? ListView.builder(
+                    primary: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: photos.length,
+                    itemBuilder: (context, index) {
+                      String imageKey = photos.keys.elementAt(index);
+                      return GestureDetector(
+                        onTap: () {
+                          // Change the selected photo in the carousel
+                          // You can implement this based on your carousel widget
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(8.0),
+                          width: 100.0, // Adjust width as needed
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: index == 0
+                                  ? Colors.blue // Highlight the selected photo
+                                  : Colors.transparent,
+                            ),
+                          ),
+                          child: Image.network(
+                            photos[imageKey]!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : Container(
+                    child: Image.network(
+                        widget.productModel.itemThumbnail as String),
+                  ), // Handle case where there are no photos
+          ),
 
           // Price Tag
           Container(
