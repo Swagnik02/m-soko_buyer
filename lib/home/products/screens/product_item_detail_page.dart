@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/product_model.dart';
@@ -9,10 +8,10 @@ class ProductItemDetailPage extends StatefulWidget {
   final ProductModel productModel;
 
   const ProductItemDetailPage({
-    Key? key,
+    super.key,
     required this.pId,
     required this.productModel,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductItemDetailPage> createState() => ProductItemDetailPageState();
@@ -43,7 +42,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
         appBar: AppBar(
           backgroundColor: ColorConstants.blue700,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(48.0),
+            preferredSize: const Size.fromHeight(48.0),
             child: CustomTabBar(
               color: Colors.white,
               controller: _tabController,
@@ -74,13 +73,13 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                     Expanded(
                       child: Container(
                         color: Colors.white,
-                        child: Center(child: Text('Chat Now')),
+                        child: const Center(child: Text('Chat Now')),
                       ),
                     ),
                     Expanded(
                       child: Container(
                         color: Colors.amber[500],
-                        child: Center(child: Text('Send Inquiry')),
+                        child: const Center(child: Text('Send Inquiry')),
                       ),
                     ),
                   ],
@@ -129,24 +128,24 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
         children: [
           // Top Row with Discount Percentage and Share/Bookmark buttons
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "${widget.productModel.itemDiscountPercentage}% Discount",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.share),
+                      icon: const Icon(Icons.share),
                       onPressed: () {
                         // Handle share button click
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.bookmark),
+                      icon: const Icon(Icons.bookmark),
                       onPressed: () {
                         // Handle bookmark button click
                       },
@@ -196,7 +195,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                   },
                   child: Container(
                     width: 60.0,
-                    margin: EdgeInsets.symmetric(horizontal: 4.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: selectedImageIndex == index
@@ -216,19 +215,19 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
 
           // Price Tag, Min and Max Order, Product Name (Remaining details)
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
             color: Colors.grey[200],
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "${GlobalUtil.currencySymbol}${widget.productModel.price}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -236,10 +235,10 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                     Text("Max Order: ${widget.productModel.itemOrderCount}"),
                   ],
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
                   widget.productModel.name ?? '',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                   ),
@@ -254,12 +253,12 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
 
   Widget _buildDetailsSection() {
     // Implement your Details section here
-    return Center(child: Text("Details Section"));
+    return const Center(child: Text("Details Section"));
   }
 
   Widget _buildSimilarSection() {
     // Implement your Similar section here
-    return Center(child: Text("Similar Section"));
+    return const Center(child: Text("Similar Section"));
   }
 
   Tab _customTab(String iconUrl, String tabName) {
@@ -303,5 +302,5 @@ class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(48.0);
+  Size get preferredSize => const Size.fromHeight(48.0);
 }

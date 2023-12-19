@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/routes/appRoutes.dart';
+import 'package:m_soko/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingController extends GetxController {
@@ -17,7 +17,7 @@ class OnBoardingController extends GetxController {
     if (currentIndex >= 2) {
       Get.offAllNamed(AppRoutes.authHome);
       final pref = await SharedPreferences.getInstance();
-      pref.setInt(GlobalUtil.ONBOARDINGTOKEN, 1);
+      pref.setInt(GlobalUtil.onBordingToken, 1);
     }
     pageController.nextPage(
       duration: const Duration(microseconds: 300),

@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/products_main_categories.dart';
@@ -17,14 +19,14 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           // actions: [Icon(Icons.search)],
-          title: Text(
+          title: const Text(
             'All Categories',
             style: TextStyle(color: Colors.white),
           ),
@@ -32,7 +34,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.center,
                 end: Alignment.bottomCenter,
@@ -40,7 +42,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
               ),
             ),
             child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     _mainCategories(),
@@ -59,7 +61,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
       future: fetchCategoriesFromFirestore(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -69,7 +71,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
             height: 400,
             child: GridView.builder(
               primary: false,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 // crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
@@ -147,7 +149,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Special Offers',
             style: TextStyle(
               fontSize: 23,
@@ -160,7 +162,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
   }
 
   Widget _customGrid() {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10),

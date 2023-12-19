@@ -12,7 +12,7 @@ class BottomNavBar extends StatefulWidget {
   final Color circleIndicatorColor;
 
   const BottomNavBar({
-    Key? key,
+    super.key,
     required this.onIndexChanged,
     this.iconIndex0 = Icons.person,
     this.iconIndex1 = CupertinoIcons.text_bubble,
@@ -20,13 +20,13 @@ class BottomNavBar extends StatefulWidget {
     this.iconIndex3 = Icons.payment,
     this.iconIndex4 = Icons.menu,
     this.circleIndicatorColor = ColorConstants.blue700,
-  }) : super(key: key);
+  });
 
   @override
-  _BottomNavBarState createState() => _BottomNavBarState();
+  BottomNavBarState createState() => BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class BottomNavBarState extends State<BottomNavBar> {
   int mainNavBarIndex = 2;
 
   @override
@@ -138,7 +138,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: Container(
         width: 50.0,
         height: 50.0,
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: widget.circleIndicatorColor,

@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/categorised_offered_products.dart';
@@ -10,11 +12,11 @@ class ProductsMainCategoryWidget extends StatelessWidget {
   final int index;
 
   const ProductsMainCategoryWidget({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.categoryName,
     this.index = 0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class ProductsMainCategoryWidget extends StatelessWidget {
         ));
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: (() {
           switch (index) {
             case 0:
@@ -73,7 +75,7 @@ class ProductsMainCategoryWidget extends StatelessWidget {
             Text(
               categoryName,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -97,11 +99,11 @@ class ProductsMainCategoryWidget extends StatelessWidget {
             width: 50,
             height: 50,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             categoryName,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 11),
+            style: const TextStyle(fontSize: 11),
           ),
         ],
       ),
@@ -124,11 +126,11 @@ class ProductsMainCategoryWidget extends StatelessWidget {
             height: 60,
           ),
         ),
-        SizedBox(height: 2),
+        const SizedBox(height: 2),
         Text(
           categoryName,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -140,7 +142,8 @@ class SpecialOfferedCategory extends StatelessWidget {
   final String prdCategory;
   final int discountPercentage;
 
-  SpecialOfferedCategory({
+  const SpecialOfferedCategory({
+    super.key,
     required this.prdCategoryImage,
     required this.prdCategory,
     required this.discountPercentage,
@@ -172,7 +175,7 @@ class SpecialOfferedCategory extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -187,7 +190,7 @@ class SpecialOfferedCategory extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

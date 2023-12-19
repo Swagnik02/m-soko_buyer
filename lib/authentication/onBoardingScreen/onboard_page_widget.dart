@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_soko/authentication/onBoardingScreen/onBoardingController.dart';
+import 'package:m_soko/authentication/onBoardingScreen/on_boarding_controller.dart';
 import 'package:m_soko/common/colors.dart';
 
 class OnboardPage extends StatelessWidget {

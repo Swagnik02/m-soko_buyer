@@ -1,35 +1,32 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 
 String lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 class LogoutScreen extends StatelessWidget {
+  const LogoutScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Logout'),
+        title: const Text('Logout'),
       ),
       body: StreamBuilder(
         stream:
             FirebaseFirestore.instance.collection('product_items').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
 
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           }
 
-          var documents = snapshot.data?.docs;
+          // var documents = snapshot.data?.docs;
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +44,7 @@ class LogoutScreen extends StatelessWidget {
                   addProducts();
                   // addProductsItems();
                 },
-                child: Text('Add Categories'),
+                child: const Text('Add Categories'),
               ),
               TextButton(
                 onPressed: () {
@@ -55,7 +52,7 @@ class LogoutScreen extends StatelessWidget {
                   //       const AuthEventLogOut(),
                   //     );
                 },
-                child: Text('Logout'),
+                child: const Text('Logout'),
               ),
               // for (var document in documents!)
               //   CategoryWidget(data: document.data() as Map<String, dynamic>),
@@ -195,7 +192,7 @@ Future<void> addCategories() async {
 class CategoryWidget extends StatelessWidget {
   final Map<String, dynamic> data;
 
-  const CategoryWidget({required this.data});
+  const CategoryWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +202,7 @@ class CategoryWidget extends StatelessWidget {
         Text('categoryName: ${data['brandName']}'),
         Image(image: NetworkImage(data['bannerImage'])),
         // Text('categoryImage: ${data['categoryImage']}'),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
       ],
     );
   }

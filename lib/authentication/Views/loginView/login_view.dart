@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_soko/authentication/Views/loginView/loginController.dart';
+import 'package:m_soko/authentication/Views/loginView/login_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/routes/appRoutes.dart';
+import 'package:m_soko/routes/app_routes.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});

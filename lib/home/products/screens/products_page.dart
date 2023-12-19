@@ -10,12 +10,14 @@ import 'package:m_soko/home/products/widgets/products_main_categories.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsScreen extends StatelessWidget {
+  const ProductsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(8, 15, 8, 10),
+          padding: const EdgeInsets.fromLTRB(8, 15, 8, 10),
           child: Column(
             children: [
               // search box
@@ -25,7 +27,7 @@ class ProductsScreen extends StatelessWidget {
               _mainCategories(),
               const SizedBox(height: 15),
               // Advertisement
-              advertisement_block(),
+              advertisementBlock(),
               const SizedBox(height: 12),
               // Filters
               _filters(context),
@@ -93,7 +95,7 @@ class ProductsScreen extends StatelessWidget {
       future: fetchCategoriesFromFirestore(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -130,7 +132,7 @@ class ProductsScreen extends StatelessWidget {
             onPressedAction: () {
               Navigator.of(context).push(PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) {
-                  return AllCategoriesPage();
+                  return const AllCategoriesPage();
                 },
                 transitionsBuilder: customTransition(const Offset(0, 0)),
               ));

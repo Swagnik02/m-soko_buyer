@@ -1,18 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_soko/authentication/Views/registerView/registerController.dart';
+import 'package:m_soko/authentication/Views/registerView/register_controller.dart';
 import 'package:m_soko/common/colors.dart';
 
 class RegisterView extends StatefulWidget {
-  const RegisterView({Key? key}) : super(key: key);
+  const RegisterView({super.key});
 
   @override
-  _RegisterViewState createState() => _RegisterViewState();
+  RegisterViewState createState() => RegisterViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RegisterController());
@@ -267,7 +269,7 @@ class _RegisterViewState extends State<RegisterView> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 // Implement your navigation or action here
-                                print('Navigate to Terms And Policy');
+                                log('Navigate to Terms And Policy');
                               },
                           ),
                         ],

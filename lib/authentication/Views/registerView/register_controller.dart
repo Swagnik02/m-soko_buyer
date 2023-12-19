@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,11 +31,12 @@ class RegisterController extends GetxController {
     super.dispose();
   }
 
-  void togglePasswordFunc1(){
+  void togglePasswordFunc1() {
     isPasswordVisible1 = !isPasswordVisible1;
     update();
   }
-  void togglePasswordFunc2(){
+
+  void togglePasswordFunc2() {
     isPasswordVisible2 = !isPasswordVisible2;
     update();
   }

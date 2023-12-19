@@ -15,7 +15,8 @@ class ProductThumbnail extends StatelessWidget {
   final int? itemDiscountPercentage;
   final String itemOrderCount;
 
-  ProductThumbnail({
+  const ProductThumbnail({
+    super.key,
     required this.itemPid,
     required this.itemThumbnail,
     required this.itemName,

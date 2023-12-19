@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
@@ -7,7 +9,8 @@ import 'package:m_soko/home/products/widgets/products_advertisement.dart';
 class SelectedCategoryPage extends StatelessWidget {
   final String title;
 
-  SelectedCategoryPage({
+  const SelectedCategoryPage({
+    super.key,
     required this.title,
   });
 
@@ -23,15 +26,15 @@ class SelectedCategoryPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
                   _topBar(context),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: advertisement_block(),
+                    child: advertisementBlock(),
                   ),
                   _mainBody(),
                 ],
@@ -51,14 +54,14 @@ class SelectedCategoryPage extends StatelessWidget {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return SizedBox(
+                  return const SizedBox(
                     height: 200,
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          const Text('Sort by'),
+                          Text('Sort by'),
                         ],
                       ),
                     ),
@@ -67,12 +70,12 @@ class SelectedCategoryPage extends StatelessWidget {
               );
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 3.0),
+              padding: const EdgeInsets.symmetric(horizontal: 3.0),
               child: Container(
                 height: 54,
                 alignment: Alignment.center,
                 color: Colors.white,
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Sort by'),
@@ -89,14 +92,14 @@ class SelectedCategoryPage extends StatelessWidget {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return SizedBox(
+                  return const SizedBox(
                     height: 200,
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          const Text('Filters'),
+                          Text('Filters'),
                         ],
                       ),
                     ),
@@ -105,12 +108,12 @@ class SelectedCategoryPage extends StatelessWidget {
               );
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 3.0),
+              padding: const EdgeInsets.symmetric(horizontal: 3.0),
               child: Container(
                 height: 54,
                 alignment: Alignment.center,
                 color: Colors.white,
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Filters'),
@@ -130,9 +133,9 @@ class SelectedCategoryPage extends StatelessWidget {
       future: futureCheckSelectedCategoryProducts(title),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-          return Center(child: Text('No data found'));
+          return const Center(child: Text('No data found'));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
