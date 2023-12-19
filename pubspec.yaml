@@ -79,6 +79,7 @@ flutter:
     - assets/auth/
     - assets/tests/
     - assets/tests/mobiles/
+    - assets/icons/
 
 
     # - assets/products_category_icons/

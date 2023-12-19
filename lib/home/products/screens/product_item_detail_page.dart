@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/models/product_model.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
@@ -18,7 +21,7 @@ class ProductItemDetailPage extends StatefulWidget {
 class ProductItemDetailPageState extends State<ProductItemDetailPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedSectionIndex = 0; // Default selected index
+  int _selectedSectionIndex = 0;
 
   @override
   void initState() {
@@ -38,15 +41,16 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Product Details"),
+          backgroundColor: ColorConstants.blue700,
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(48.0),
-            child: TabBar(
+            child: CustomTabBar(
+              color: Colors.white,
               controller: _tabController,
               tabs: [
-                Tab(text: "Overview"),
-                Tab(text: "Details"),
-                Tab(text: "Similar"),
+                _customTab('assets/icons/overview_icon.png', 'Overview'),
+                _customTab('assets/icons/details_icon.png', 'Details'),
+                _customTab('assets/icons/similar_icon.png', 'Similar'),
               ],
             ),
           ),
@@ -60,11 +64,11 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
           ],
         ),
         bottomNavigationBar: _selectedSectionIndex == 2
-            ? null // Hide bottom bar for "Similar" section
+            ? null
             : BottomAppBar(
                 child: Container(
                   height: 56.0,
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  // padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -99,7 +103,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
       case 2:
         return _buildSimilarSection();
       default:
-        return Container(); // Placeholder, add appropriate sections
+        return Container();
     }
   }
 
@@ -107,13 +111,28 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     // Assuming `ProductModel` has a property `itemImages` that is a map of image URLs.
     Map<String, String>? photos = widget.productModel.itemImages;
 
+    // Store the selected index
+    int selectedImageIndex = 0;
+
+    // Create a list of Image.network widgets for preloading
+    List<Widget> imageWidgets = [];
+
+    if (photos != null) {
+      photos.forEach((imageKey, imageUrl) {
+        imageWidgets.add(Image.network(
+          imageUrl,
+          fit: BoxFit.cover,
+        ));
+      });
+    }
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Top Row with Discount Percentage and Share/Bookmark buttons
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -141,79 +160,94 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             ),
           ),
 
-          // Image Carousel with Timeline
+// Large Image Container using PageView
           Container(
-            height: 200.0, // Adjust height as needed
-            child: photos != null && photos.isNotEmpty
-                ? ListView.builder(
-                    primary: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: photos.length,
-                    itemBuilder: (context, index) {
-                      String imageKey = photos.keys.elementAt(index);
-                      return GestureDetector(
-                        onTap: () {
-                          // Change the selected photo in the carousel
-                          // You can implement this based on your carousel widget
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(8.0),
-                          width: 100.0, // Adjust width as needed
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: index == 0
-                                  ? Colors.blue // Highlight the selected photo
-                                  : Colors.transparent,
-                            ),
-                          ),
-                          child: Image.network(
-                            photos[imageKey]!,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      );
-                    },
-                  )
-                : Container(
+            height: 280,
+            // margin: EdgeInsets.symmetric(vertical: 8.0),
+            child: PageView.builder(
+              itemCount: photos != null ? photos.length : 0,
+              onPageChanged: (index) {
+                setState(() {
+                  selectedImageIndex = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                String imageKey = photos!.keys.elementAt(index);
+                return Image.network(
+                  photos[imageKey]!,
+                  fit: BoxFit.fitHeight,
+                );
+              },
+            ),
+          ),
+          // Image Timeline
+          Container(
+            height: 60.0,
+            child: ListView.builder(
+              primary: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: photos != null ? photos.length : 0,
+              itemBuilder: (context, index) {
+                String imageKey = photos!.keys.elementAt(index);
+                return GestureDetector(
+                  onTap: () {
+                    Fluttertoast.showToast(msg: index.toString());
+
+                    setState(() {
+                      selectedImageIndex = index;
+                    });
+                  },
+                  child: Container(
+                    width: 60.0,
+                    margin: EdgeInsets.symmetric(horizontal: 4.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: selectedImageIndex == index
+                            ? Colors.blue
+                            : Colors.transparent,
+                      ),
+                    ),
                     child: Image.network(
-                        widget.productModel.itemThumbnail as String),
-                  ), // Handle case where there are no photos
+                      photos[imageKey]!,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
 
-          // Price Tag
+          // Price Tag, Min and Max Order, Product Name (Remaining details)
           Container(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
             color: Colors.grey[200],
-            child: Text(
-              "\$${widget.productModel.price}",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              ),
-            ),
-          ),
-
-          // Min and Max Order
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Min Order: ${widget.productModel.itemOrderCount}"),
-                Text("Max Order: ${widget.productModel.itemOrderCount}"),
+                Text(
+                  "\$${widget.productModel.price}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Min Order: ${widget.productModel.itemOrderCount}"),
+                    Text("Max Order: ${widget.productModel.itemOrderCount}"),
+                  ],
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  widget.productModel.name ?? '',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
               ],
-            ),
-          ),
-
-          // Product Name
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              widget.productModel.name ?? '',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-              ),
             ),
           ),
         ],
@@ -230,4 +264,47 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     // Implement your Similar section here
     return Center(child: Text("Similar Section"));
   }
+
+  Tab _customTab(String iconUrl, String tabName) {
+    return Tab(
+      child: Container(
+        child: Row(
+          children: [
+            Image.asset(iconUrl),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(tabName),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
+  final Color color;
+  final TabController controller;
+  final List<Tab> tabs;
+
+  const CustomTabBar({
+    Key? key,
+    required this.color,
+    required this.controller,
+    required this.tabs,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+      child: TabBar(
+        controller: controller,
+        tabs: tabs,
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(48.0);
 }
