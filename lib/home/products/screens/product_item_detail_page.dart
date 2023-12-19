@@ -127,219 +127,239 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     }
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Top Row with Discount Percentage and Share/Bookmark buttons
-            Container(
-              padding: const EdgeInsets.only(top: 5, left: 12, right: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // discount tag
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: ColorConstants.green50,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      "${widget.productModel.itemDiscountPercentage?.toInt()}% off",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.green900,
-                      ),
-                    ),
-                  ),
-                  // ShareButton and bookmark button
-                  Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: InkWell(
-                            onTap: () {
-                              // Handle share button click
-                            },
-                            child: Icon(
-                              Icons.share_outlined,
-                              size: 18,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: InkWell(
-                            onTap: () {
-                              // Handle bookmark button click
-                            },
-                            child: Icon(
-                              Icons.bookmark_border_rounded,
-                              // size: 20,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Large Image Container using PageView
-            Container(
-              height: 280,
-              // margin: EdgeInsets.symmetric(vertical: 8.0),
-              child: PageView.builder(
-                itemCount: photos != null ? photos.length : 0,
-                onPageChanged: (index) {
-                  setState(() {
-                    selectedImageIndex = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  String imageKey = photos!.keys.elementAt(index);
-                  return Image.network(
-                    photos[imageKey]!,
-                    fit: BoxFit.fitHeight,
-                  );
-                },
-              ),
-            ),
-            // Image Timeline
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              height: 60.0,
-              child: ListView.builder(
-                primary: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: photos != null ? photos.length : 0,
-                itemBuilder: (context, index) {
-                  String imageKey = photos!.keys.elementAt(index);
-                  return GestureDetector(
-                    onTap: () {
-                      // Fluttertoast.showToast(msg: index.toString());
-
-                      setState(() {
-                        selectedImageIndex = index;
-                      });
-                    },
-                    child: Container(
-                      width: 60.0,
-                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 3,
-                          color: selectedImageIndex == index
-                              ? ColorConstants.yellow200
-                              : Colors.transparent,
-                        ),
-                      ),
-                      child: Image.network(
-                        photos[imageKey]!,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            // Price Tag, Min and Max Order, Product Name (Remaining details)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              // color: Colors.grey[200],
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${GlobalUtil.currencySymbol}${widget.productModel.price}",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Top Row with Discount Percentage and Share/Bookmark buttons
+                Container(
+                  padding: const EdgeInsets.only(top: 5, left: 12, right: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Min Order: ${widget.productModel.itemOrderCount} pieces",
-                        style: const TextStyle(
-                          fontSize: 13.0,
+                      // discount tag
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: ColorConstants.green50,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          "${widget.productModel.itemDiscountPercentage?.toInt()}% off",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ColorConstants.green900,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 30),
-                      Text(
-                        "< ${widget.productModel.itemOrderCount} pieces",
-                        style: const TextStyle(
-                          fontSize: 13.0,
+                      // ShareButton and bookmark button
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: InkWell(
+                                onTap: () {
+                                  // Handle share button click
+                                },
+                                child: const Icon(
+                                  Icons.share_outlined,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: InkWell(
+                                onTap: () {
+                                  // Handle bookmark button click
+                                },
+                                child: const Icon(
+                                  Icons.bookmark_border_rounded,
+                                  // size: 20,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8.0),
-                  Text(
-                    widget.productModel.name ?? '',
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                    ),
+                ),
+
+                // Large Image Container using PageView
+                Container(
+                  height: 280,
+                  // margin: EdgeInsets.symmetric(vertical: 8.0),
+                  child: PageView.builder(
+                    itemCount: photos != null ? photos.length : 0,
+                    onPageChanged: (index) {
+                      setState(() {
+                        selectedImageIndex = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      String imageKey = photos!.keys.elementAt(index);
+                      return Image.network(
+                        photos[imageKey]!,
+                        fit: BoxFit.fitHeight,
+                      );
+                    },
                   ),
+                ),
+                // Image Timeline
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  height: 60.0,
+                  child: ListView.builder(
+                    primary: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: photos != null ? photos.length : 0,
+                    itemBuilder: (context, index) {
+                      String imageKey = photos!.keys.elementAt(index);
+                      return GestureDetector(
+                        onTap: () {
+                          // Fluttertoast.showToast(msg: index.toString());
 
-                  // ordercount
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: RichText(
-                      text: TextSpan(
-                        text:
-                            '${widget.productModel.itemOrderCount} orders | See Store Reviews',
-                        style: const TextStyle(
-                          color: Colors.black45,
-                          fontSize: 14,
+                          setState(() {
+                            selectedImageIndex = index;
+                          });
+                        },
+                        child: Container(
+                          width: 60.0,
+                          margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 3,
+                              color: selectedImageIndex == index
+                                  ? ColorConstants.yellow200
+                                  : Colors.transparent,
+                            ),
+                          ),
+                          child: Image.network(
+                            photos[imageKey]!,
+                            fit: BoxFit.fitHeight,
+                          ),
                         ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Fluttertoast.showToast(msg: 'ratingPage');
-                          },
-                      ),
-                    ),
+                      );
+                    },
                   ),
+                ),
 
-                  // Ratings
-                  PannableRatingBar(
-                    rate: widget.productModel.itemAvgRating ?? 0,
-                    items: List.generate(
-                        5,
-                        (index) => const RatingWidget(
-                              selectedColor: Color(0xFFFFCE31),
-                              unSelectedColor: Colors.grey,
-                              child: Icon(
-                                Icons.star,
-                                size: 18.6,
-                              ),
-                            )),
+                // Price Tag, Min and Max Order, Product Name (Remaining details)
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  // color: Colors.grey[200],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${GlobalUtil.currencySymbol}${widget.productModel.price}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.,
+                        children: [
+                          Text(
+                            "Min Order: ${widget.productModel.itemOrderCount} pieces",
+                            style: const TextStyle(
+                              fontSize: 13.0,
+                            ),
+                          ),
+                          const SizedBox(width: 30),
+                          Text(
+                            "< ${widget.productModel.itemOrderCount} pieces",
+                            style: const TextStyle(
+                              fontSize: 13.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8.0),
+                      Text(
+                        widget.productModel.name ?? '',
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
+
+                      // ordercount
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: RichText(
+                          text: TextSpan(
+                            text:
+                                '${widget.productModel.itemOrderCount} orders | See Store Reviews',
+                            style: const TextStyle(
+                              color: Colors.black45,
+                              fontSize: 14,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Fluttertoast.showToast(msg: 'ratingPage');
+                              },
+                          ),
+                        ),
+                      ),
+
+                      // Ratings
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: PannableRatingBar(
+                          rate: widget.productModel.itemAvgRating ?? 0,
+                          items: List.generate(
+                              5,
+                              (index) => const RatingWidget(
+                                    selectedColor: Color(0xFFFFCE31),
+                                    unSelectedColor: Colors.grey,
+                                    child: Icon(
+                                      Icons.star,
+                                      size: 20,
+                                    ),
+                                  )),
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              _tabController.animateTo(1);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              width: double.infinity,
+              height: 56.1,
+              color: ColorConstants.blue50,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('All Details'),
+                  Icon(Icons.arrow_forward_ios_rounded)
                 ],
               ),
             ),
-
-            // TextButton(
-            //     onPressed: () {
-            //       setState(() {
-            //         _tabController.animateTo(1);
-            //       });
-            //     },
-            //     child: Text('all details'))
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
