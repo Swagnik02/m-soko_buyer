@@ -43,7 +43,7 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
       'pid': doc['pid'],
 
       // basic infos for thumbnail
-      'itemImage': doc['itemImage'],
+      'itemThumbnail': doc['itemThumbnail'],
       'itemName': doc['itemName'],
       'itemSubCategory': doc['itemSubCategory'],
       'itemPrice': doc['itemPrice'],
@@ -51,10 +51,10 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
       'itemDiscountPercentage': doc['itemDiscountPercentage'],
       'itemOrderCount': doc['itemOrderCount'],
 
-      // indetails
-      'itemImage1': doc['itemImage1'],
-      'itemImage2': doc['itemImage2'],
-      'itemImage3': doc['itemImage3'],
+      // // indetails
+      // 'itemImage1': doc['itemImage1'],
+      // 'itemImage2': doc['itemImage2'],
+      // 'itemImage3': doc['itemImage3'],
 
       // specs/Highlights
 

@@ -8,7 +8,7 @@ class ProductModel {
   String? specs;
   String? mainCategory;
   String? productId;
-  String? itemImage;
+  String? itemThumbnail;
   double? itemShippingCharge;
   double? itemDiscountPercentage;
   int? itemOrderCount;
@@ -24,7 +24,7 @@ class ProductModel {
     this.specs,
     this.mainCategory,
     this.productId,
-    this.itemImage,
+    this.itemThumbnail,
     this.itemShippingCharge,
     this.itemDiscountPercentage,
     this.itemOrderCount,
@@ -42,7 +42,7 @@ class ProductModel {
       specs: data['itemspecs'],
       mainCategory: data['prdItemCategory'],
       productId: data['pid'],
-      itemImage: data['itemImage'],
+      itemThumbnail: data['itemThumbnail'],
       itemShippingCharge: (data['itemShippingCharge'] as num?)?.toDouble(),
       itemDiscountPercentage:
           (data['itemDiscountPercentage'] as num?)?.toDouble(),

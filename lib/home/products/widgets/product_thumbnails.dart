@@ -7,7 +7,7 @@ import 'dart:developer';
 
 class ProductThumbnail extends StatelessWidget {
   final String itemPid;
-  final String itemImage;
+  final String itemThumbnail;
   final String itemName;
   final String itemSubCategory;
   final int itemPrice;
@@ -17,7 +17,7 @@ class ProductThumbnail extends StatelessWidget {
 
   ProductThumbnail({
     required this.itemPid,
-    required this.itemImage,
+    required this.itemThumbnail,
     required this.itemName,
     required this.itemSubCategory,
     required this.itemPrice,
@@ -64,7 +64,7 @@ class ProductThumbnail extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
-                      image: NetworkImage(itemImage),
+                      image: NetworkImage(itemThumbnail),
                       fit: BoxFit.cover,
                     ),
                   ),

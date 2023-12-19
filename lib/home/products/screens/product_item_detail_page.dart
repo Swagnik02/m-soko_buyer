@@ -104,8 +104,114 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
   }
 
   Widget _buildOverviewSection() {
-    // Implement your Overview section here
-    return Center(child: Text("Overview Section"));
+    // // Assuming `ProductModel` has a property `photos` that is a list of image URLs.
+    // List<String> photos = widget.productModel.photos;
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Top Row with Discount Percentage and Share/Bookmark buttons
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${widget.productModel.itemDiscountPercentage}% Discount",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.share),
+                      onPressed: () {
+                        // Handle share button click
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.bookmark),
+                      onPressed: () {
+                        // Handle bookmark button click
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // // Image Carousel with Timeline
+          // Container(
+          //   height: 200.0, // Adjust height as needed
+          //   child: ListView.builder(
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: photos.length,
+          //     itemBuilder: (context, index) {
+          //       return GestureDetector(
+          //         onTap: () {
+          //           // Change the selected photo in the carousel
+          //           // You can implement this based on your carousel widget
+          //         },
+          //         child: Container(
+          //           margin: EdgeInsets.all(8.0),
+          //           width: 100.0, // Adjust width as needed
+          //           decoration: BoxDecoration(
+          //             border: Border.all(
+          //               color: index == 0
+          //                   ? Colors.blue // Highlight the selected photo
+          //                   : Colors.transparent,
+          //             ),
+          //           ),
+          //           child: Image.network(
+          //             photos[index],
+          //             fit: BoxFit.cover,
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
+
+          // Price Tag
+          Container(
+            padding: EdgeInsets.all(16.0),
+            color: Colors.grey[200],
+            child: Text(
+              "\$${widget.productModel.price}",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+              ),
+            ),
+          ),
+
+          // Min and Max Order
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Min Order: ${widget.productModel.itemOrderCount}"),
+                Text("Max Order: ${widget.productModel.itemOrderCount}"),
+              ],
+            ),
+          ),
+
+          // Product Name
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              widget.productModel.name ?? '',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildDetailsSection() {
