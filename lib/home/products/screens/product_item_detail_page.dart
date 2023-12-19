@@ -123,141 +123,165 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     }
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Top Row with Discount Percentage and Share/Bookmark buttons
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // discount tag
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: ColorConstants.green50,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    "${widget.productModel.itemDiscountPercentage?.toInt()}% off",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.green900,
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.share),
-                      onPressed: () {
-                        // Handle share button click
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.bookmark),
-                      onPressed: () {
-                        // Handle bookmark button click
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // Large Image Container using PageView
-          Container(
-            height: 280,
-            // margin: EdgeInsets.symmetric(vertical: 8.0),
-            child: PageView.builder(
-              itemCount: photos != null ? photos.length : 0,
-              onPageChanged: (index) {
-                setState(() {
-                  selectedImageIndex = index;
-                });
-              },
-              itemBuilder: (context, index) {
-                String imageKey = photos!.keys.elementAt(index);
-                return Image.network(
-                  photos[imageKey]!,
-                  fit: BoxFit.fitHeight,
-                );
-              },
-            ),
-          ),
-          // Image Timeline
-          Container(
-            height: 60.0,
-            child: ListView.builder(
-              primary: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: photos != null ? photos.length : 0,
-              itemBuilder: (context, index) {
-                String imageKey = photos!.keys.elementAt(index);
-                return GestureDetector(
-                  onTap: () {
-                    // Fluttertoast.showToast(msg: index.toString());
-
-                    setState(() {
-                      selectedImageIndex = index;
-                    });
-                  },
-                  child: Container(
-                    width: 60.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Top Row with Discount Percentage and Share/Bookmark buttons
+            Container(
+              padding: const EdgeInsets.only(top: 5, left: 12, right: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // discount tag
+                  Container(
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: selectedImageIndex == index
-                            ? Colors.blue
-                            : Colors.transparent,
+                      color: ColorConstants.green50,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      "${widget.productModel.itemDiscountPercentage?.toInt()}% off",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.green900,
                       ),
                     ),
-                    child: Image.network(
-                      photos[imageKey]!,
-                      fit: BoxFit.fitHeight,
+                  ),
+                  // ShareButton and bookmark button
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: InkWell(
+                            onTap: () {
+                              // Handle share button click
+                            },
+                            child: Icon(
+                              Icons.share_outlined,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: InkWell(
+                            onTap: () {
+                              // Handle bookmark button click
+                            },
+                            child: Icon(
+                              Icons.bookmark_border_rounded,
+                              // size: 20,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              },
+                ],
+              ),
             ),
-          ),
 
-          // Price Tag, Min and Max Order, Product Name (Remaining details)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
-            color: Colors.grey[200],
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${GlobalUtil.currencySymbol}${widget.productModel.price}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Min Order: ${widget.productModel.itemOrderCount}"),
-                    Text("Max Order: ${widget.productModel.itemOrderCount}"),
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  widget.productModel.name ?? '',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
+            // Large Image Container using PageView
+            Container(
+              height: 280,
+              // margin: EdgeInsets.symmetric(vertical: 8.0),
+              child: PageView.builder(
+                itemCount: photos != null ? photos.length : 0,
+                onPageChanged: (index) {
+                  setState(() {
+                    selectedImageIndex = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  String imageKey = photos!.keys.elementAt(index);
+                  return Image.network(
+                    photos[imageKey]!,
+                    fit: BoxFit.fitHeight,
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+            // Image Timeline
+            Container(
+              height: 60.0,
+              child: ListView.builder(
+                primary: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: photos != null ? photos.length : 0,
+                itemBuilder: (context, index) {
+                  String imageKey = photos!.keys.elementAt(index);
+                  return GestureDetector(
+                    onTap: () {
+                      // Fluttertoast.showToast(msg: index.toString());
+
+                      setState(() {
+                        selectedImageIndex = index;
+                      });
+                    },
+                    child: Container(
+                      width: 60.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: selectedImageIndex == index
+                              ? Colors.blue
+                              : Colors.transparent,
+                        ),
+                      ),
+                      child: Image.network(
+                        photos[imageKey]!,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            // Price Tag, Min and Max Order, Product Name (Remaining details)
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
+              color: Colors.grey[200],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${GlobalUtil.currencySymbol}${widget.productModel.price}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Min Order: ${widget.productModel.itemOrderCount}"),
+                      Text("Max Order: ${widget.productModel.itemOrderCount}"),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    widget.productModel.name ?? '',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
