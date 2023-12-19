@@ -132,9 +132,20 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "${widget.productModel.itemDiscountPercentage}% Discount",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                // discount tag
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: ColorConstants.green50,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "${widget.productModel.itemDiscountPercentage?.toInt()}% off",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.green900,
+                    ),
+                  ),
                 ),
                 Row(
                   children: [
