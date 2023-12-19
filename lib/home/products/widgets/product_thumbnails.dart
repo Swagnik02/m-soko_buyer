@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
