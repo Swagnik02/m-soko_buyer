@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/product_model.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
@@ -221,7 +222,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "\$${widget.productModel.price}",
+                  "${GlobalUtil.currencySymbol}${widget.productModel.price}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
