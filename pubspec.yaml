@@ -51,6 +51,7 @@ dependencies:
   shared_preferences: ^2.2.2
   logger:
   carousel_slider: ^4.2.1
+  flutter_pannable_rating_bar: ^2.7.2+1
 
 dev_dependencies:
   flutter_test:

@@ -12,6 +12,7 @@ class ProductModel {
   double? itemShippingCharge;
   double? itemDiscountPercentage;
   int? itemOrderCount;
+  double? itemAvgRating;
 
   Map<String, String>? itemImages;
 
@@ -28,6 +29,7 @@ class ProductModel {
     this.itemDiscountPercentage,
     this.itemOrderCount,
     this.itemImages,
+    this.itemAvgRating,
   });
 
   // Factory method to create a ProductModel from a Map

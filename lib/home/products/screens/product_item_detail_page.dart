@@ -1,4 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/product_model.dart';
@@ -103,6 +106,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
   }
 
   int selectedImageIndex = 0;
+  double rating = 4.5;
 
   Widget _buildOverviewSection() {
     // Assuming `ProductModel` has a property `itemImages` that is a map of image URLs.
@@ -287,6 +291,41 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                     style: const TextStyle(
                       fontSize: 14.0,
                     ),
+                  ),
+
+                  // ordercount
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: RichText(
+                      text: TextSpan(
+                        text:
+                            '${widget.productModel.itemOrderCount} orders | See Store Reviews',
+                        style: const TextStyle(
+                          color: Colors.black45,
+                          fontSize: 14,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Fluttertoast.showToast(msg: 'ratingPage');
+                          },
+                      ),
+                    ),
+                  ),
+
+                  // Ratings
+                  PannableRatingBar(
+                    rate: widget.productModel.itemAvgRating ?? 0,
+                    items: List.generate(
+                        5,
+                        (index) => const RatingWidget(
+                              selectedColor: Color(0xFFFFCE31),
+                              unSelectedColor: Colors.grey,
+                              child: Icon(
+                                Icons.star,
+                                size: 18.6,
+                              ),
+                            )),
                   ),
                 ],
               ),
