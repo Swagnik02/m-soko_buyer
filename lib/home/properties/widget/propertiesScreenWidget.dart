@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
 
 class PropertiesScreenWidget {
@@ -128,18 +132,19 @@ class PropertiesScreenWidget {
     required String location,
     required String postDate,
     required Function onTap,
+    EdgeInsets? margin,
   }) {
     return InkWell(
       onTap: () => onTap(),
       child: Container(
-        height: 240,
         width: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(6),
         ),
+        margin: margin,
         padding: EdgeInsets.symmetric(
-            horizontal: Get.width * 0.014, vertical: Get.height * 0.007),
+            horizontal: Get.width * 0.014, vertical: Get.height * 0.004),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -148,7 +153,11 @@ class PropertiesScreenWidget {
               height: 140,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                image: NetworkImage(image),
+                image: image.isEmpty || image == null
+                    ? const AssetImage(
+                            'assets/PropertyImage/empty_property_image.png')
+                        as ImageProvider
+                    : NetworkImage(image),
                 fit: BoxFit.fill,
               )),
             ),
@@ -162,8 +171,8 @@ class PropertiesScreenWidget {
               ),
             ),
             const SizedBox(height: 2),
-            Text(location, style: const TextStyle(fontSize: 12)),
-            Text(postDate,
+            Text(location, style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis)),
+            Text(Utils.formatPostDate(postDate),
                 style:
                     const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           ],

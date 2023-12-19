@@ -23,8 +23,8 @@ class PropertyController extends GetxController {
 
   Future<DocumentSnapshot<Map<String, dynamic>>> fetchHomeImageFromFirebase() async {
     var querySnapshot = await FirebaseFirestore.instance
-        .collection('property_items')
-        .doc('basic_images')
+        .collection('property_basic_images')
+        .doc('HomeImage')
         .get();
     return querySnapshot;
   }

@@ -9,6 +9,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
 import 'package:m_soko/models/property.dart';
+import 'package:m_soko/routes/appRoutes.dart';
 
 class PropertiesScreen extends StatelessWidget {
   @override
@@ -38,7 +39,7 @@ class PropertiesScreen extends StatelessWidget {
                       } else {
                         final data = snapshot.data?.data();
                         return PropertiesScreenWidget.propertiesHomeImage(
-                          images: [Image.network(data?['homeImage'])],
+                          images: [Image.network(data?['url'])],
                         );
                       }
                     },
@@ -131,7 +132,8 @@ class PropertiesScreen extends StatelessWidget {
             ),
             const Spacer(),
             InkWell(
-              onTap: () {},
+              onTap: () => Get.toNamed(AppRoutes.propertiesSeeAllScreen,
+                  arguments: properties),
               child: Row(
                 children: [
                   const Text(

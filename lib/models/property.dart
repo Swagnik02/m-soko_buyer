@@ -152,4 +152,53 @@ class PropertyModel {
       // Add all other properties here
     };
   }
+
+  factory PropertyModel.fromDocument(DocumentSnapshot snapshot) {
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+    int parsetoInt(dynamic value) {
+      if (value is int) {
+        return value;
+      } else if (value is String) {
+        return int.tryParse(value) ?? 0;
+      }
+      return 0; // Return a default value if neither int nor String
+    }
+
+    return PropertyModel(
+      bathRoom: parsetoInt(data?['Bath Room']),
+      agentUid: data?['Agent UID'] ?? '',
+      category: data?['Category'] ?? '',
+      loanAvailable: data?['Loan Available'] ?? false,
+      locationPoint: data?['Location Point'],
+      storeRoom: parsetoInt(data?['Store Room']),
+      agentNumber: data?['Agent Number'] ?? '',
+      agentName: data?['Agent Name'] ?? '',
+      sellingPrice: parsetoInt(data?['Selling Price']),
+      bankName: data?['Bank Name'] ?? '',
+      listingStatus: data?['Listing Status'] ?? '',
+      qualityCheck: data?['Quality Check'] ?? false,
+      waterAvailability: parsetoInt(data?['Water Availability']),
+      images: List<String>.from(data?['Images'] ?? ''),
+      electricityAvailability: parsetoInt(data?['Electricity Availability']),
+      title: data?['Title'] ?? '',
+      postDate: data?['Post Date'] != null
+          ? (data?['Post Date'] as Timestamp).toDate()
+          : DateTime.now(),
+      plotNumberPoint: data?['Plot Number Point'],
+      bedRoom: parsetoInt(data?['Bed Room']),
+      disclaimer: data?['Disclaimer'] ?? '',
+      rooms: data?['Rooms'] ?? '',
+      postBy: data?['Post By'] ?? '',
+      services: List<String>.from(data?['Services'] ?? []),
+      reraId: data?['Rera ID'] ?? '',
+      propertyType: data?['Property Type'] ?? '',
+      coveredArea: parsetoInt(data?['Covered Area']),
+      kitchen: parsetoInt(data?['Kitchen']),
+      propertyDescription: data?['Property Description'] ?? '',
+      livingRoom: parsetoInt(data?['Living Room']),
+      location: data?['Location'] ?? '',
+      // Add all other properties here
+    );
+  }
 }
