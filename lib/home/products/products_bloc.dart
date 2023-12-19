@@ -50,16 +50,6 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
       'itemShippingCharge': doc['itemShippingCharge'],
       'itemDiscountPercentage': doc['itemDiscountPercentage'],
       'itemOrderCount': doc['itemOrderCount'],
-
-      // // indetails
-      // 'itemImage1': doc['itemImage1'],
-      // 'itemImage2': doc['itemImage2'],
-      // 'itemImage3': doc['itemImage3'],
-
-      // specs/Highlights
-
-      // ratings and reviews
-      // Add the remaining fields here
     };
   }).toList();
 }
