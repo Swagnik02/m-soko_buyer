@@ -6,6 +6,15 @@ class ProductModel {
   String? subCategory;
   double? price;
   String? specs;
+  String? mainCategory;
+  String? productId;
+  String? itemImage;
+  double? itemShippingCharge;
+  double? itemDiscountPercentage;
+  int? itemOrderCount;
+  String? itemImage1;
+  String? itemImage2;
+  String? itemImage3;
 
   // Constructor
   ProductModel({
@@ -13,6 +22,15 @@ class ProductModel {
     this.subCategory,
     this.price,
     this.specs,
+    this.mainCategory,
+    this.productId,
+    this.itemImage,
+    this.itemShippingCharge,
+    this.itemDiscountPercentage,
+    this.itemOrderCount,
+    this.itemImage1,
+    this.itemImage2,
+    this.itemImage3,
   });
 
   // Factory method to create a ProductModel from a Map
@@ -22,7 +40,16 @@ class ProductModel {
       subCategory: data['itemSubCategory'],
       price: (data['itemPrice'] as num?)?.toDouble(),
       specs: data['itemspecs'],
-      // Add other fields as needed
+      mainCategory: data['prdItemCategory'],
+      productId: data['pid'],
+      itemImage: data['itemImage'],
+      itemShippingCharge: (data['itemShippingCharge'] as num?)?.toDouble(),
+      itemDiscountPercentage:
+          (data['itemDiscountPercentage'] as num?)?.toDouble(),
+      itemOrderCount: data['itemOrderCount'],
+      itemImage1: data['itemImage1'],
+      itemImage2: data['itemImage2'],
+      itemImage3: data['itemImage3'],
     );
   }
 }
