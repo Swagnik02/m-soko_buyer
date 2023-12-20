@@ -12,7 +12,7 @@ class GlobalUtil {
 }
 
 class Utils {
-  static Widget customLoadingSpinner(){
+  static Widget customLoadingSpinner() {
     return const Center(
       child: CircularProgressIndicator(),
     );
@@ -30,9 +30,10 @@ class Utils {
 
     try {
       DateTime parsedDate = DateTime.parse(postDate);
-      formattedDate = DateFormat('MMM dd').format(parsedDate); // Format as 'Dec 27'
+      formattedDate =
+          DateFormat('MMM dd').format(parsedDate); // Format as 'Dec 27'
     } catch (e) {
-      // log('Error parsing or formatting date: $e');
+      log('Error parsing or formatting date: $e');
       formattedDate = 'Invalid Date';
     }
 

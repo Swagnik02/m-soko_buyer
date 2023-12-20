@@ -27,9 +27,12 @@ class MainApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: ColorConstants.blue700,
-        // primarySwatch: Colors.blue,
-      ),
+          primaryColor: ColorConstants.blue700,
+          appBarTheme: const AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.white),
+          )
+          // primarySwatch: Colors.blue,
+          ),
       initialRoute: GlobalUtil.isViewed == 0 || GlobalUtil.isViewed == null
           ? AppRoutes.onBoardingScreen
           : AppRoutes.authHome,

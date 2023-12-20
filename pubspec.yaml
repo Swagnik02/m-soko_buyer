@@ -52,6 +52,8 @@ dependencies:
   logger:
   flutter_image_slideshow: ^0.1.6
   intl:
+  carousel_slider: ^4.2.1
+  page_view_dot_indicator: ^2.3.0
 
 
 dev_dependencies:

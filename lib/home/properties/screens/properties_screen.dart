@@ -104,7 +104,12 @@ class PropertiesScreen extends StatelessWidget {
                 coveredArea: properties[3].coveredArea.toString(),
                 location: properties[3].location,
                 postDate: parseDate,
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.propertiesDetailScreen,
+                    arguments: properties[3],
+                  );
+                },
               ),
               SizedBox(width: Get.width * 0.02),
               PropertiesScreenWidget.propertiesBox(
@@ -114,7 +119,12 @@ class PropertiesScreen extends StatelessWidget {
                   coveredArea: properties[4].coveredArea.toString(),
                   location: properties[4].location,
                   postDate: parseDate,
-                  onTap: () {}),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.propertiesDetailScreen,
+                      arguments: properties[4],
+                    );
+                  }),
             ],
           ),
         ),
@@ -163,7 +173,12 @@ class PropertiesScreen extends StatelessWidget {
                 coveredArea: properties[5].coveredArea.toString(),
                 location: properties[5].location,
                 postDate: parseDate,
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.propertiesDetailScreen,
+                    arguments: properties[5],
+                  );
+                },
               ),
               SizedBox(width: Get.width * 0.02),
               PropertiesScreenWidget.propertiesBox(
@@ -173,7 +188,12 @@ class PropertiesScreen extends StatelessWidget {
                   coveredArea: properties[4].coveredArea.toString(),
                   location: properties[4].location,
                   postDate: parseDate,
-                  onTap: () {}),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.propertiesDetailScreen,
+                      arguments: properties[4],
+                    );
+                  }),
             ],
           ),
         ),

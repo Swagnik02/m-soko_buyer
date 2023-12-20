@@ -144,7 +144,7 @@ class PropertiesScreenWidget {
         ),
         margin: margin,
         padding: EdgeInsets.symmetric(
-            horizontal: Get.width * 0.014, vertical: Get.height * 0.004),
+            horizontal: Get.width * 0.014, vertical: Get.height * 0.006),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -158,7 +158,7 @@ class PropertiesScreenWidget {
                             'assets/PropertyImage/empty_property_image.png')
                         as ImageProvider
                     : NetworkImage(image),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               )),
             ),
             const SizedBox(height: 8),
@@ -172,7 +172,7 @@ class PropertiesScreenWidget {
             ),
             const SizedBox(height: 2),
             Text(location, style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis)),
-            Text(Utils.formatPostDate(postDate),
+            Text(postDate,
                 style:
                     const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           ],

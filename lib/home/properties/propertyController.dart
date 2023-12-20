@@ -1,11 +1,14 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class PropertyController extends GetxController {
   late TextEditingController searchController;
+  final CarouselController carouselController = CarouselController();
+  int propertyImageCurrentIndex = 0;
   // List homeImages = [];
 
   @override
@@ -21,7 +24,13 @@ class PropertyController extends GetxController {
     searchController.dispose();
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> fetchHomeImageFromFirebase() async {
+  void setImageViewIndex(int i) {
+    propertyImageCurrentIndex = i;
+    update();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>>
+      fetchHomeImageFromFirebase() async {
     var querySnapshot = await FirebaseFirestore.instance
         .collection('property_basic_images')
         .doc('HomeImage')
@@ -29,13 +38,10 @@ class PropertyController extends GetxController {
     return querySnapshot;
   }
 
-
   Future<QuerySnapshot<Map<String, dynamic>>> fetchDataFromFirebase() async {
-    var querySnapshot = await FirebaseFirestore.instance
-        .collection('property_items')
-        .get();
+    var querySnapshot =
+        await FirebaseFirestore.instance.collection('property_items').get();
 
     return querySnapshot;
   }
-
 }
