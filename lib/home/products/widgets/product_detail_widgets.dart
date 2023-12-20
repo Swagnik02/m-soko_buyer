@@ -9,7 +9,7 @@ Row mobileOtherDetailsRow(String specName, String value, String? valueSUffix) {
         child: Text(
           '$value$valueSUffix',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       )
     ],
@@ -33,7 +33,7 @@ Tab customTab(String iconUrl, String tabName) {
 }
 
 Padding purchaseDetailsRow(
-  IconData iconName, // Change the parameter type to IconData
+  IconData iconName,
   String heading,
   String underlinedSubheading,
   String nonUnderlinedSubheading,
@@ -45,8 +45,8 @@ Padding purchaseDetailsRow(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Icon(iconName), // Use the passed iconName
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Icon(iconName),
         ),
         Expanded(
           child: Column(
@@ -54,20 +54,20 @@ Padding purchaseDetailsRow(
             children: [
               Text(
                 heading,
-                style: TextStyle(fontSize: 19),
+                style: const TextStyle(fontSize: 19),
               ),
               Row(
                 children: [
                   Text(
                     underlinedSubheading,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       decoration: TextDecoration.underline,
                     ),
                   ),
                   Text(
                     nonUnderlinedSubheading,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                     ),
                   ),
@@ -96,11 +96,11 @@ class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Tab> tabs;
 
   const CustomTabBar({
-    Key? key,
+    super.key,
     required this.color,
     required this.controller,
     required this.tabs,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
