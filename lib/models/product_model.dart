@@ -13,16 +13,22 @@ class ProductModel {
   int? itemOrderCount;
   double? itemAvgRating;
 
+  Map<String, String>? itemImages;
+
   // mobile specs
-  int? ram;
-  int? rom;
+  String? ram;
+  String? rom;
   String? processor;
   String? rearCamera;
   String? frontCamera;
   String? display;
   String? battery;
-
-  Map<String, String>? itemImages;
+  String? networkType;
+  String? simType;
+  String? isExpandableStorage;
+  String? isAudioJack;
+  String? isQuickCharging;
+  String? inTheBox;
 
   // Constructor
   ProductModel({
@@ -37,6 +43,21 @@ class ProductModel {
     this.itemOrderCount,
     this.itemImages,
     this.itemAvgRating,
+
+    // mobile specs
+    this.ram,
+    this.rom,
+    this.processor,
+    this.rearCamera,
+    this.frontCamera,
+    this.display,
+    this.battery,
+    this.networkType,
+    this.simType,
+    this.isExpandableStorage,
+    this.isAudioJack,
+    this.isQuickCharging,
+    this.inTheBox,
   });
 
   // Factory method to create a ProductModel from a Map
@@ -54,6 +75,21 @@ class ProductModel {
       itemOrderCount: data['itemOrderCount'],
       itemImages: (data['itemImages'] as Map<String, dynamic>?)
           ?.map((key, value) => MapEntry(key, value as String)),
+
+      // mobile specs
+      ram: data['ram'.toString()],
+      rom: data['rom'.toString()],
+      processor: data['processor'],
+      rearCamera: data['rearCamera'],
+      frontCamera: data['frontCamera'],
+      display: data['display'],
+      battery: data['battery'],
+      networkType: data['networkType'],
+      simType: data['simType'],
+      isExpandableStorage: data['isExpandableStorage'] == 1 ? 'YES' : 'NO',
+      isAudioJack: data['isAudioJack'] == 1 ? 'YES' : 'NO',
+      isQuickCharging: data['isQuickCharging'] == 1 ? 'YES' : 'NO',
+      inTheBox: data['inTheBox'],
     );
   }
 }
