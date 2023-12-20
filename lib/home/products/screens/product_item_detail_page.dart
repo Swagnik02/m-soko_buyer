@@ -7,7 +7,6 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
-import 'package:rating_summary/rating_summary.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
   final String pId;
@@ -48,6 +47,13 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           backgroundColor: ColorConstants.blue700,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48.0),
