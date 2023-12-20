@@ -7,6 +7,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
+import 'package:rating_summary/rating_summary.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
   final String pId;
@@ -358,7 +359,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             ),
           ),
 
-          //Purchase Details
+          // Purchase Details
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
             child: Column(
@@ -393,6 +394,112 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                         'Returns & Refunds',
                         '',
                         'Eligible for returns & refunds.',
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          // Ratings & Reviews
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Ratings & Reviews',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      GestureDetector(
+                        child: Text('View Reviews',
+                            style: TextStyle(color: Colors.blue, fontSize: 14)),
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    children: [
+                      // left side
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          // color: Colors.red,
+                          child: Column(
+                            children: [
+                              Text(
+                                '${widget.productModel.itemRatingGrade}',
+                                style: TextStyle(
+                                    color: Colors.green[700],
+                                    // color: Color(0xFF2DA50C),
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              PannableRatingBar(
+                                rate: widget.productModel.itemAvgRating ?? 0,
+                                items: List.generate(
+                                  5,
+                                  (index) => const RatingWidget(
+                                    selectedColor: Color(0xFFFFCE31),
+                                    unSelectedColor: Colors.grey,
+                                    child: Icon(
+                                      Icons.star,
+                                      size: 26,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                '${widget.productModel.itemTotalRatingCount} ratings \nand \n${widget.productModel.itemTotalReviewCount} Reviews',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 11,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      // divider
+
+                      const VerticalDivider(
+                        color: Colors.black,
+                        thickness: 10.0,
+                        width: 10.0,
+                      ),
+                      // right side
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          // color: Colors.yellow,
+                          child: Column(
+                            children: [
+                              RatingPreview(
+                                totalCount: 10,
+                                count5Stars: 2,
+                                count4Stars: 1,
+                                count3Stars: 3,
+                                count2Stars: 2,
+                                count1Stars: 2,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),

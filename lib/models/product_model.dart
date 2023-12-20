@@ -11,9 +11,13 @@ class ProductModel {
   double? itemShippingCharge;
   double? itemDiscountPercentage;
   int? itemOrderCount;
-  double? itemAvgRating;
-
   Map<String, String>? itemImages;
+
+  // ratings and reviews
+  String? itemRatingGrade;
+  double? itemAvgRating;
+  double? itemTotalRatingCount;
+  double? itemTotalReviewCount;
 
   // mobile specs
   String? ram;
@@ -42,7 +46,12 @@ class ProductModel {
     this.itemDiscountPercentage,
     this.itemOrderCount,
     this.itemImages,
+
+    // ratings and reviews
+    this.itemRatingGrade = '',
     this.itemAvgRating,
+    this.itemTotalRatingCount = 2000,
+    this.itemTotalReviewCount = 200,
 
     // mobile specs
     this.ram,
@@ -62,6 +71,10 @@ class ProductModel {
 
   // Factory method to create a ProductModel from a Map
   factory ProductModel.fromMap(Map<String, dynamic> data) {
+    double? itemAvgRating = (data['itemAvgRating'] as num?)?.toDouble();
+
+    String itemRatingGrade = determineRatingGrade(itemAvgRating);
+
     return ProductModel(
       itemName: data['itemName'],
       itemSubCategory: data['itemSubCategory'],
@@ -75,6 +88,10 @@ class ProductModel {
       itemOrderCount: data['itemOrderCount'],
       itemImages: (data['itemImages'] as Map<String, dynamic>?)
           ?.map((key, value) => MapEntry(key, value as String)),
+
+      // ratings and reviews
+      itemAvgRating: itemAvgRating,
+      itemRatingGrade: itemRatingGrade,
 
       // mobile specs
       ram: data['ram'],
@@ -91,6 +108,19 @@ class ProductModel {
       isQuickCharging: data['isQuickCharging'] == 1 ? 'YES' : 'NO',
       inTheBox: data['inTheBox'],
     );
+  }
+  static String determineRatingGrade(double? itemAvgRating) {
+    if (itemAvgRating == null) {
+      return 'No Ratings Yet';
+    } else if (itemAvgRating >= 4.5) {
+      return 'Recommended';
+    } else if (itemAvgRating >= 3.5) {
+      return 'Good';
+    } else if (itemAvgRating >= 2.5) {
+      return 'Average';
+    } else {
+      return 'Below Average';
+    }
   }
 }
 
