@@ -377,11 +377,25 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('RAM | ROM'),
+                Text('${widget.productModel.ram} | ${widget.productModel.rom}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 Text('Processor'),
+                Text('${widget.productModel.processor}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+
                 Text('Rear Camera'),
+                Text('${widget.productModel.rearCamera}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+
                 Text('Front Camera'),
+                Text('${widget.productModel.frontCamera}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 Text('Display'),
+                Text('${widget.productModel.display}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 Text('Battery'),
+                Text('${widget.productModel.battery}',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
 
                 // Other Details
 
@@ -401,15 +415,18 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                           ),
                         ),
                       ),
-                      mobileOtherDetailsRow('Network Type', '4', 'G'),
-                      mobileOtherDetailsRow('Sim Type', 'Dual', 'Sim'),
-                      mobileOtherDetailsRow('Expandable Storage', 'No', ''),
-                      mobileOtherDetailsRow('Audio Jack', 'No', ''),
-                      mobileOtherDetailsRow('Quick Charging', 'No', ''),
+                      mobileOtherDetailsRow('Network Type',
+                          '${widget.productModel.networkType}', ''),
                       mobileOtherDetailsRow(
-                          'In The Box',
-                          'USB Cable, Adaptor, cable, Mobile Phone, Ejection Pin, Manual',
-                          ''),
+                          'Sim Type', '${widget.productModel.simType}', ''),
+                      mobileOtherDetailsRow('Expandable Storage',
+                          '${widget.productModel.isExpandableStorage}', ''),
+                      mobileOtherDetailsRow('Audio Jack',
+                          '${widget.productModel.isAudioJack}', ''),
+                      mobileOtherDetailsRow('Quick Charging',
+                          '${widget.productModel.isQuickCharging}', ''),
+                      mobileOtherDetailsRow(
+                          'In The Box', '${widget.productModel.inTheBox}', ''),
                     ],
                   ),
                 ),

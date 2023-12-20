@@ -1,5 +1,4 @@
 import 'dart:developer' as devtools show log;
-import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
