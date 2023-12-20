@@ -1,4 +1,5 @@
 import 'dart:developer' as devtools show log;
+import 'dart:js_interop';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
@@ -77,8 +78,8 @@ class ProductModel {
           ?.map((key, value) => MapEntry(key, value as String)),
 
       // mobile specs
-      ram: data['ram'.toString()],
-      rom: data['rom'.toString()],
+      ram: data['ram'],
+      rom: data['rom'],
       processor: data['processor'],
       rearCamera: data['rearCamera'],
       frontCamera: data['frontCamera'],
