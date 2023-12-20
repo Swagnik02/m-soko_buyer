@@ -260,7 +260,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${GlobalUtil.currencySymbol}${widget.productModel.price}",
+                        "${GlobalUtil.currencySymbol}${widget.productModel.itemMrp}",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
@@ -287,7 +287,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        widget.productModel.name ?? '',
+                        widget.productModel.itemName ?? '',
                         style: const TextStyle(
                           fontSize: 14.0,
                         ),
@@ -365,8 +365,8 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 8.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 16, bottom: 8.0),
             child: Text(
               'Highlights',
               style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),

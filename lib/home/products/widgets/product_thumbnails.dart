@@ -10,7 +10,7 @@ class ProductThumbnail extends StatelessWidget {
   final String itemThumbnail;
   final String itemName;
   final String itemSubCategory;
-  final int itemPrice;
+  final int itemMrp;
   final String itemShippingCharge;
   final int? itemDiscountPercentage;
   final String itemOrderCount;
@@ -21,7 +21,7 @@ class ProductThumbnail extends StatelessWidget {
     required this.itemThumbnail,
     required this.itemName,
     required this.itemSubCategory,
-    required this.itemPrice,
+    required this.itemMrp,
     required this.itemShippingCharge,
     required this.itemOrderCount,
     this.itemDiscountPercentage,
@@ -29,8 +29,7 @@ class ProductThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double finalcost =
-        itemPrice - (itemPrice * (itemDiscountPercentage! / 100));
+    double finalcost = itemMrp - (itemMrp * (itemDiscountPercentage! / 100));
     return GestureDetector(
       onTap: () async {
         ProductModel? productModel = await collectProductData(itemPid);

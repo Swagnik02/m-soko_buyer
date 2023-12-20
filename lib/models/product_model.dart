@@ -2,10 +2,9 @@ import 'dart:developer' as devtools show log;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
-  String? name;
-  String? subCategory;
-  double? price;
-  String? specs;
+  String? itemName;
+  String? itemSubCategory;
+  double? itemMrp;
   String? mainCategory;
   String? productId;
   String? itemThumbnail;
@@ -14,14 +13,22 @@ class ProductModel {
   int? itemOrderCount;
   double? itemAvgRating;
 
+  // mobile specs
+  int? ram;
+  int? rom;
+  String? processor;
+  String? rearCamera;
+  String? frontCamera;
+  String? display;
+  String? battery;
+
   Map<String, String>? itemImages;
 
   // Constructor
   ProductModel({
-    this.name,
-    this.subCategory,
-    this.price,
-    this.specs,
+    this.itemName,
+    this.itemSubCategory,
+    this.itemMrp,
     this.mainCategory,
     this.productId,
     this.itemThumbnail,
@@ -35,10 +42,9 @@ class ProductModel {
   // Factory method to create a ProductModel from a Map
   factory ProductModel.fromMap(Map<String, dynamic> data) {
     return ProductModel(
-      name: data['itemName'],
-      subCategory: data['itemSubCategory'],
-      price: (data['itemPrice'] as num?)?.toDouble(),
-      specs: data['itemspecs'],
+      itemName: data['itemName'],
+      itemSubCategory: data['itemSubCategory'],
+      itemMrp: (data['itemMrp'] as num?)?.toDouble(),
       mainCategory: data['prdItemCategory'],
       productId: data['pid'],
       itemThumbnail: data['itemThumbnail'],

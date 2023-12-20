@@ -46,7 +46,7 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
       'itemThumbnail': doc['itemThumbnail'],
       'itemName': doc['itemName'],
       'itemSubCategory': doc['itemSubCategory'],
-      'itemPrice': doc['itemPrice'],
+      'itemMrp': doc['itemMrp'],
       'itemShippingCharge': doc['itemShippingCharge'],
       'itemDiscountPercentage': doc['itemDiscountPercentage'],
       'itemOrderCount': doc['itemOrderCount'],
