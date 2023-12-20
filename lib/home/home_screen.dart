@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
@@ -19,8 +20,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  // String get userId => AuthService.firebase().currentUser!.id;
-  // String get userName => AuthService.firebase().currentUser!.name;
+  String get userId => FirebaseAuth.instance.currentUser?.uid ?? "";
+
+  // String get userName =>
 
   int navBarIndex = 2;
   int _topBarIndex = 0;

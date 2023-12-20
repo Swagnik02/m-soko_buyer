@@ -13,14 +13,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // String get userId => AuthService.firebase().currentUser!.id;
-  //
-  // String get userName => AuthService.firebase().currentUser!.name;
-  //
-  // String get email => AuthService.firebase().currentUser!.email;
+  String get userId => FirebaseAuth.instance.currentUser?.uid ?? 'userid007';
 
-  // String get mobile => AuthService.firebase().currentUser!.mobile;
-  String mobile = '+27 9034566774';
+  String get userName =>
+      FirebaseAuth.instance.currentUser?.displayName ?? 'user';
+
+  String get email =>
+      FirebaseAuth.instance.currentUser?.email ?? 'user@email.com';
+
+  String get mobile =>
+      FirebaseAuth.instance.currentUser?.phoneNumber ?? '+27 9034566774';
 
   String city = 'Kolkata';
 
@@ -84,8 +86,8 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Hello userName!',
+                  Text(
+                    'Hello $userName!',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -94,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     mobile,
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
@@ -122,11 +124,11 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
         const SizedBox(height: 3),
-        const Row(
+        Row(
           children: [
             Icon(CupertinoIcons.mail),
             SizedBox(width: 5),
-            // Text(email),
+            Text(email),
           ],
         ),
         const SizedBox(height: 25),

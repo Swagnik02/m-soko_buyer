@@ -48,11 +48,9 @@ dependencies:
   image_picker: ^1.0.4
   permission_handler: ^11.1.0
   get: ^4.6.6
+  logger: ^2.0.2+1
   shared_preferences: ^2.2.2
-  logger:
-  carousel_slider: ^4.2.1
   flutter_pannable_rating_bar: ^2.7.2+1
-  rating_summary: ^1.0.2+1
 
 dev_dependencies:
   flutter_test:
