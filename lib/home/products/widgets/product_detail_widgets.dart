@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Row mobileOtherDetailsRow(String specName, String value, String? valueSUffix) {
   return Row(
@@ -27,6 +28,64 @@ Tab customTab(String iconUrl, String tabName) {
           ),
         ],
       ),
+    ),
+  );
+}
+
+Padding purchaseDetailsRow(
+  IconData iconName, // Change the parameter type to IconData
+  String heading,
+  String underlinedSubheading,
+  String nonUnderlinedSubheading,
+) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Icon(iconName), // Use the passed iconName
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                heading,
+                style: TextStyle(fontSize: 19),
+              ),
+              Row(
+                children: [
+                  Text(
+                    underlinedSubheading,
+                    style: TextStyle(
+                      fontSize: 11,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                  Text(
+                    nonUnderlinedSubheading,
+                    style: TextStyle(
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Fluttertoast.showToast(msg: 'Shipping Details');
+          },
+          child: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 20,
+          ),
+        ),
+      ],
     ),
   );
 }

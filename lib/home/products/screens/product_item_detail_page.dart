@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
@@ -336,6 +339,8 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
               ],
             ),
           ),
+
+          // All Details Button
           GestureDetector(
             onTap: () {
               _tabController.animateTo(1);
@@ -353,7 +358,50 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                 ],
               ),
             ),
-          )
+          ),
+
+          //Purchase Details
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Purchase Details',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 19,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Column(
+                    children: [
+                      purchaseDetailsRow(
+                        Icons.local_shipping_outlined,
+                        'Shipping',
+                        'Contact supplier',
+                        ' to negotiate shipping.',
+                      ),
+                      purchaseDetailsRow(
+                        Icons.payment_rounded,
+                        'Payment',
+                        '',
+                        'Enjoy encrypted and secure payments.',
+                      ),
+                      purchaseDetailsRow(
+                        CupertinoIcons.arrow_uturn_left,
+                        'Returns & Refunds',
+                        '',
+                        'Eligible for returns & refunds.',
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -376,26 +424,26 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('RAM | ROM'),
+                const Text('RAM | ROM'),
                 Text('${widget.productModel.ram} | ${widget.productModel.rom}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('Processor'),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Processor'),
                 Text('${widget.productModel.processor}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
 
-                Text('Rear Camera'),
+                const Text('Rear Camera'),
                 Text('${widget.productModel.rearCamera}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
 
-                Text('Front Camera'),
+                const Text('Front Camera'),
                 Text('${widget.productModel.frontCamera}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('Display'),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Display'),
                 Text('${widget.productModel.display}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                Text('Battery'),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Battery'),
                 Text('${widget.productModel.battery}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
 
                 // Other Details
 
