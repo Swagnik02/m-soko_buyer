@@ -4,6 +4,7 @@ import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/home/products/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
@@ -52,9 +53,9 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
               color: Colors.white,
               controller: _tabController,
               tabs: [
-                _customTab('assets/icons/overview_icon.png', 'Overview'),
-                _customTab('assets/icons/details_icon.png', 'Details'),
-                _customTab('assets/icons/similar_icon.png', 'Similar'),
+                customTab('assets/icons/overview_icon.png', 'Overview'),
+                customTab('assets/icons/details_icon.png', 'Details'),
+                customTab('assets/icons/similar_icon.png', 'Similar'),
               ],
             ),
           ),
@@ -108,12 +109,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
   }
 
   Widget _buildOverviewSection() {
-    // Assuming `ProductModel` has a property `itemImages` that is a map of image URLs.
     Map<String, String>? photos = widget.productModel.itemImages;
-
-    // Store the selected index
-
-    // Create a list of Image.network widgets for preloading
     List<Widget> imageWidgets = [];
 
     if (photos != null) {
@@ -364,55 +360,68 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
   }
 
   Widget _buildDetailsSection() {
-    // Implement your Details section here
-    return const Center(child: Text("Details Section"));
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 8.0),
+            child: Text(
+              'Highlights',
+              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+            ),
+          ),
+          if (widget.productModel.mainCategory == 'Mobiles')
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('RAM | ROM'),
+                Text('Processor'),
+                Text('Rear Camera'),
+                Text('Front Camera'),
+                Text('Display'),
+                Text('Battery'),
+
+                // Other Details
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          'Other Details',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      mobileOtherDetailsRow('Network Type', '4', 'G'),
+                      mobileOtherDetailsRow('Sim Type', 'Dual', 'Sim'),
+                      mobileOtherDetailsRow('Expandable Storage', 'No', ''),
+                      mobileOtherDetailsRow('Audio Jack', 'No', ''),
+                      mobileOtherDetailsRow('Quick Charging', 'No', ''),
+                      mobileOtherDetailsRow(
+                          'In The Box',
+                          'USB Cable, Adaptor, cable, Mobile Phone, Ejection Pin, Manual',
+                          ''),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSimilarSection() {
     // Implement your Similar section here
     return const Center(child: Text("Similar Section"));
   }
-
-  Tab _customTab(String iconUrl, String tabName) {
-    return Tab(
-      child: Container(
-        child: Row(
-          children: [
-            Image.asset(iconUrl),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(tabName),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
-  final Color color;
-  final TabController controller;
-  final List<Tab> tabs;
-
-  const CustomTabBar({
-    Key? key,
-    required this.color,
-    required this.controller,
-    required this.tabs,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: TabBar(
-        controller: controller,
-        tabs: tabs,
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(48.0);
 }
