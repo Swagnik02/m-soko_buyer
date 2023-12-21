@@ -4,12 +4,14 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_soko/models/user_model.dart';
 
 String lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 class LogoutScreen extends StatelessWidget {
-  const LogoutScreen({super.key});
+  LogoutScreen({super.key});
 
   String get userId => FirebaseAuth.instance.currentUser?.uid ?? "";
   @override
@@ -42,11 +44,17 @@ class LogoutScreen extends StatelessWidget {
               // alt=media&token=0dda43dd-29ed-4f71-a4c2-88804f5c463f'),
               // ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Call a function to add categories
                   // addCategories();
                   // addProducts();
-                  updateUserData();
+                  // updateUserData();
+                  // someFunction();
+                  Fluttertoast.showToast(
+                      msg: '${UserDataService().userModel?.pin} ');
+                  // Call fetchUserData to update the user data
+                  // fecthUsersData(
+                  //     FirebaseAuth.instance.currentUser?.email ?? "");
                   // addProductsItems();
                 },
                 child: const Text('Add Categories'),
@@ -66,6 +74,28 @@ class LogoutScreen extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+Future<void> fecthUsersData(String email) async {
+  try {
+    CollectionReference usersCollection =
+        FirebaseFirestore.instance.collection('users');
+    QuerySnapshot querySnapshot =
+        await usersCollection.where('email', isEqualTo: email).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      for (QueryDocumentSnapshot productDocument in querySnapshot.docs) {
+        Map<String, dynamic> productData =
+            productDocument.data() as Map<String, dynamic>;
+
+        devtools.log('Users Data for $email: $productData');
+      }
+    } else {
+      devtools.log('No user found with email: $email');
+    }
+  } catch (e) {
+    devtools.log('Error collecting user data: $e');
   }
 }
 

@@ -1,43 +1,112 @@
 import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel {
-  String get userId => FirebaseAuth.instance.currentUser?.uid ?? 'userid007';
+  String userName;
+  String email;
+  String? country;
+  String? uid;
+  String? pin;
+  String? city;
+  String? mobile;
+  String? state;
 
-  String get userName =>
-      FirebaseAuth.instance.currentUser?.displayName ?? 'user';
+  UserModel({
+    required this.userName,
+    required this.email,
+    this.country,
+    this.uid,
+    this.pin,
+    this.city,
+    this.mobile,
+    this.state,
+  });
 
-  String get email =>
-      FirebaseAuth.instance.currentUser?.email ?? 'user@email.com';
+  // Add any other methods or properties you need
+}
 
-  String get mobile =>
-      FirebaseAuth.instance.currentUser?.phoneNumber ?? '+27 9034566774';
+class UserDataService {
+  static final UserDataService _instance = UserDataService._internal();
 
-  String city = 'Kolkata';
-  String pin = '731303';
-  String state = 'West Bengal';
-  String country = 'India';
+  factory UserDataService() {
+    return _instance;
+  }
 
-  Future<void> fetchUserData() async {
+  UserDataService._internal();
+
+  UserModel? _userModel;
+
+  UserModel? get userModel => _userModel;
+  Future<void> fetchUserData(String userEmail) async {
     try {
-      final DocumentSnapshot<Map<String, dynamic>> userDoc =
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
-              .get();
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        // User not authenticated
+        return;
+      }
 
-      if (userDoc.exists) {
-        // Assuming you have fields like 'city', 'pin', 'state', 'country' in your document
-        // Adjust this based on your actual data structure
-        city = userDoc['city'] ?? 'Kolkata';
-        pin = userDoc['pin'] ?? '731303';
-        state = userDoc['state'] ?? 'West Bengal';
-        country = userDoc['country'] ?? 'India';
+      String userEmail = currentUser.email ?? "";
+      if (userEmail.isEmpty) {
+        // Email not available
+        return;
+      }
+
+      CollectionReference usersCollection =
+          FirebaseFirestore.instance.collection('users');
+      QuerySnapshot querySnapshot =
+          await usersCollection.where('email', isEqualTo: userEmail).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        for (QueryDocumentSnapshot productDocument in querySnapshot.docs) {
+          Map<String, dynamic> userData =
+              productDocument.data() as Map<String, dynamic>;
+
+          _userModel = UserModel(
+            country: userData['country'].toString(),
+            uid: userData['uid'].toString(),
+            pin: userData['pin'].toString(),
+            city: userData['city'].toString(),
+            mobile: userData['mobile'].toString(),
+            state: userData['state'].toString(),
+            userName: userData['userName'].toString(),
+            email: userData['email'].toString(),
+          );
+          log('Users Data for $userEmail: $userData');
+        }
+      } else {
+        // User not found
+        _userModel = null;
       }
     } catch (e) {
-      // Handle error appropriately
-      log('Error fetching user data: $e');
+      // Handle specific Firestore exceptions
+      log('Error collecting user data: $e');
+    }
+  }
+
+  void storeUserDataLocally() {
+    if (_userModel != null) {
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setString('user_email', _userModel!.email);
+        prefs.setString('user_name', _userModel!.userName);
+        prefs.setString('country', _userModel?.country ?? '');
+        prefs.setString('uid', _userModel?.uid ?? '');
+        prefs.setString('pin', _userModel?.pin ?? '');
+        prefs.setString('city', _userModel?.city ?? '');
+        prefs.setString('mobile', _userModel?.mobile ?? '');
+        prefs.setString('state', _userModel?.state ?? '');
+      });
+    }
+  }
+
+  // Add a method to retrieve user data from local storage
+  Future<void> retrieveUserDataLocally() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userEmail = prefs.getString('user_email') ?? "";
+    if (userEmail.isNotEmpty) {
+      await fetchUserData(userEmail);
     }
   }
 }

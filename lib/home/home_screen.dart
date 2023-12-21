@@ -196,7 +196,7 @@ class HomeScreenState extends State<HomeScreen> {
       case 2:
         return ServicesScreen();
       case 3:
-        return const LogoutScreen();
+        return LogoutScreen();
 
       default:
         return Container();

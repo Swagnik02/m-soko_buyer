@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class LoginController extends GetxController {
@@ -28,14 +29,34 @@ class LoginController extends GetxController {
     super.dispose();
   }
 
+  // Future<void> logIn() async {
+  //   try {
+  //     await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(
+  //           email: email.text,
+  //           password: password.text,
+  //         )
+  //         .then((value) => Get.offAllNamed(AppRoutes.homeScreen));
+  //   } on FirebaseAuthException catch (e) {
+  //     Logger().e(e);
+  //   }
+  // }
   Future<void> logIn() async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-            email: email.text,
-            password: password.text,
-          )
-          .then((value) => Get.offAllNamed(AppRoutes.homeScreen));
+        email: email.text,
+        password: password.text,
+      )
+          .then((value) {
+        UserDataService().fetchUserData(email.text).then((_) {
+          // // Store user data locally after successful login
+          UserDataService().storeUserDataLocally();
+        });
+
+        // Navigate to the home screen
+        Get.offAllNamed(AppRoutes.homeScreen);
+      });
     } on FirebaseAuthException catch (e) {
       Logger().e(e);
     }
