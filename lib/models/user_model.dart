@@ -65,15 +65,16 @@ class UserDataService {
               productDocument.data() as Map<String, dynamic>;
 
           _userModel = UserModel(
-            country: userData['country'].toString(),
-            uid: userData['uid'].toString(),
-            pin: userData['pin'].toString(),
-            city: userData['city'].toString(),
-            mobile: userData['mobile'].toString(),
-            state: userData['state'].toString(),
-            userName: userData['userName'].toString(),
-            email: userData['email'].toString(),
+            country: userData['country']?.toString() ?? '',
+            uid: userData['uid']?.toString() ?? '',
+            pin: userData['pin']?.toString() ?? '',
+            city: userData['city']?.toString() ?? '',
+            mobile: userData['mobile']?.toString() ?? '',
+            state: userData['state']?.toString() ?? '',
+            userName: userData['userName']?.toString() ?? '',
+            email: userData['email']?.toString() ?? '',
           );
+
           log('Users Data for $userEmail: $userData');
         }
       } else {
