@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/widgets.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
@@ -37,6 +38,27 @@ class _ProfilePageState extends State<ProfilePage> {
     _stateController.text = Users.state!;
     _countryController.text = Users.country!;
     _pincodeController.text = Users.pin!;
+  }
+
+  UserModel _getUserDataFromEditedValues() {
+    // Replace this with your logic to get updated values from UI
+    // Example: Assuming you have TextEditingControllers for each field
+    String updatedUserName = _userNameController.text;
+    String updatedCountry = _countryController.text;
+    String updatedPin = _pincodeController.text;
+    String updatedCity = _cityController.text;
+    String updatedMobile = _mobileController.text;
+    String updatedState = _stateController.text;
+
+    return UserModel(
+      userName: updatedUserName,
+      country: updatedCountry,
+      pin: updatedPin,
+      city: updatedCity,
+      mobile: updatedMobile,
+      state: updatedState,
+      email: Users.email,
+    );
   }
 
   @override
@@ -137,7 +159,10 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    UserModel updatedUserData =
+                        _getUserDataFromEditedValues(); // Implement this function to get updated values
+                    await UserDataService().updateUserData(updatedUserData);
                     setState(() {
                       _index = 0;
                     });
@@ -238,24 +263,28 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hello ${Users.userName}!',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                  child: Container(
+                    width: 180,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hello ${Users.userName}!',
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '${Users.mobile}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
+                        Text(
+                          '${Users.mobile}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

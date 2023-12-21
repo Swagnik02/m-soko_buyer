@@ -24,7 +24,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   // String get userName =>
 
-  int navBarIndex = 0;
+  int navBarIndex = 2;
   int _topBarIndex = 0;
 
   @override

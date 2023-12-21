@@ -109,4 +109,39 @@ class UserDataService {
       await fetchUserData(userEmail);
     }
   }
+
+  Future<void> updateUserData(UserModel updatedUserData) async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        // User not authenticated
+        return;
+      }
+
+      String userEmail = currentUser.email ?? "";
+      if (userEmail.isEmpty) {
+        // Email not available
+        return;
+      }
+
+      CollectionReference usersCollection =
+          FirebaseFirestore.instance.collection('users');
+      await usersCollection.doc(userEmail).update({
+        'country': updatedUserData.country,
+        // 'uid': updatedUserData.uid,
+        'pin': updatedUserData.pin,
+        'city': updatedUserData.city,
+        'mobile': updatedUserData.mobile,
+        'state': updatedUserData.state,
+        'userName': updatedUserData.userName,
+        // 'email': updatedUserData.email,
+      });
+
+      _userModel = updatedUserData;
+      storeUserDataLocally(); // Update local storage with new data
+    } catch (e) {
+      // Handle specific Firestore exceptions
+      log('Error updating user data: $e');
+    }
+  }
 }
