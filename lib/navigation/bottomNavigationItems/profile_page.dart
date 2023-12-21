@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Icon(CupertinoIcons.mail),
             SizedBox(width: 5),
-            Text(Users.email ?? ''),
+            Text(Users.email),
           ],
         ),
         const SizedBox(height: 25),
