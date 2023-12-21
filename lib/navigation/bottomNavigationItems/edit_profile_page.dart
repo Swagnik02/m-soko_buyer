@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class edit_ProfilePage extends StatefulWidget {
+  const edit_ProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<edit_ProfilePage> createState() => edit__ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class edit__ProfilePageState extends State<edit_ProfilePage> {
   int n = 4;
   @override
   Widget build(BuildContext context) {
@@ -25,18 +25,14 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _miniProfile(),
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         _aboutSection(context),
-                        _otherSection(context),
                       ],
                     ),
                   ),
@@ -108,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _aboutSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text('Primary Information'),
         const SizedBox(height: 10),
@@ -133,16 +129,9 @@ class _ProfilePageState extends State<ProfilePage> {
         Text('${Users.city} ${Users.pin}'),
         const SizedBox(height: 5),
         Text('${Users.state}, ${Users.country}'),
-      ],
-    );
-  }
 
-  Widget _otherSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
         // Activity
+
         const SizedBox(height: 25),
         const Text('Activity'),
         const SizedBox(height: 10),
