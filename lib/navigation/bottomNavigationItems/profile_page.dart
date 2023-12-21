@@ -3,37 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String get userId => FirebaseAuth.instance.currentUser?.uid ?? 'userid007';
-
-  String get userName =>
-      FirebaseAuth.instance.currentUser?.displayName ?? 'user';
-
-  String get email =>
-      FirebaseAuth.instance.currentUser?.email ?? 'user@email.com';
-
-  String get mobile =>
-      FirebaseAuth.instance.currentUser?.phoneNumber ?? '+27 9034566774';
-
-  String city = 'Kolkata';
-
-  String pin = '731303';
-
-  String state = 'West Bengal';
-
-  String country = 'India';
-
-  String n = '4';
-
+  int n = 4;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,14 +68,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hello $userName!',
+                    'Hello ${Users.userName}!',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    mobile,
+                    '${Users.mobile}',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
@@ -120,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             const Icon(CupertinoIcons.device_phone_portrait),
             const SizedBox(width: 5),
-            Text(mobile),
+            Text(Users.mobile.toString()),
           ],
         ),
         const SizedBox(height: 3),
@@ -128,15 +109,15 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             Icon(CupertinoIcons.mail),
             SizedBox(width: 5),
-            Text(email),
+            Text(Users.email ?? ''),
           ],
         ),
         const SizedBox(height: 25),
         const Text('Address'),
         const SizedBox(height: 10),
-        Text('$city $pin'),
+        Text('${Users.city} ${Users.pin}'),
         const SizedBox(height: 5),
-        Text('$state, $country'),
+        Text('${Users.state}, ${Users.country}'),
 
         // Activity
 
