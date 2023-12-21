@@ -15,6 +15,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   int n = 4;
+  int _index = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,21 +29,86 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _miniProfile(),
+                  _index == 0 ? _miniProfile() : _editProfile(),
                   const SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        _aboutSection(context),
+                        _index == 0 ? _showAboutSection(context) : Container(),
                         _otherSection(context),
                       ],
                     ),
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _editProfile() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.white,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Material(
+        elevation: 2,
+        borderRadius: BorderRadius.circular(8),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset('assets/def_profile.png'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hello ${Users.userName}!',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '${Users.mobile}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+              child: _editAboutSection(context),
+            ),
+            IconButton(
+              onPressed: () {
+                // Define the action to be performed when the button is pressed
+              },
+              icon: Icon(Icons.save),
             ),
           ],
         ),
@@ -105,7 +172,40 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _aboutSection(BuildContext context) {
+  Widget _showAboutSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const Text('Primary Information'),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            const Icon(CupertinoIcons.device_phone_portrait),
+            const SizedBox(width: 5),
+            Text(Users.mobile.toString()),
+          ],
+        ),
+        const SizedBox(height: 3),
+        Row(
+          children: [
+            Icon(CupertinoIcons.mail),
+            SizedBox(width: 5),
+            Text(Users.email),
+          ],
+        ),
+        const SizedBox(height: 25),
+        const Text('Address'),
+        const SizedBox(height: 10),
+        Text('${Users.city} ${Users.pin}'),
+        const SizedBox(height: 5),
+        Text('${Users.state}, ${Users.country}'),
+        const SizedBox(height: 25),
+      ],
+    );
+  }
+
+  Widget _editAboutSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -143,7 +243,7 @@ class _ProfilePageState extends State<ProfilePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // Activity
-        const SizedBox(height: 25),
+
         const Text('Activity'),
         const SizedBox(height: 10),
         InkWell(
