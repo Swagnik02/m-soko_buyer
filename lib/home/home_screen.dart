@@ -6,7 +6,7 @@ import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/profile_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
 import 'package:m_soko/home/properties/properties_screen.dart';
@@ -24,7 +24,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   // String get userName =>
 
-  int navBarIndex = 2;
+  int navBarIndex = 0;
   int _topBarIndex = 0;
 
   @override

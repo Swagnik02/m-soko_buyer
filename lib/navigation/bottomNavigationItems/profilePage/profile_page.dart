@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/widgets.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -170,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         const SizedBox(height: 5),
 
-        _customRow('Username', _userNameController, 'Enter you new Username'),
+        customRow('Username', _userNameController, 'Enter you new Username'),
         Row(
           children: [
             const Icon(CupertinoIcons.device_phone_portrait),
@@ -205,40 +206,11 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 5),
-        _customRow('City', _cityController, 'Enter you new city'),
-        _customRow('Pincode', _pincodeController, 'Enter you new pincode'),
-        _customRow('State', _stateController, 'Enter you new state'),
-        _customRow('Country', _countryController, 'Enter you new country'),
+        customRow('City', _cityController, 'Enter you new city'),
+        customRow('Pincode', _pincodeController, 'Enter you new pincode'),
+        customRow('State', _stateController, 'Enter you new state'),
+        customRow('Country', _countryController, 'Enter you new country'),
       ],
-    );
-  }
-
-  Widget _customRow(
-    String label,
-    TextEditingController controller,
-    String hintText,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        children: [
-          Text('$label:'),
-          const SizedBox(width: 5),
-          Expanded(
-            child: SizedBox(
-              height: 20,
-              child: TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                  hintText: hintText,
-                  contentPadding: EdgeInsets.only(bottom: 12),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
