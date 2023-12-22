@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
+import 'package:m_soko/models/property.dart';
 
 class PropertiesScreenWidget {
   static Widget searchBox() {
@@ -124,6 +125,146 @@ class PropertiesScreenWidget {
     );
   }
 
+  static Widget propertiesDetailTitleBox({
+    required PropertyModel propertyModel,
+  }) {
+    final convertPostDate =
+        Utils.formatPostDate(propertyModel.postDate.toString());
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "TZS ${propertyModel.sellingPrice} Cr | ${propertyModel.rooms} ${propertyModel.title}",
+              style: const TextStyle(
+                  fontSize: 26, overflow: TextOverflow.ellipsis),
+            ),
+            SizedBox(height: Get.height * 0.01),
+            Row(
+              children: [
+                const Icon(Icons.location_on, color: ColorConstants.blue700),
+                SizedBox(width: Get.width * 0.01),
+                Text(
+                  propertyModel.location,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                )
+              ],
+            ),
+            SizedBox(height: Get.height * 0.008),
+            Text(
+              'Post on $convertPostDate, By ${propertyModel.postBy}',
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: Get.height * 0.01),
+            Text(
+              'Rera Id: ${propertyModel.reraId}',
+              style: const TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget propertiesDetailContactBox({
+    required PropertyModel propertyModel,
+  }) {
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'AGENT',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blue.shade700,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  propertyModel.agentName,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
+            Utils.customButton(
+              title: 'Contact Now',
+              onTap: () {},
+              size: const Size(160, 60),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget propertiesDetailInfoBox(
+      {required PropertyModel propertyModel}) {
+    final convertPostDate =
+    Utils.formatPostDate(propertyModel.postDate.toString());
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Utils.titleWithSubTitle(
+                firstTitle: 'Covered Area',
+                firstSubTitle: "${propertyModel.coveredArea} sqft",
+                secondTitle: 'Furnishing',
+                secondSubTitle: 'Semi-Furnished'),
+            SizedBox(height: Get.height * 0.01),
+            Utils.titleWithSubTitle(
+                firstTitle: 'Configuration',
+                firstSubTitle:
+                    "${propertyModel.bedRoom} Bed, ${propertyModel.bathRoom} Bath",
+                paddingSecond: EdgeInsets.only(right: Get.width * 0.12),
+                secondTitle: 'Status',
+                secondSubTitle: propertyModel.listingStatus),
+            SizedBox(height: Get.height * 0.01),
+            Utils.titleWithSubTitle(
+                firstTitle: 'Possession',
+                firstSubTitle: convertPostDate,
+                secondTitle: 'Car Packing',
+                secondSubTitle: '1 Covered'),
+          ],
+        ),
+      ),
+    );
+  }
+
   static Widget propertiesBox({
     required String image,
     required String rooms,
@@ -131,11 +272,13 @@ class PropertiesScreenWidget {
     required String sellingPrice,
     required String location,
     required String postDate,
-    required Function onTap,
+    required VoidCallback onTap,
     EdgeInsets? margin,
   }) {
+    final convertPostDate =
+    Utils.formatPostDate(postDate.toString());
     return InkWell(
-      onTap: () => onTap(),
+      onTap: onTap,
       child: Container(
         width: 200,
         decoration: BoxDecoration(
@@ -168,11 +311,14 @@ class PropertiesScreenWidget {
               'TZS $sellingPrice Cr | $coveredArea sqft',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             const SizedBox(height: 2),
-            Text(location, style: const TextStyle(fontSize: 12,overflow: TextOverflow.ellipsis)),
-            Text(postDate,
+            Text(location,
+                style: const TextStyle(
+                    fontSize: 12, overflow: TextOverflow.ellipsis)),
+            Text(convertPostDate,
                 style:
                     const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           ],

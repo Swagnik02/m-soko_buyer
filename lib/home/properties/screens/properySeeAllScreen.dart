@@ -8,6 +8,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
 import 'package:m_soko/models/property.dart';
+import 'package:m_soko/routes/appRoutes.dart';
 
 class PropertySeeAllScreen extends StatelessWidget {
   const PropertySeeAllScreen({super.key});
@@ -57,7 +58,10 @@ class PropertySeeAllScreen extends StatelessWidget {
                     sellingPrice: data.sellingPrice.toString(),
                     location: data.location,
                     postDate: data.postDate.toString(),
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.propertiesDetailScreen,
+                          arguments: data);
+                    },
                   );
                 },
               );
