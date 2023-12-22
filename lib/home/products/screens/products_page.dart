@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
