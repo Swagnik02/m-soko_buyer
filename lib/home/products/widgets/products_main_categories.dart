@@ -56,7 +56,7 @@ class ProductsMainCategoryWidget extends StatelessWidget {
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(10),
-        // color: ColorConstants.yellow50,
+        color: const Color(0x1F0E6E6E6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
