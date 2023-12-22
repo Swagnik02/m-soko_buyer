@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController controller = Get.put(ProfileController());
-    controller.index = 0;
+    // controller.index = 0;
     return Scaffold(
       body: GetBuilder<ProfileController>(
         builder: (_) => SafeArea(

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 
 class BottomNavBar extends StatefulWidget {
   final Function(int mainNavBarIndex) onIndexChanged;
@@ -79,6 +81,7 @@ class BottomNavBarState extends State<BottomNavBar> {
       onTap: (index) {
         setState(() {
           mainNavBarIndex = index;
+          Get.delete<ProfileController>();
         });
         widget.onIndexChanged(mainNavBarIndex);
 
