@@ -1,13 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/widgets.dart';
-import 'package:m_soko/routes/app_routes.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -40,7 +37,7 @@ class ProfilePage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   _showAboutSection(context),
-                                  _otherSection(context, controller),
+                                  _otherSection(controller, context),
                                 ],
                               ),
                             )
@@ -298,7 +295,10 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _otherSection(BuildContext context, ProfileController controller) {
+  Widget _otherSection(
+    ProfileController controller,
+    BuildContext context,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
