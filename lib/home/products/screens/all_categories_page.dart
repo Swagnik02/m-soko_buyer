@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/products_main_categories.dart';
+import 'package:m_soko/home/products/widgets/recently_viewed.dart';
 
 class AllCategoriesPage extends StatefulWidget {
   const AllCategoriesPage({super.key});
@@ -46,7 +47,7 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
                 child: Column(
                   children: [
                     _mainCategories(),
-                    _recentlyViewed(),
+                    recentlyViewed(true),
                     _specialOffers(),
                   ],
                 )),
@@ -89,55 +90,6 @@ class _AllCategoriesPageState extends State<AllCategoriesPage> {
           );
         }
       },
-    );
-  }
-
-  Widget _recentlyViewed() {
-    return Container(
-      height: 200,
-      width: double.infinity,
-      // color: Colors.red,
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Recently Viewed',
-            style: TextStyle(
-              fontSize: 23,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ProductsMainCategoryWidget(
-                    imagePath: 'assets/tests/Mobiles.png',
-                    categoryName: 'Mobiles',
-                    index: 2,
-                  ),
-                  ProductsMainCategoryWidget(
-                    imagePath: 'assets/tests/smartWatch.png',
-                    categoryName: 'Smart Watches',
-                    index: 2,
-                  ),
-                  ProductsMainCategoryWidget(
-                    imagePath: 'assets/tests/Headphones.png',
-                    categoryName: 'Headphones',
-                    index: 2,
-                  ),
-                  ProductsMainCategoryWidget(
-                    imagePath: 'assets/tests/Laptops.png',
-                    categoryName: 'Laptops',
-                    index: 2,
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
     );
   }
 

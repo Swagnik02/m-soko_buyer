@@ -7,6 +7,7 @@ import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
 import 'package:m_soko/home/products/widgets/products_main_categories.dart';
+import 'package:m_soko/home/products/widgets/recently_viewed.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class ProductsScreen extends StatelessWidget {
               _filters(context),
               // const SizedBox(height: 15),
               // // 2nd Category
-              // _secondCategory(),
+              recentlyViewed(false),
               // const SizedBox(height: 15),
               // // top rated
               // _topRated(),
@@ -150,10 +151,6 @@ class ProductsScreen extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget _secondCategory() {
-  return Container();
 }
 
 Widget _topRated() {
