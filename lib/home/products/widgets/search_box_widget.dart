@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/search_products_page.dart';
 import 'package:m_soko/home/products/screens/search_result_page.dart';
+import 'package:m_soko/navigation/page_transitions.dart';
 
 final TextEditingController _searchText = TextEditingController();
 Widget searchBox(
@@ -26,16 +27,26 @@ Widget searchBox(
               onTap: () {
                 String searchKeyword = _searchText.text;
                 isSearchable
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SearchResultPage(searchKeyword: searchKeyword)),
+                    ? Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return SearchResultPage(
+                                searchKeyword: searchKeyword);
+                          },
+                          transitionsBuilder:
+                              customTransition(const Offset(1, 0)),
+                        ),
                       )
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SearchProductsPage()),
+                    : Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return SearchProductsPage();
+                          },
+                          transitionsBuilder:
+                              customTransition(const Offset(0, 0)),
+                        ),
                       );
               },
               child: Icon(CupertinoIcons.search,
