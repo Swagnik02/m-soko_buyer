@@ -118,12 +118,19 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () async {
-                      controller.isLoading(true);
-                      UserModel updatedUserData =
-                          controller.getUserDataFromEditedValues();
-                      await UserDataService().updateUserData(updatedUserData);
-                      controller.isLoading(false);
-                      controller.updateIndex(0);
+                      try {
+                        controller.isLoading(true);
+                        UserModel updatedUserData =
+                            controller.getUserDataFromEditedValues();
+                        await UserDataService().updateUserData(updatedUserData);
+                        controller.isLoading(false);
+                        controller.updateIndex(0);
+                        Fluttertoast.showToast(msg: 'Profile Updated');
+                      } catch (error) {
+                        Fluttertoast.showToast(
+                            msg: 'Error updating profile: $error');
+                        controller.isLoading(false);
+                      }
                     },
                     child: const Text('Update'),
                   ),
