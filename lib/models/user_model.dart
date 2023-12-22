@@ -138,11 +138,21 @@ class UserDataService {
         // 'email': updatedUserData.email,
       });
 
+      // Update local data
       _userModel = updatedUserData;
-      storeUserDataLocally(); // Update local storage with new data
+      storeUserDataLocally();
+
+      // Retrieve updated user data locally
+      await retrieveUserDataLocally();
     } catch (e) {
       // Handle specific Firestore exceptions
       log('Error updating user data: $e');
     }
+  }
+
+  Future<void> clearUserDataLocally() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    _userModel = null;
   }
 }

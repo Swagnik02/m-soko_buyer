@@ -1,50 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/models/user_model.dart';
 
 class ProfileController extends GetxController {
-  // Reactive state variables
-  var n = 4.obs; // Example reactive variable
-  var index = 0.obs; // Example reactive variable for index
+  var n = 4;
+  var index = 0;
 
-  // Controllers for the TextFields in _editProfile
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _mobileController = TextEditingController();
-  TextEditingController _cityController = TextEditingController();
-  TextEditingController _stateController = TextEditingController();
-  TextEditingController _countryController = TextEditingController();
-  TextEditingController _pincodeController = TextEditingController();
-
-  // Add more state variables as needed
+  late TextEditingController userNameController;
+  late TextEditingController mobileController;
+  late TextEditingController cityController;
+  late TextEditingController stateController;
+  late TextEditingController countryController;
+  late TextEditingController pincodeController;
 
   @override
   void onInit() {
     super.onInit();
-    // Initialize your state variables here
 
-    // Example initialization for controllers
-    _userNameController.text = "Initial Username";
-    _mobileController.text = "Initial Mobile";
-    _cityController.text = "Initial City";
-    _stateController.text = "Initial State";
-    _countryController.text = "Initial Country";
-    _pincodeController.text = "Initial Pincode";
+    userNameController = TextEditingController(text: Users.userName);
+    mobileController = TextEditingController(text: Users.mobile);
+    cityController = TextEditingController(text: Users.city);
+    stateController = TextEditingController(text: Users.state);
+    countryController = TextEditingController(text: Users.country);
+    pincodeController = TextEditingController(text: Users.pin);
   }
 
-  // Example method to update index
+  @override
+  void dispose() {
+    super.dispose();
+
+    userNameController.dispose();
+    mobileController.dispose();
+    cityController.dispose();
+    stateController.dispose();
+    countryController.dispose();
+    pincodeController.dispose();
+  }
+
   void updateIndex(int newIndex) {
-    index.value = newIndex;
+    index = newIndex;
+    update();
   }
 
-  // Add more methods to update state variables as needed
-  void updateN(int newValue) {
-    n.value = newValue;
-  }
+  UserModel getUserDataFromEditedValues() {
+    String updatedUserName = userNameController.text;
+    String updatedCountry = countryController.text;
+    String updatedPin = pincodeController.text;
+    String updatedCity = cityController.text;
+    String updatedMobile = mobileController.text;
+    String updatedState = stateController.text;
 
-  // Example getters for controllers
-  TextEditingController get userNameController => _userNameController;
-  TextEditingController get mobileController => _mobileController;
-  TextEditingController get cityController => _cityController;
-  TextEditingController get stateController => _stateController;
-  TextEditingController get countryController => _countryController;
-  TextEditingController get pincodeController => _pincodeController;
+    return UserModel(
+      userName: updatedUserName,
+      country: updatedCountry,
+      pin: updatedPin,
+      city: updatedCity,
+      mobile: updatedMobile,
+      state: updatedState,
+      email: Users.email,
+    );
+  }
 }

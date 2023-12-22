@@ -5,94 +5,51 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/widgets.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  int n = 4;
-  int _index = 0;
-
-  // Controllers for the TextFields in _editProfile
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _mobileController = TextEditingController();
-  TextEditingController _cityController = TextEditingController();
-  TextEditingController _stateController = TextEditingController();
-  TextEditingController _countryController = TextEditingController();
-  TextEditingController _pincodeController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Set initial values for the controllers
-    _userNameController.text = Users.userName!;
-    _mobileController.text = Users.mobile!;
-    _cityController.text = Users.city!;
-    _stateController.text = Users.state!;
-    _countryController.text = Users.country!;
-    _pincodeController.text = Users.pin!;
-  }
-
-  UserModel _getUserDataFromEditedValues() {
-    // Replace this with your logic to get updated values from UI
-    // Example: Assuming you have TextEditingControllers for each field
-    String updatedUserName = _userNameController.text;
-    String updatedCountry = _countryController.text;
-    String updatedPin = _pincodeController.text;
-    String updatedCity = _cityController.text;
-    String updatedMobile = _mobileController.text;
-    String updatedState = _stateController.text;
-
-    return UserModel(
-      userName: updatedUserName,
-      country: updatedCountry,
-      pin: updatedPin,
-      city: updatedCity,
-      mobile: updatedMobile,
-      state: updatedState,
-      email: Users.email,
-    );
-  }
+class ProfilePage extends StatelessWidget {
+  ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ProfileController controller = Get.put(ProfileController());
+    controller.index = 0;
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // main body
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _index == 0 ? _miniProfile() : _editProfile(),
-                    const SizedBox(height: 16),
-                    _index == 0
-                        ? Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                _showAboutSection(context),
-                                _otherSection(context),
-                              ],
-                            ),
-                          )
-                        : Container(),
-                  ],
+      body: GetBuilder<ProfileController>(
+        builder: (_) => SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // main body
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      controller.index == 0
+                          ? _miniProfile(controller)
+                          : _editProfile(controller, context),
+                      const SizedBox(height: 16),
+                      controller.index == 0
+                          ? Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  _showAboutSection(context),
+                                  _otherSection(context, controller),
+                                ],
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -101,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // EDIT PROFILE
 
-  Widget _editProfile() {
+  Widget _editProfile(ProfileController controller, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -153,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: _editAboutSection(context),
+              child: _editAboutSection(context, controller),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -161,21 +118,24 @@ class _ProfilePageState extends State<ProfilePage> {
                 TextButton(
                   onPressed: () async {
                     UserModel updatedUserData =
-                        _getUserDataFromEditedValues(); // Implement this function to get updated values
+                        controller.getUserDataFromEditedValues();
                     await UserDataService().updateUserData(updatedUserData);
-                    setState(() {
-                      _index = 0;
-                    });
+
+                    controller.updateIndex(0);
                   },
                   child: const Text('Update'),
                 ),
                 TextButton(
                   onPressed: () {
-                    setState(() {
-                      _index = 0;
-                    });
+                    controller.updateIndex(0);
                   },
                   child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Fluttertoast.showToast(msg: '${Users.userName}');
+                  },
+                  child: const Text('check'),
                 ),
               ],
             ),
@@ -185,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _editAboutSection(BuildContext context) {
+  Widget _editAboutSection(BuildContext context, ProfileController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -196,7 +156,8 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         const SizedBox(height: 5),
 
-        customRow('Username', _userNameController, 'Enter you new Username'),
+        customRow('Username', controller.userNameController,
+            'Enter you new Username'),
         Row(
           children: [
             const Icon(CupertinoIcons.device_phone_portrait),
@@ -205,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: SizedBox(
                 height: 20,
                 child: TextField(
-                  controller: _mobileController,
+                  controller: controller.mobileController,
                   decoration: InputDecoration(
                     hintText: 'Enter you new mobile',
                     contentPadding: EdgeInsets.only(bottom: 12),
@@ -231,17 +192,19 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 5),
-        customRow('City', _cityController, 'Enter you new city'),
-        customRow('Pincode', _pincodeController, 'Enter you new pincode'),
-        customRow('State', _stateController, 'Enter you new state'),
-        customRow('Country', _countryController, 'Enter you new country'),
+        customRow('City', controller.cityController, 'Enter you new city'),
+        customRow(
+            'Pincode', controller.pincodeController, 'Enter you new pincode'),
+        customRow('State', controller.stateController, 'Enter you new state'),
+        customRow(
+            'Country', controller.countryController, 'Enter you new country'),
       ],
     );
   }
 
   // DISPLAY PROFILE
 
-  Widget _miniProfile() {
+  Widget _miniProfile(ProfileController controller) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -291,9 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             IconButton(
               onPressed: () {
-                setState(() {
-                  _index = 1; // Update the index to show the _miniProfile
-                });
+                controller.updateIndex(1);
               },
               icon: Icon(Icons.edit_outlined),
             ),
@@ -342,7 +303,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _otherSection(BuildContext context) {
+  Widget _otherSection(BuildContext context, ProfileController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -364,7 +325,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         const SizedBox(height: 3),
-        Text('$n Messages Sent'),
+        Text('${controller.n} Messages Sent'),
 
         // Manage Accounts
         const SizedBox(height: 25),
