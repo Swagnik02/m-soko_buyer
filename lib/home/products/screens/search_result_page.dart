@@ -44,11 +44,7 @@ class SearchResultPage extends StatelessWidget {
 Widget _searchBody(String searchKeyword) {
   return FutureBuilder<List<Map<String, dynamic>>>(
     future: futureSearchResultProducts(searchKeyword),
-    builder: (context, snapshot)
-
-        // Product Thumbnail
-
-        {
+    builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const CircularProgressIndicator();
       } else if (snapshot.data == null || snapshot.data!.isEmpty) {
