@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:m_soko/models/user_model.dart';
 
 class GlobalUtil {
   static const String currencySymbol = '₹';
