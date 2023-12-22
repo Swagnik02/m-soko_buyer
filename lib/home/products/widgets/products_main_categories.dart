@@ -1,9 +1,7 @@
-// ignore_for_file: sized_box_for_whitespace
-
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/categorised_offered_products.dart';
-import 'package:m_soko/home/products/screens/selected_categories_page.dart';
+import 'package:m_soko/home/products/screens/search_result_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsMainCategoryWidget extends StatelessWidget {
@@ -24,8 +22,9 @@ class ProductsMainCategoryWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
-            return SelectedCategoryPage(
-              title: categoryName,
+            return ResultPage(
+              keyword: categoryName,
+              isSearchResults: false,
             );
           },
           transitionsBuilder: customTransition(const Offset(0, 0)),

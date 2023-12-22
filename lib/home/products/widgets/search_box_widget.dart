@@ -32,7 +32,10 @@ Widget searchBox(
                   ? Navigator.of(context).push(
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) {
-                          return SearchResultPage(searchKeyword: searchKeyword);
+                          return ResultPage(
+                            keyword: searchKeyword,
+                            isSearchResults: true,
+                          );
                         },
                         transitionsBuilder:
                             customTransition(const Offset(1, 0)),
@@ -70,8 +73,10 @@ Widget searchBox(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
-                            return SearchResultPage(
-                                searchKeyword: searchKeyword);
+                            return ResultPage(
+                              keyword: searchKeyword,
+                              isSearchResults: true,
+                            );
                           },
                           transitionsBuilder:
                               customTransition(const Offset(1, 0)),
