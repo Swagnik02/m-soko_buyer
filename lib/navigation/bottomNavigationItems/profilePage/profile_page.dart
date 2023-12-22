@@ -117,21 +117,7 @@ class ProfilePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                    onPressed: () async {
-                      try {
-                        controller.isLoading(true);
-                        UserModel updatedUserData =
-                            controller.getUserDataFromEditedValues();
-                        await UserDataService().updateUserData(updatedUserData);
-                        controller.isLoading(false);
-                        controller.updateIndex(0);
-                        Fluttertoast.showToast(msg: 'Profile Updated');
-                      } catch (error) {
-                        Fluttertoast.showToast(
-                            msg: 'Error updating profile: $error');
-                        controller.isLoading(false);
-                      }
-                    },
+                    onPressed: () => controller.onTapUpdateProfile(),
                     child: const Text('Update'),
                   ),
                   if (controller.isLoading.value)
@@ -140,9 +126,7 @@ class ProfilePage extends StatelessWidget {
                       child: Utils.customLoadingSpinner(),
                     ),
                   TextButton(
-                    onPressed: () {
-                      controller.updateIndex(0);
-                    },
+                    onPressed: () => controller.updateIndex(0),
                     child: const Text('Cancel'),
                   ),
                 ],
@@ -327,9 +311,7 @@ class ProfilePage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         InkWell(
-          onTap: () {
-            Fluttertoast.showToast(msg: 'My Review');
-          },
+          onTap: () => controller.onTapMyReview(),
           child: const Text(
             'My Review',
             style: TextStyle(color: Colors.blue),
@@ -343,19 +325,12 @@ class ProfilePage extends StatelessWidget {
         const Text('Manage Accounts'),
         const SizedBox(height: 10),
         InkWell(
-          onTap: () {
-            Fluttertoast.showToast(msg: 'Add Accounts');
-          },
+          onTap: () => controller.onTapAddAccounts(),
           child: const Text('Add Accounts'),
         ),
         const SizedBox(height: 3),
         InkWell(
-          onTap: () {
-            FirebaseAuth.instance
-                .signOut()
-                .then((value) => Get.offAllNamed(AppRoutes.loginScreen));
-            Fluttertoast.showToast(msg: 'Logged Out');
-          },
+          onTap: () => controller.onTapLogOut(),
           child: const Text('Log Out'),
         ),
       ],
