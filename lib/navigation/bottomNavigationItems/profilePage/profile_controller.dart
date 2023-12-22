@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
 
 class ProfileController extends GetxController {
   var n = 4;
   var index = 0;
+  var isLoading = false.obs;
 
   late TextEditingController userNameController;
   late TextEditingController mobileController;
@@ -18,12 +18,18 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
 
-    userNameController = TextEditingController(text: Users.userName);
-    mobileController = TextEditingController(text: Users.mobile);
-    cityController = TextEditingController(text: Users.city);
-    stateController = TextEditingController(text: Users.state);
-    countryController = TextEditingController(text: Users.country);
-    pincodeController = TextEditingController(text: Users.pin);
+    userNameController =
+        TextEditingController(text: UserDataService().userModel!.userName);
+    mobileController =
+        TextEditingController(text: UserDataService().userModel!.mobile);
+    cityController =
+        TextEditingController(text: UserDataService().userModel!.city);
+    stateController =
+        TextEditingController(text: UserDataService().userModel!.state);
+    countryController =
+        TextEditingController(text: UserDataService().userModel!.country);
+    pincodeController =
+        TextEditingController(text: UserDataService().userModel!.pin);
   }
 
   @override
@@ -58,7 +64,7 @@ class ProfileController extends GetxController {
       city: updatedCity,
       mobile: updatedMobile,
       state: updatedState,
-      email: Users.email,
+      email: UserDataService().userModel!.email,
     );
   }
 }

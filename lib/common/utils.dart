@@ -18,15 +18,15 @@ class Utils {
   }
 }
 
-class Users {
-  static final String? userId = UserDataService().userModel?.uid;
-  static final String? userName = UserDataService().userModel?.userName;
-  static final String email = UserDataService().userModel?.email ??
-      FirebaseAuth.instance.currentUser?.email ??
-      'user@email.com';
-  static final String? mobile = UserDataService().userModel?.mobile;
-  static final String? city = UserDataService().userModel?.city;
-  static final String? pin = UserDataService().userModel?.pin;
-  static final String? state = UserDataService().userModel?.state;
-  static final String? country = UserDataService().userModel?.country;
-}
+// class Users {
+//   static final String? userId = UserDataService().userModel?.uid;
+//   static final String? userName = UserDataService().userModel?.userName;
+//   static final String email = UserDataService().userModel?.email ??
+//       FirebaseAuth.instance.currentUser?.email ??
+//       'user@email.com';
+//   static final String? mobile = UserDataService().userModel?.mobile;
+//   static final String? city = UserDataService().userModel?.city;
+//   static final String? pin = UserDataService().userModel?.pin;
+//   static final String? state = UserDataService().userModel?.state;
+//   static final String? country = UserDataService().userModel?.country;
+// }

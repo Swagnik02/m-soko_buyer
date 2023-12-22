@@ -10,7 +10,7 @@ import 'package:m_soko/navigation/bottomNavigationItems/widgets.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,92 +57,94 @@ class ProfilePage extends StatelessWidget {
   }
 
   // EDIT PROFILE
-
   Widget _editProfile(ProfileController controller, BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.white,
+    return Obx(() {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.white,
+          ),
+          borderRadius: BorderRadius.circular(8),
         ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Material(
-        elevation: 2,
-        borderRadius: BorderRadius.circular(8),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Image.asset('assets/def_profile.png'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Edit Profile!',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Tap on the values you \nwant to edit..',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
+        child: Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(8),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Image.asset('assets/def_profile.png'),
                   ),
-                ),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 90.0),
-              child: Divider(
-                color: Colors.black26,
-                thickness: 1.0,
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Edit Profile!',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Tap on the values you \nwant to edit..',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: _editAboutSection(context, controller),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () async {
-                    UserModel updatedUserData =
-                        controller.getUserDataFromEditedValues();
-                    await UserDataService().updateUserData(updatedUserData);
-
-                    controller.updateIndex(0);
-                  },
-                  child: const Text('Update'),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 90.0),
+                child: Divider(
+                  color: Colors.black26,
+                  thickness: 1.0,
                 ),
-                TextButton(
-                  onPressed: () {
-                    controller.updateIndex(0);
-                  },
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Fluttertoast.showToast(msg: '${Users.userName}');
-                  },
-                  child: const Text('check'),
-                ),
-              ],
-            ),
-          ],
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: _editAboutSection(context, controller),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      controller.isLoading(true);
+                      UserModel updatedUserData =
+                          controller.getUserDataFromEditedValues();
+                      await UserDataService().updateUserData(updatedUserData);
+                      controller.isLoading(false);
+                      controller.updateIndex(0);
+                    },
+                    child: const Text('Update'),
+                  ),
+                  if (controller.isLoading.value)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Utils.customLoadingSpinner(),
+                    ),
+                  TextButton(
+                    onPressed: () {
+                      controller.updateIndex(0);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget _editAboutSection(BuildContext context, ProfileController controller) {
@@ -167,7 +169,7 @@ class ProfilePage extends StatelessWidget {
                 height: 20,
                 child: TextField(
                   controller: controller.mobileController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter you new mobile',
                     contentPadding: EdgeInsets.only(bottom: 12),
                     border: InputBorder.none,
@@ -180,9 +182,9 @@ class ProfilePage extends StatelessWidget {
         // const SizedBox(height: 3),
         Row(
           children: [
-            Icon(CupertinoIcons.mail),
-            SizedBox(width: 5),
-            Text(Users.email),
+            const Icon(CupertinoIcons.mail),
+            const SizedBox(width: 5),
+            Text(UserDataService().userModel!.email),
           ],
         ),
 
@@ -232,7 +234,7 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hello ${Users.userName}!',
+                          'Hello ${UserDataService().userModel!.userName}!',
                           style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -240,7 +242,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${Users.mobile}',
+                          '${UserDataService().userModel!.mobile}',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,
@@ -256,7 +258,7 @@ class ProfilePage extends StatelessWidget {
               onPressed: () {
                 controller.updateIndex(1);
               },
-              icon: Icon(Icons.edit_outlined),
+              icon: const Icon(Icons.edit_outlined),
             ),
           ],
         ),
@@ -278,15 +280,15 @@ class ProfilePage extends StatelessWidget {
           children: [
             const Icon(CupertinoIcons.device_phone_portrait),
             const SizedBox(width: 5),
-            Text(Users.mobile.toString()),
+            Text(UserDataService().userModel!.mobile.toString()),
           ],
         ),
         const SizedBox(height: 3),
         Row(
           children: [
-            Icon(CupertinoIcons.mail),
-            SizedBox(width: 5),
-            Text(Users.email),
+            const Icon(CupertinoIcons.mail),
+            const SizedBox(width: 5),
+            Text(UserDataService().userModel!.email),
           ],
         ),
         const SizedBox(height: 25),
@@ -295,9 +297,11 @@ class ProfilePage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        Text('${Users.city} ${Users.pin}'),
+        Text(
+            '${UserDataService().userModel!.city} ${UserDataService().userModel!.pin}'),
         const SizedBox(height: 5),
-        Text('${Users.state}, ${Users.country}'),
+        Text(
+            '${UserDataService().userModel!.state}, ${UserDataService().userModel!.country}'),
         const SizedBox(height: 25),
       ],
     );
