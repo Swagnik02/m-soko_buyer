@@ -71,12 +71,12 @@ class ProductsMainCategoryWidget extends StatelessWidget {
                     width: 110,
                     height: 110,
                   ),
-            // SizedBox(height: 8),
             Text(
               categoryName,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 2),
           ],
         ),
       ),
