@@ -88,30 +88,6 @@ Widget _searchBody(String searchKeyword) {
         );
       }
     },
-
-    // ListView
-    // {
-    //   if (snapshot.connectionState == ConnectionState.waiting) {
-    //     return CircularProgressIndicator();
-    //   } else if (snapshot.hasError) {
-    //     return Text('Error: ${snapshot.error}');
-    //   } else {
-    //     List<Map<String, dynamic>> searchResults = snapshot.data!;
-    //     // Render your search results using searchResults
-    //     return ListView.builder(
-    //       itemCount: searchResults.length,
-    //       itemBuilder: (context, index) {
-    //         var result = searchResults[index];
-    //         // Build your result item UI here
-    //         return ListTile(
-    //           title: Text(result['itemName']),
-    //           subtitle: Text(result['itemSubCategory']),
-    //           // Add more details as needed
-    //         );
-    //       },
-    //     );
-    //   }
-    // },
   );
 }
 
