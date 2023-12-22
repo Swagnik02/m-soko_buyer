@@ -53,3 +53,35 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
     };
   }).toList();
 }
+
+Future<List<Map<String, dynamic>>> futureSearchResultProducts(
+    String category) async {
+  var querySnapshot =
+      await FirebaseFirestore.instance.collection('product_items').get();
+
+  var filteredDocs = querySnapshot.docs
+      .where((doc) =>
+          doc['itemName'].toLowerCase().contains(category.toLowerCase()) ||
+          doc['itemSubCategory']
+              .toLowerCase()
+              .contains(category.toLowerCase()) ||
+          doc['prdItemCategory'].toLowerCase().contains(category.toLowerCase()))
+      .toList();
+
+  return filteredDocs.map((doc) {
+    return {
+      // main Category
+      'prdItemCategory': doc['prdItemCategory'],
+      'pid': doc['pid'],
+
+      // basic infos for thumbnail
+      'itemThumbnail': doc['itemThumbnail'],
+      'itemName': doc['itemName'],
+      'itemSubCategory': doc['itemSubCategory'],
+      'itemMrp': doc['itemMrp'],
+      'itemShippingCharge': doc['itemShippingCharge'],
+      'itemDiscountPercentage': doc['itemDiscountPercentage'],
+      'itemOrderCount': doc['itemOrderCount'],
+    };
+  }).toList();
+}

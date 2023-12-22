@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
 
@@ -89,36 +89,4 @@ Widget _searchBody(String searchKeyword) {
       }
     },
   );
-}
-
-Future<List<Map<String, dynamic>>> futureSearchResultProducts(
-    String category) async {
-  var querySnapshot =
-      await FirebaseFirestore.instance.collection('product_items').get();
-
-  var filteredDocs = querySnapshot.docs
-      .where((doc) =>
-          doc['itemName'].toLowerCase().contains(category.toLowerCase()) ||
-          doc['itemSubCategory']
-              .toLowerCase()
-              .contains(category.toLowerCase()) ||
-          doc['prdItemCategory'].toLowerCase().contains(category.toLowerCase()))
-      .toList();
-
-  return filteredDocs.map((doc) {
-    return {
-      // main Category
-      'prdItemCategory': doc['prdItemCategory'],
-      'pid': doc['pid'],
-
-      // basic infos for thumbnail
-      'itemThumbnail': doc['itemThumbnail'],
-      'itemName': doc['itemName'],
-      'itemSubCategory': doc['itemSubCategory'],
-      'itemMrp': doc['itemMrp'],
-      'itemShippingCharge': doc['itemShippingCharge'],
-      'itemDiscountPercentage': doc['itemDiscountPercentage'],
-      'itemOrderCount': doc['itemOrderCount'],
-    };
-  }).toList();
 }
