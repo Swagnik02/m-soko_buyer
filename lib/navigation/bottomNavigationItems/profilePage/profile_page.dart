@@ -295,10 +295,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _otherSection(
-    ProfileController controller,
-    BuildContext context,
-  ) {
+  Widget _otherSection(ProfileController controller, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
