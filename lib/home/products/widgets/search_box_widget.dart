@@ -6,17 +6,19 @@ import 'package:m_soko/home/products/screens/search_products_page.dart';
 import 'package:m_soko/home/products/screens/search_result_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
-final TextEditingController _searchText = TextEditingController();
 Widget searchBox(
   BuildContext context,
   bool isSearchable,
 ) {
+  TextEditingController _searchText = TextEditingController();
+  _searchText.text = '';
   return Container(
     height: 51,
     decoration: BoxDecoration(
       color: isSearchable ? Colors.white : ColorConstants.blue50,
       border: Border.all(
-          color: isSearchable ? Colors.white : ColorConstants.blue200),
+        color: isSearchable ? Colors.white : ColorConstants.blue200,
+      ),
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,33 +26,33 @@ Widget searchBox(
         Padding(
           padding: EdgeInsets.all(8.0),
           child: GestureDetector(
-              onTap: () {
-                String searchKeyword = _searchText.text;
-                isSearchable
-                    ? Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return SearchResultPage(
-                                searchKeyword: searchKeyword);
-                          },
-                          transitionsBuilder:
-                              customTransition(const Offset(1, 0)),
-                        ),
-                      )
-                    : Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return SearchProductsPage();
-                          },
-                          transitionsBuilder:
-                              customTransition(const Offset(0, 0)),
-                        ),
-                      );
-              },
-              child: Icon(CupertinoIcons.search,
-                  color: isSearchable ? Colors.black : ColorConstants.blue700)),
+            onTap: () {
+              String searchKeyword = _searchText.text;
+              isSearchable
+                  ? Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return SearchResultPage(searchKeyword: searchKeyword);
+                        },
+                        transitionsBuilder:
+                            customTransition(const Offset(1, 0)),
+                      ),
+                    )
+                  : Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
+                          return SearchProductsPage();
+                        },
+                        transitionsBuilder:
+                            customTransition(const Offset(0, 0)),
+                      ),
+                    );
+            },
+            child: Icon(
+              CupertinoIcons.search,
+              color: isSearchable ? Colors.black : ColorConstants.blue700,
+            ),
+          ),
         ),
         Expanded(
           child: isSearchable
@@ -60,13 +62,31 @@ Widget searchBox(
                     hintText: 'Search for products',
                     border: InputBorder.none,
                   ),
+                  onSubmitted: (String value) {
+                    // Trigger search when the "Enter" key is pressed
+                    String searchKeyword = _searchText.text;
+                    if (searchKeyword.isNotEmpty) {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return SearchResultPage(
+                                searchKeyword: searchKeyword);
+                          },
+                          transitionsBuilder:
+                              customTransition(const Offset(1, 0)),
+                        ),
+                      );
+                    }
+                  },
                 )
               : GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SearchProductsPage()),
+                        builder: (context) => SearchProductsPage(),
+                      ),
                     );
                     Fluttertoast.showToast(msg: 'search');
                   },
@@ -102,11 +122,14 @@ Widget searchBox(
         Padding(
           padding: EdgeInsets.all(8.0),
           child: GestureDetector(
-              onTap: () {
-                Fluttertoast.showToast(msg: 'voice');
-              },
-              child: Icon(isSearchable ? Icons.mic : CupertinoIcons.mic,
-                  color: isSearchable ? Colors.black : ColorConstants.blue700)),
+            onTap: () {
+              Fluttertoast.showToast(msg: 'voice');
+            },
+            child: Icon(
+              isSearchable ? Icons.mic : CupertinoIcons.mic,
+              color: isSearchable ? Colors.black : ColorConstants.blue700,
+            ),
+          ),
         ),
       ],
     ),
