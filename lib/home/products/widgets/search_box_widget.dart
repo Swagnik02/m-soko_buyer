@@ -109,14 +109,45 @@ Widget searchBox(
 }
 
 Widget searchHistory(BuildContext context, List<String> historyArray) {
-  return Expanded(
-    child: ListView.builder(
-      itemCount: historyArray.length > 4 ? 4 : historyArray.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          title: Text(historyArray[historyArray.length - 1 - index]),
-        );
-      },
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Container(
+      color: Colors.white,
+      height: historyArray.length.toInt() * (25 + 16),
+      child: ListView.builder(
+        itemCount: historyArray.length > 4 ? 4 : historyArray.length,
+        itemBuilder: (BuildContext context, int index) {
+          return customListTile(
+              context, historyArray[historyArray.length - 1 - index]);
+        },
+      ),
+    ),
+  );
+}
+
+Widget customListTile(BuildContext context, String searchKeyword) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () => _searchFunction(context, searchKeyword, []),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Icon(Icons.history),
+              ),
+              Text(searchKeyword),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Icon(Icons.clear_rounded),
+        ),
+      ],
     ),
   );
 }
