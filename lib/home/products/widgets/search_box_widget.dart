@@ -108,7 +108,7 @@ Widget searchBox(
   );
 }
 
-Widget searchHistory(BuildContext context, List<String> historyArray) {
+Widget searchHistoryTray(BuildContext context, List<String> historyArray) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),
     child: Container(
