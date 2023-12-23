@@ -10,9 +10,9 @@ class ProductThumbnail extends StatelessWidget {
   final String itemThumbnail;
   final String itemName;
   final String itemSubCategory;
-  final int itemMrp;
+  final double itemMrp;
   final String itemShippingCharge;
-  final int? itemDiscountPercentage;
+  final double? itemDiscountPercentage;
   final String itemOrderCount;
 
   const ProductThumbnail({

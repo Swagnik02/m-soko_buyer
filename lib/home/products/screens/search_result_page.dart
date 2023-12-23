@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
+import 'package:m_soko/models/product_category_model.dart';
 
 enum SortOptions {
   relevance,
@@ -90,6 +93,21 @@ class _ResultPageState extends State<ResultPage> {
         ),
       ),
     );
+  }
+
+  Future<List<Map<String, dynamic>>> fetchSortedProducts() async {
+    switch (currentSortOption) {
+      case SortOptions.relevance:
+        return futureSearchResultProducts(widget.keyword);
+      case SortOptions.popularity:
+        // TODO: Implement logic for popularity sorting
+        break;
+      case SortOptions.priceHighToLow:
+        return sortByPriceHighToLow(widget.keyword);
+      case SortOptions.priceLowToHigh:
+        return sortByPriceLowToHigh(widget.keyword);
+    }
+    return [];
   }
 
   Widget buildSortOption(
@@ -241,19 +259,22 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Widget _categorisedBody(String title) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
+    return FutureBuilder<List<ProductsCategoryModel>>(
       future: futureCheckSelectedCategoryProducts(title),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
-        } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+        } else if (snapshot.data == null) {
+          log(snapshot.data.toString());
           return const Center(child: Text('No data found'));
+        } else if (snapshot.data!.isEmpty) {
+          return const Center(child: Text('Data is empty'));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          List<Map<String, dynamic>> products = snapshot.data!;
+          List<ProductsCategoryModel> products = snapshot.data!;
+          log(products.toString());
           return Container(
-            // color: Colors.red,
             height: (products.length / 2) * 700,
             child: GridView.builder(
               primary: false,
@@ -266,18 +287,17 @@ class _ResultPageState extends State<ResultPage> {
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
+                ProductsCategoryModel currentProduct = products[index];
                 return ProductThumbnail(
-                  itemPid: (products[index]['pid']),
-                  itemThumbnail: (products[index]['itemThumbnail']),
-                  itemSubCategory: (products[index]['itemSubCategory']),
-                  itemName: (products[index]['itemName']),
-                  itemMrp: (products[index]['itemMrp']),
+                  itemPid: currentProduct.pid,
+                  itemThumbnail: currentProduct.itemThumbnail,
+                  itemSubCategory: currentProduct.itemSubCategory,
+                  itemName: currentProduct.itemName,
+                  itemMrp: currentProduct.itemMrp,
                   itemShippingCharge:
-                      (products[index]['itemShippingCharge']).toString(),
-                  itemDiscountPercentage: (products[index]
-                      ['itemDiscountPercentage']),
-                  itemOrderCount:
-                      (products[index]['itemOrderCount']).toString(),
+                      currentProduct.itemShippingCharge.toString(),
+                  itemDiscountPercentage: currentProduct.itemDiscountPercentage,
+                  itemOrderCount: currentProduct.itemOrderCount.toString(),
                 );
               },
             ),
