@@ -11,7 +11,6 @@ Widget searchBox(
   bool isSearchable,
 ) {
   TextEditingController _searchText = TextEditingController();
-  String searchKeyword = _searchText.text;
   _searchText.text = '';
   return Container(
     height: 51,
@@ -28,6 +27,7 @@ Widget searchBox(
           padding: EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
+              String searchKeyword = _searchText.text;
               isSearchable
                   ? _searchFunction(context, searchKeyword)
                   : _navigateToSearchPage(context);
@@ -47,6 +47,8 @@ Widget searchBox(
                     border: InputBorder.none,
                   ),
                   onSubmitted: (String value) {
+                    // Trigger search when the "Enter" key is pressed
+                    String searchKeyword = _searchText.text;
                     if (searchKeyword.isNotEmpty) {
                       _searchFunction(context, searchKeyword);
                     }
@@ -55,7 +57,6 @@ Widget searchBox(
               : GestureDetector(
                   onTap: () {
                     _navigateToSearchPage(context);
-                    Fluttertoast.showToast(msg: 'search');
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
