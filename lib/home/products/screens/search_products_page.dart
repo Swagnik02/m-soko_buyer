@@ -16,6 +16,7 @@ class _SearchProductsPageState extends State<SearchProductsPage> {
         body: Column(
           children: [
             searchBox(context, true),
+            searchHistory(context, searchHistoryArray),
           ],
         ),
       ),

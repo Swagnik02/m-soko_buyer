@@ -6,6 +6,8 @@ import 'package:m_soko/home/products/screens/search_products_page.dart';
 import 'package:m_soko/home/products/screens/search_result_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
+List<String> searchHistoryArray = [];
+
 Widget searchBox(
   BuildContext context,
   bool isSearchable,
@@ -29,7 +31,7 @@ Widget searchBox(
             onTap: () {
               String searchKeyword = _searchText.text;
               isSearchable
-                  ? _searchFunction(context, searchKeyword)
+                  ? _searchFunction(context, searchKeyword, searchHistoryArray)
                   : _navigateToSearchPage(context);
             },
             child: Icon(
@@ -50,7 +52,8 @@ Widget searchBox(
                     // Trigger search when the "Enter" key is pressed
                     String searchKeyword = _searchText.text;
                     if (searchKeyword.isNotEmpty) {
-                      _searchFunction(context, searchKeyword);
+                      _searchFunction(
+                          context, searchKeyword, searchHistoryArray);
                     }
                   },
                 )
@@ -104,7 +107,25 @@ Widget searchBox(
   );
 }
 
-void _searchFunction(BuildContext context, String searchKeyword) {
+Widget searchHistory(BuildContext context, List<String> historyArray) {
+  return Expanded(
+    child: ListView.builder(
+      itemCount: historyArray.length > 4 ? 4 : historyArray.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(historyArray[historyArray.length - 1 - index]),
+        );
+      },
+    ),
+  );
+}
+
+void _searchFunction(
+  BuildContext context,
+  String searchKeyword,
+  List<String> historyArray,
+) {
+  historyArray.add(searchKeyword);
   Navigator.of(context).push(
     PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
