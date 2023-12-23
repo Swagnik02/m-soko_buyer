@@ -4,7 +4,6 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
-import 'package:m_soko/home/products/widgets/sortby_filters_topbar.dart';
 
 enum SortOptions {
   relevance,
