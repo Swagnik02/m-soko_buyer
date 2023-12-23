@@ -85,56 +85,65 @@ class Utils {
     );
   }
 
-  static Widget titleWithSubTitle(
-      {required String firstTitle,
-      required String firstSubTitle,
-      required String secondTitle,
-      EdgeInsets? paddingSecond,
-      required String secondSubTitle}) {
+  static Widget titleWithSubTitle({
+    required String firstTitle,
+    String? firstSubTitle,
+    required String secondTitle,
+    TextStyle? firstTextStyleTitle,
+    TextStyle? secondTextStyleTitle,
+    bool isSubTileSection = true,
+    EdgeInsets? paddingSecond,
+    String? secondSubTitle,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 firstTitle,
-                style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400),
+                style: firstTextStyleTitle ??
+                    const TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400),
               ),
               SizedBox(height: Get.height * 0.001),
               Text(
-                firstSubTitle,
+                firstSubTitle ?? '',
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
             ],
           ),
-          Padding(
-            padding: paddingSecond ?? EdgeInsets.zero,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  secondTitle,
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(height: Get.height * 0.001),
-                Text(
-                  secondSubTitle,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
+          isSubTileSection
+              ? Padding(
+                  padding: paddingSecond ?? EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        secondTitle,
+                        style: secondTextStyleTitle ??
+                            const TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(height: Get.height * 0.001),
+                      Text(
+                        secondSubTitle ?? '',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
+                )
+              : Container(),
         ],
       ),
     );

@@ -9,7 +9,19 @@ class PropertyController extends GetxController {
   late TextEditingController searchController;
   final CarouselController carouselController = CarouselController();
   int propertyImageCurrentIndex = 0;
+
   // List homeImages = [];
+
+  var isExpandedForDisclaimer = true.obs;
+  var isExpandedForPropertyDescription = true.obs;
+
+  void toggleExpandedForDisclaimer() {
+    isExpandedForDisclaimer.toggle();
+  }
+
+  void toggleExpandedForPropertyDescription() {
+    isExpandedForPropertyDescription.toggle();
+  }
 
   @override
   void onInit() {

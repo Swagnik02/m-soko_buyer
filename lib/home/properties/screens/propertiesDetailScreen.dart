@@ -28,64 +28,119 @@ class PropertiesDetailScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          CarouselSlider.builder(
-            itemCount: properties.images.isNotEmpty ? properties.images.length : 1,
-            itemBuilder: (BuildContext context, int index, int realIndex) {
-              if (properties.images.isEmpty || properties.images[index] == null || properties.images[index].isEmpty) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/PropertyImage/empty_property_image.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-              } else {
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(properties.images[index]),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-              }
-            },
-            options: CarouselOptions(
-              enableInfiniteScroll: false,
-              aspectRatio: 16 / 9,
-              onPageChanged: (i, option) => controller.setImageViewIndex(i),
-              viewportFraction: 1,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 3),
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: Get.height * 0.1),
+          child: Column(
+            children: [
+              CarouselSlider.builder(
+                itemCount:
+                    properties.images.isNotEmpty ? properties.images.length : 1,
+                itemBuilder: (BuildContext context, int index, int realIndex) {
+                  return Stack(
+                    children: [
+                      if (properties.images.isEmpty ||
+                          properties.images[index] == null ||
+                          properties.images[index].isEmpty)
+                        Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/PropertyImage/empty_property_image.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
+                      else
+                        Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(properties.images[index]),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.black.withOpacity(0.4),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          margin: EdgeInsets.only(
+                              top: Get.height * 0.004, right: Get.width * 0.02),
+                          child: Row(
+                            children: [
+                              InkWell(
+                                  onTap: () {},
+                                  child: const Icon(Icons.share,
+                                      color: Colors.white)),
+                              const SizedBox(width: 8),
+                              InkWell(
+                                  onTap: () {},
+                                  child: const Icon(Icons.bookmark_border,
+                                      color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                options: CarouselOptions(
+                  enableInfiniteScroll: false,
+                  aspectRatio: 16 / 9,
+                  onPageChanged: (i, option) => controller.setImageViewIndex(i),
+                  viewportFraction: 1,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                ),
+              ),
+              SizedBox(height: Get.height * 0.01),
+              if (properties.images.isNotEmpty)
+                PageViewDotIndicator(
+                  currentItem: controller.propertyImageCurrentIndex,
+                  count: properties.images.length,
+                  unselectedColor: Colors.grey,
+                  selectedColor: ColorConstants.blue200,
+                  size: const Size(20, 10),
+                  borderRadius: BorderRadius.circular(6),
+                  boxShape: BoxShape.rectangle,
+                ),
+              SizedBox(height: Get.height * 0.004),
+              PropertiesScreenWidget.propertiesDetailTitleBox(
+                propertyModel: properties,
+              ),
+              SizedBox(height: Get.height * 0.004),
+              PropertiesScreenWidget.propertiesDetailContactBox(
+                propertyModel: properties,
+              ),
+              SizedBox(height: Get.height * 0.004),
+              PropertiesScreenWidget.propertiesDetailInfoBox(
+                propertyModel: properties,
+              ),
+              SizedBox(height: Get.height * 0.004),
+              PropertiesScreenWidget.propertiesDetailBox(
+                  propertyModel: properties),
+              SizedBox(height: Get.height * 0.01),
+              PropertiesScreenWidget.propertiesDetailAmenitiesBox(
+                  propertyModel: properties),
+              SizedBox(height: Get.height * 0.01),
+              PropertiesScreenWidget.propertiesDetailDisclaimerBox(
+                propertyModel: properties,
+                controller: controller,
+              ),
+              SizedBox(height: Get.height * 0.01),
+              PropertiesScreenWidget.propertiesDetailPropertyDescriptionBox(
+                propertyModel: properties,
+                controller: controller,
+              ),
+            ],
           ),
-          SizedBox(height: Get.height * 0.01),
-          if (properties.images.isNotEmpty)
-            PageViewDotIndicator(
-              currentItem: controller.propertyImageCurrentIndex,
-              count: properties.images.length,
-              unselectedColor: Colors.grey,
-              selectedColor: ColorConstants.blue200,
-              size: const Size(20, 10),
-              borderRadius: BorderRadius.circular(6),
-              boxShape: BoxShape.rectangle,
-            ),
-          SizedBox(height: Get.height * 0.02),
-          PropertiesScreenWidget.propertiesDetailTitleBox(
-            propertyModel: properties,
-          ),
-          SizedBox(height: Get.height * 0.02),
-          PropertiesScreenWidget.propertiesDetailContactBox(
-            propertyModel: properties,
-          ),
-          SizedBox(height: Get.height * 0.02),
-          PropertiesScreenWidget.propertiesDetailInfoBox(
-            propertyModel: properties,
-          ),
-        ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Row(

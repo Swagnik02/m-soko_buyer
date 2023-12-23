@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
+import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/models/property.dart';
 
 class PropertiesScreenWidget {
@@ -84,6 +85,66 @@ class PropertiesScreenWidget {
             isDisabled: true,
           ),
         ],
+      ),
+    );
+  }
+
+  static Widget filtersForDetailScreen() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _filterItemForDetailScreen(
+            label: 'Laundry Service',
+            onTap: () {
+              Fluttertoast.showToast(msg: 'Recently Viewed');
+            },
+          ),
+          _filterItemForDetailScreen(label: 'Visitor Parking', onTap: () {}),
+          _filterItemForDetailScreen(
+              label: 'Water Disposal',
+              onTap: () {
+                Fluttertoast.showToast(msg: 'Top Offers');
+              }),
+          _filterItemForDetailScreen(
+            label: '+23',
+            onTap: () {
+              Fluttertoast.showToast(msg: 'New');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget _filterItemForDetailScreen({
+    required Function onTap,
+    required String label,
+  }) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        height: 42,
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(right: Get.width * 0.02),
+        padding: EdgeInsets.symmetric(
+            vertical: Get.height * 0.002, horizontal: Get.width * 0.02),
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: Colors.grey.withOpacity(0.6),
+            width: 1.0,
+          ),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
       ),
     );
   }
@@ -228,7 +289,7 @@ class PropertiesScreenWidget {
   static Widget propertiesDetailInfoBox(
       {required PropertyModel propertyModel}) {
     final convertPostDate =
-    Utils.formatPostDate(propertyModel.postDate.toString());
+        Utils.formatPostDate(propertyModel.postDate.toString());
     return FittedBox(
       child: Container(
         width: Get.width,
@@ -265,6 +326,230 @@ class PropertiesScreenWidget {
     );
   }
 
+  static Widget propertiesDetailBox({required PropertyModel propertyModel}) {
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Properties Details',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: Get.height * 0.02),
+            Utils.titleWithSubTitle(
+              firstTitle: 'Transaction',
+              secondTitle: 'New Property',
+              firstTextStyleTitle:
+                  const TextStyle(fontSize: 18, color: Colors.grey),
+              secondTextStyleTitle:
+                  const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+            Utils.titleWithSubTitle(
+              firstTitle: 'Water Availability',
+              secondTitle: "${propertyModel.waterAvailability} Hours",
+              firstTextStyleTitle:
+                  const TextStyle(fontSize: 18, color: Colors.grey),
+              secondTextStyleTitle:
+                  const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+            Utils.titleWithSubTitle(
+              firstTitle: 'Status of\nElectricity',
+              secondTitle: "NO/Rare Powercut",
+              firstTextStyleTitle:
+                  const TextStyle(fontSize: 18, color: Colors.grey),
+              secondTextStyleTitle:
+                  const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+            Utils.titleWithSubTitle(
+              firstTitle: 'Approved by\nbanks',
+              secondTitle: propertyModel.bankName,
+              firstTextStyleTitle:
+                  const TextStyle(fontSize: 18, color: Colors.grey),
+              secondTextStyleTitle:
+                  const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+            Utils.titleWithSubTitle(
+              firstTitle: 'Project RERA\nID',
+              secondTitle: propertyModel.reraId,
+              firstTextStyleTitle:
+                  const TextStyle(fontSize: 18, color: Colors.grey),
+              secondTextStyleTitle:
+                  const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+            Utils.titleWithSubTitle(
+              firstTitle: 'Loan Offered by',
+              secondTitle: propertyModel.bankName,
+              firstTextStyleTitle:
+                  const TextStyle(fontSize: 18, color: Colors.grey),
+              secondTextStyleTitle:
+                  const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget propertiesDetailAmenitiesBox(
+      {required PropertyModel propertyModel}) {
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Amenities',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: Get.height * 0.02),
+            PropertiesScreenWidget.filtersForDetailScreen(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget propertiesDetailDisclaimerBox({
+    required PropertyModel propertyModel,
+    required PropertyController controller,
+  }) {
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Obx(
+          () => Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Disclaimer',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: Get.height * 0.02),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Text(
+                        propertyModel.disclaimer,
+                        maxLines:
+                            controller.isExpandedForDisclaimer.value ? 2 : 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    WidgetSpan(
+                      child: InkWell(
+                        onTap: () {
+                          controller.toggleExpandedForDisclaimer();
+                        },
+                        child: Text(
+                          controller.isExpandedForDisclaimer.value
+                              ? 'Read more'
+                              : 'Read less',
+                          style: const TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget propertiesDetailPropertyDescriptionBox({
+    required PropertyModel propertyModel,
+    required PropertyController controller,
+  }) {
+    return FittedBox(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.03,
+          vertical: Get.height * 0.01,
+        ),
+        color: Colors.white,
+        child: Obx(
+          () => Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Property Description',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: Get.height * 0.02),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Text(
+                        propertyModel.propertyDescription,
+                        maxLines:
+                            controller.isExpandedForPropertyDescription.value
+                                ? 2
+                                : 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    WidgetSpan(
+                      child: InkWell(
+                        onTap: () {
+                          controller.toggleExpandedForPropertyDescription();
+                        },
+                        child: Text(
+                          controller.isExpandedForPropertyDescription.value
+                              ? 'Read more'
+                              : 'Read less',
+                          style: const TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   static Widget propertiesBox({
     required String image,
     required String rooms,
@@ -275,8 +560,7 @@ class PropertiesScreenWidget {
     required VoidCallback onTap,
     EdgeInsets? margin,
   }) {
-    final convertPostDate =
-    Utils.formatPostDate(postDate.toString());
+    final convertPostDate = Utils.formatPostDate(postDate.toString());
     return InkWell(
       onTap: onTap,
       child: Container(
