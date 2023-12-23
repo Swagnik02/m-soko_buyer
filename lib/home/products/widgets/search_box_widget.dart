@@ -111,17 +111,19 @@ Widget searchBox(
 Widget searchHistoryTray(BuildContext context, List<String> historyArray) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Container(
-      color: Colors.white,
-      height: historyArray.length.toInt() * (25 + 16),
-      child: ListView.builder(
-        itemCount: historyArray.length > 4 ? 4 : historyArray.length,
-        itemBuilder: (BuildContext context, int index) {
-          return customListTile(
-              context, historyArray[historyArray.length - 1 - index]);
-        },
-      ),
-    ),
+    child: historyArray.length.toInt == 0
+        ? null
+        : Container(
+            color: Colors.white,
+            height: historyArray.length.toInt() * (25 + 16),
+            child: ListView.builder(
+              itemCount: historyArray.length > 4 ? 4 : historyArray.length,
+              itemBuilder: (BuildContext context, int index) {
+                return customListTile(
+                    context, historyArray[historyArray.length - 1 - index]);
+              },
+            ),
+          ),
   );
 }
 
