@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:m_soko/models/product_category_model.dart';
 
@@ -78,9 +76,10 @@ Future<List<Map<String, dynamic>>> futureSearchResultProducts(
       'itemThumbnail': doc['itemThumbnail'],
       'itemName': doc['itemName'],
       'itemSubCategory': doc['itemSubCategory'],
-      'itemMrp': doc['itemMrp'],
+      'itemMrp': (doc['itemMrp'] as num).toDouble(),
       'itemShippingCharge': doc['itemShippingCharge'],
-      'itemDiscountPercentage': doc['itemDiscountPercentage'],
+      'itemDiscountPercentage':
+          (doc['itemDiscountPercentage'] as num).toDouble(),
       'itemOrderCount': doc['itemOrderCount'],
     };
   }).toList();
