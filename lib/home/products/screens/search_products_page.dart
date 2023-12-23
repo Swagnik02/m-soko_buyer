@@ -13,14 +13,6 @@ class SearchProductsPage extends StatefulWidget {
 }
 
 class _SearchProductsPageState extends State<SearchProductsPage> {
-  List<String> historyArray = [];
-
-  @override
-  void initState() {
-    super.initState();
-    historyArray = widget.initialHistory;
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +21,7 @@ class _SearchProductsPageState extends State<SearchProductsPage> {
         body: Column(
           children: [
             searchBox(context, true),
-            searchHistory(context, historyArray),
+            searchHistory(context, searchHistoryArray),
           ],
         ),
       ),
