@@ -5,6 +5,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/screens/search_products_page.dart';
 import 'package:m_soko/home/products/screens/search_result_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> searchHistoryArray = [];
 
@@ -120,12 +121,17 @@ Widget searchHistory(BuildContext context, List<String> historyArray) {
   );
 }
 
-void _searchFunction(
+Future<void> _searchFunction(
   BuildContext context,
   String searchKeyword,
   List<String> historyArray,
-) {
+) async {
   historyArray.add(searchKeyword);
+
+  // Save search history to shared preferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setStringList('historyPrefs', historyArray);
+
   Navigator.of(context).push(
     PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
@@ -139,11 +145,15 @@ void _searchFunction(
   );
 }
 
-void _navigateToSearchPage(BuildContext context) {
+Future<void> _navigateToSearchPage(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<String> historyArray = prefs.getStringList('historyPrefs') ?? [];
   Navigator.of(context).push(
     PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
-        return SearchProductsPage();
+        return SearchProductsPage(
+          initialHistory: historyArray,
+        );
       },
       transitionsBuilder: customTransition(const Offset(0, 0)),
     ),
