@@ -11,6 +11,7 @@ Widget searchBox(
   bool isSearchable,
 ) {
   TextEditingController _searchText = TextEditingController();
+  String searchKeyword = _searchText.text;
   _searchText.text = '';
   return Container(
     height: 51,
@@ -27,29 +28,9 @@ Widget searchBox(
           padding: EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              String searchKeyword = _searchText.text;
               isSearchable
-                  ? Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) {
-                          return ResultPage(
-                            keyword: searchKeyword,
-                            isSearchResults: true,
-                          );
-                        },
-                        transitionsBuilder:
-                            customTransition(const Offset(1, 0)),
-                      ),
-                    )
-                  : Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) {
-                          return SearchProductsPage();
-                        },
-                        transitionsBuilder:
-                            customTransition(const Offset(0, 0)),
-                      ),
-                    );
+                  ? _searchFunction(context, searchKeyword)
+                  : _navigateToSearchPage(context);
             },
             child: Icon(
               CupertinoIcons.search,
@@ -66,33 +47,14 @@ Widget searchBox(
                     border: InputBorder.none,
                   ),
                   onSubmitted: (String value) {
-                    // Trigger search when the "Enter" key is pressed
-                    String searchKeyword = _searchText.text;
                     if (searchKeyword.isNotEmpty) {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return ResultPage(
-                              keyword: searchKeyword,
-                              isSearchResults: true,
-                            );
-                          },
-                          transitionsBuilder:
-                              customTransition(const Offset(1, 0)),
-                        ),
-                      );
+                      _searchFunction(context, searchKeyword);
                     }
                   },
                 )
               : GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SearchProductsPage(),
-                      ),
-                    );
+                    _navigateToSearchPage(context);
                     Fluttertoast.showToast(msg: 'search');
                   },
                   child: Padding(
@@ -137,6 +99,31 @@ Widget searchBox(
           ),
         ),
       ],
+    ),
+  );
+}
+
+void _searchFunction(BuildContext context, String searchKeyword) {
+  Navigator.of(context).push(
+    PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return ResultPage(
+          keyword: searchKeyword,
+          isSearchResults: true,
+        );
+      },
+      transitionsBuilder: customTransition(const Offset(1, 0)),
+    ),
+  );
+}
+
+void _navigateToSearchPage(BuildContext context) {
+  Navigator.of(context).push(
+    PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return SearchProductsPage();
+      },
+      transitionsBuilder: customTransition(const Offset(0, 0)),
     ),
   );
 }
