@@ -1,15 +1,24 @@
+<<<<<<< HEAD
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
+=======
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/logout.dart';
+>>>>>>> main
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
-import 'package:m_soko/home/properties/properties_screen.dart';
+import 'package:m_soko/home/properties/screens/properties_screen.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,14 +33,14 @@ class HomeScreenState extends State<HomeScreen> {
 
   // String get userName =>
 
-  int navBarIndex = 2;
-  int _topBarIndex = 0;
+  int navBarIndex = 2; // Some Changes here
+  int _topBarIndex = 0; // Some Changes here
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: navBarIndex == 2 ? _home() : _slectedNavHome(),
+        child: navBarIndex == 2 ? _home() : _selectedNavHome(),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -42,7 +51,7 @@ class HomeScreenState extends State<HomeScreen> {
   //navBarIndex = index of bottomNavBar
   //_topBarIndex = index of TopBar
 
-  Widget _slectedNavHome() {
+  Widget _selectedNavHome() {
     return Column(
       children: [
         PreferredSize(
@@ -91,6 +100,8 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _selectedNavPage() {
+    log(navBarIndex.toString());
+    log(_topBarIndex.toString());
     switch (navBarIndex) {
       case 0:
         return ProfilePage();
@@ -108,7 +119,27 @@ class HomeScreenState extends State<HomeScreen> {
       case 2:
         return _home();
       case 3:
-        return PaymentsPage();
+        switch (_topBarIndex) {
+          case 0: // Products Section
+            return PaymentsPage();
+          case 1: // Property Section
+            return const PropertySavedScreen();
+          case 2: // Services Section
+            return PaymentsPage();
+          default:
+            return Container();
+        }
+      case 4:
+        switch (_topBarIndex) {
+          case 0: // Products Section
+            return _home();
+          case 1: // Property Section
+            return SupportPage();
+          case 2: // Services Section
+            return _home();
+          default:
+            return Container();
+        }
       default:
         return Container();
     }

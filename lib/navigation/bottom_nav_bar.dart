@@ -88,6 +88,7 @@ class BottomNavBarState extends State<BottomNavBar> {
         if (mainNavBarIndex == 4) {
           showModalBottomSheet<void>(
             context: context,
+            useRootNavigator: true,
             builder: (BuildContext context) {
               return SizedBox(
                 height: 200,
