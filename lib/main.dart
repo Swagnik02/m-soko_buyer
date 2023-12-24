@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
+  // Initialize Firebas
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Retrieve user data from local storage
