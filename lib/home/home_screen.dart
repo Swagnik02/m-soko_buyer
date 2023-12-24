@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
@@ -19,14 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // String get userId => AuthService.firebase().currentUser!.id;
   // String get userName => AuthService.firebase().currentUser!.name;
 
-  int navBarIndex = 2;
-  int _topBarIndex = 1;
+  int navBarIndex = 2; // Some Changes here
+  int _topBarIndex = 1; // Some Changes here
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: navBarIndex == 2 ? _home() : _slectedNavHome(),
+        child: navBarIndex == 2 ? _home() : _selectedNavHome(),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -37,14 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
   //navBarIndex = index of bottomNavBar
   //_topBarIndex = index of TopBar
 
-  Widget _slectedNavHome() {
+  Widget _selectedNavHome() {
     return Column(
       children: [
         PreferredSize(
-            preferredSize: Size.fromHeight(80.0),
+            preferredSize: const Size.fromHeight(80.0),
             child: Container(
               color: _getTopBarColor(_topBarIndex),
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: _customAppBar(_topBarIndex),
             )),
         Expanded(
@@ -70,14 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 // Handle notification icon tap
               },
-              child: Icon(Icons.notifications, color: Colors.white),
+              child: const Icon(Icons.notifications, color: Colors.white),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             InkWell(
               onTap: () {
                 // Handle search icon tap
               },
-              child: Icon(Icons.search, color: Colors.white),
+              child: const Icon(Icons.search, color: Colors.white),
             ),
           ],
         ),
@@ -86,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _selectedNavPage() {
+    log(navBarIndex.toString());
+    log(_topBarIndex.toString());
     switch (navBarIndex) {
       case 0:
         return ProfilePage();
@@ -103,9 +108,27 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return _home();
       case 3:
-        return PaymentsPage();
+        switch (_topBarIndex) {
+          case 0: // Products Section
+            return PaymentsPage();
+          case 1: // Property Section
+            return const PropertySavedScreen();
+          case 2: // Services Section
+            return PaymentsPage();
+          default:
+            return Container();
+        }
       case 4:
-        return _home();
+        switch (_topBarIndex) {
+          case 0: // Products Section
+            return _home();
+          case 1: // Property Section
+            return SupportPage();
+          case 2: // Services Section
+            return _home();
+          default:
+            return Container();
+        }
       default:
         return Container();
     }
@@ -115,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: [
         PreferredSize(
-            preferredSize: Size.fromHeight(80.0),
+            preferredSize: const Size.fromHeight(80.0),
             child: Container(
               color: _getTopBarColor(_topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -160,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
