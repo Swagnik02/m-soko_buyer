@@ -1,17 +1,11 @@
-<<<<<<< HEAD
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
-=======
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/logout.dart';
->>>>>>> main
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';

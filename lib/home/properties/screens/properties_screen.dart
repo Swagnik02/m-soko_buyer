@@ -9,7 +9,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
 import 'package:m_soko/models/property.dart';
-import 'package:m_soko/routes/appRoutes.dart';
+import 'package:m_soko/routes/app_routes.dart';
 
 class PropertiesScreen extends StatelessWidget {
   @override

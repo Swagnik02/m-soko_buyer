@@ -149,7 +149,6 @@ class Utils {
     );
   }
 }
-}
 
 // class Users {
 //   static final String? userId = UserDataService().userModel?.uid;
