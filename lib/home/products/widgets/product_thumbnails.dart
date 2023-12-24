@@ -1,42 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
-import 'package:m_soko/main.dart';
+import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
+import 'dart:developer';
 
 class ProductThumbnail extends StatelessWidget {
-  final String itemImage;
+  final String itemPid;
+  final String itemThumbnail;
   final String itemName;
   final String itemSubCategory;
-  final String itemPrice;
+  final double itemMrp;
   final String itemShippingCharge;
-  final String itemDiscountPercentage;
+  final double? itemDiscountPercentage;
   final String itemOrderCount;
 
-  ProductThumbnail({
-    required this.itemImage,
+  const ProductThumbnail({
+    super.key,
+    required this.itemPid,
+    required this.itemThumbnail,
     required this.itemName,
     required this.itemSubCategory,
-    required this.itemPrice,
+    required this.itemMrp,
     required this.itemShippingCharge,
     required this.itemOrderCount,
-    this.itemDiscountPercentage = '',
+    this.itemDiscountPercentage,
   });
 
   @override
   Widget build(BuildContext context) {
+    double finalcost = itemMrp - (itemMrp * (itemDiscountPercentage! / 100));
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return ProductItemDetailPage(
-              title: itemName,
-              discountInPercentage: 80,
-            );
-          },
-          transitionsBuilder: customTransition(const Offset(0, 0)),
-        ));
+      onTap: () async {
+        ProductModel? productModel = await collectProductData(itemPid);
+        if (productModel != null) {
+          Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return ProductItemDetailPage(
+                pId: itemPid,
+                productModel: productModel,
+              );
+            },
+            transitionsBuilder: customTransition(const Offset(0, 0)),
+          ));
+        } else {
+          // Handle the case when no product data is available
+          log('No product data available for $itemPid');
+        }
       },
       child: Material(
         elevation: 4,
@@ -54,7 +64,7 @@ class ProductThumbnail extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
-                      image: AssetImage(itemImage),
+                      image: NetworkImage(itemThumbnail),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -81,7 +91,7 @@ class ProductThumbnail extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${GlobalUtil.currencySymbol} $itemPrice',
+                    '${GlobalUtil.currencySymbol} ${finalcost.floor()}',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 19,

@@ -1,37 +1,39 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
 import 'package:m_soko/home/products/widgets/products_main_categories.dart';
+import 'package:m_soko/home/products/widgets/recently_viewed.dart';
+import 'package:m_soko/home/products/widgets/search_box_widget.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 class ProductsScreen extends StatelessWidget {
+  const ProductsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(8, 15, 8, 10),
+          padding: const EdgeInsets.fromLTRB(8, 15, 8, 10),
           child: Column(
             children: [
               // search box
-              _searchBox(),
+              searchBox(context, false),
               const SizedBox(height: 15),
               // categories
               _mainCategories(),
               const SizedBox(height: 15),
               // Advertisement
-              advertisement_block(),
+              advertisementBlock(),
               const SizedBox(height: 12),
               // Filters
               _filters(context),
               // const SizedBox(height: 15),
               // // 2nd Category
-              // _secondCategory(),
+              recentlyViewed(false),
               // const SizedBox(height: 15),
               // // top rated
               // _topRated(),
@@ -43,57 +45,12 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget _searchBox() {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: ColorConstants.blue50,
-        border: Border.all(color: ColorConstants.blue200),
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(CupertinoIcons.search, color: ColorConstants.blue700),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                "Search for products",
-                style: TextStyle(
-                  fontSize: 19,
-                  color: ColorConstants.blue700,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.camera_alt_outlined,
-              color: ColorConstants.blue700,
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(CupertinoIcons.mic, color: ColorConstants.blue700),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _mainCategories() {
     return FutureBuilder(
       future: fetchCategoriesFromFirestore(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -130,7 +87,7 @@ class ProductsScreen extends StatelessWidget {
             onPressedAction: () {
               Navigator.of(context).push(PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) {
-                  return AllCategoriesPage();
+                  return const AllCategoriesPage();
                 },
                 transitionsBuilder: customTransition(const Offset(0, 0)),
               ));
@@ -148,10 +105,6 @@ class ProductsScreen extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget _secondCategory() {
-  return Container();
 }
 
 Widget _topRated() {

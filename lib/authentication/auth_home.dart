@@ -17,7 +17,7 @@ class AuthHome extends StatelessWidget {
         if (ConnectionState.waiting == snapshot.connectionState) {
           return Utils.customLoadingSpinner();
         } else if (snapshot.hasData) {
-          return HomeScreen();
+          return const HomeScreen();
         }
         return const LoginView();
       },

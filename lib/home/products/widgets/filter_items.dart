@@ -5,7 +5,8 @@ class FilterItem extends StatelessWidget {
   final Function onPressedAction;
   final bool isSelected;
 
-  FilterItem({
+  const FilterItem({
+    super.key,
     required this.label,
     required this.onPressedAction,
     this.isSelected = false,
@@ -20,7 +21,7 @@ class FilterItem extends StatelessWidget {
       child: Container(
         height: 42,
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
         decoration: BoxDecoration(
           color: isSelected ? Colors.blue : Colors.transparent,
           borderRadius: BorderRadius.circular(8),

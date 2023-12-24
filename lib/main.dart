@@ -4,15 +4,24 @@ import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/firebase_options.dart';
-import 'package:m_soko/routes/appPages.dart';
-import 'package:m_soko/routes/appRoutes.dart';
+import 'package:m_soko/models/user_model.dart';
+import 'package:m_soko/routes/app_pages.dart';
+import 'package:m_soko/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Retrieve user data from local storage
+  await UserDataService().retrieveUserDataLocally();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  GlobalUtil.isViewed = prefs.getInt(GlobalUtil.ONBOARDINGTOKEN);
+  GlobalUtil.isViewed = prefs.getInt(GlobalUtil.onBordingToken);
+
+  // Run the app
   runApp(const MainApp());
 }
 
