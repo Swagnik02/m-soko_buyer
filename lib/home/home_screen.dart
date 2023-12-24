@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // String get userName => AuthService.firebase().currentUser!.name;
 
   int navBarIndex = 2; // Some Changes here
-  int _topBarIndex = 1; // Some Changes here
+  int _topBarIndex = 0; // Some Changes here
 
   @override
   Widget build(BuildContext context) {
