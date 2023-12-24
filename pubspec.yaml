@@ -48,13 +48,18 @@ dependencies:
   image_picker: ^1.0.4
   permission_handler: ^11.1.0
   get: ^4.6.6
+  logger: ^2.0.2+1
   shared_preferences: ^2.2.2
+<<<<<<< HEAD
   logger:
   flutter_image_slideshow: ^0.1.6
   intl:
   carousel_slider: ^4.2.1
   page_view_dot_indicator: ^2.3.0
 
+=======
+  flutter_pannable_rating_bar: ^2.7.2+1
+>>>>>>> main
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +89,11 @@ flutter:
     - assets/auth/
     - assets/tests/
     - assets/tests/mobiles/
+<<<<<<< HEAD
     - assets/PropertyImage/
+=======
+    - assets/icons/
+>>>>>>> main
 
 
     # - assets/products_category_icons/

@@ -1,12 +1,14 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 
-Widget advertisement_block() {
+Widget advertisementBlock() {
   return FutureBuilder(
     future: fetchAdvertisementsFromFirestore(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       } else if (snapshot.hasError) {
         return Text('Error: ${snapshot.error}');
       } else {

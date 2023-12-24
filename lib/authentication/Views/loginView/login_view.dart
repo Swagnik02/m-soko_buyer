@@ -1,14 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_soko/authentication/Views/loginView/loginController.dart';
+import 'package:m_soko/authentication/Views/loginView/login_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/routes/appRoutes.dart';
+import 'package:m_soko/routes/app_routes.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
@@ -19,11 +18,11 @@ class LoginView extends StatelessWidget {
         children: [
           Image.asset('assets/auth_header.png'),
           Container(
-            margin: const EdgeInsets.fromLTRB(30, 50, 0, 0),
+            margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: Get.height * 0.2),
+                const SizedBox(height: 30),
                 const Text(
                   'Welcome to\nSokoni!',
                   style: TextStyle(
@@ -32,7 +31,7 @@ class LoginView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: Get.height * 0.004),
+                const SizedBox(height: 5),
                 Container(
                   width: 35,
                   height: 8,

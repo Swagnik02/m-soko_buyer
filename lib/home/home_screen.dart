@@ -1,26 +1,37 @@
+<<<<<<< HEAD
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
+=======
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/logout.dart';
+>>>>>>> main
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/profile_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
 import 'package:m_soko/home/properties/screens/properties_screen.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  // String get userId => AuthService.firebase().currentUser!.id;
-  // String get userName => AuthService.firebase().currentUser!.name;
+class HomeScreenState extends State<HomeScreen> {
+  String get userId => FirebaseAuth.instance.currentUser?.uid ?? "";
+
+  // String get userName =>
 
   int navBarIndex = 2; // Some Changes here
   int _topBarIndex = 0; // Some Changes here
@@ -142,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               color: _getTopBarColor(_topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: navBarIndex == 2 ? _TopNavBar() : Container(),
+              child: navBarIndex == 2 ? _topNavBar() : Container(),
             )),
         Expanded(
           child: _buildBody(),
@@ -151,13 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _TopNavBar() {
+  Widget _topNavBar() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         _buildTopBarButton("Products", 0),
         _buildTopBarButton("Properties", 1),
         _buildTopBarButton("Services", 2),
+        _buildTopBarButton("logout", 3),
       ],
     );
   }
@@ -209,11 +221,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBody() {
     switch (_topBarIndex) {
       case 0:
-        return ProductsScreen();
+        return const ProductsScreen();
       case 1:
         return PropertiesScreen();
       case 2:
         return ServicesScreen();
+      case 3:
+        return LogoutScreen();
 
       default:
         return Container();
