@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
-import 'package:m_soko/models/product_category_model.dart';
 
 enum SortOptions {
   relevance,
