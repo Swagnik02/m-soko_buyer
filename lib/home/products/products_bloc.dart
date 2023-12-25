@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:m_soko/models/product_category_model.dart';
 
 Future<List<Map<String, dynamic>>> fetchAdvertisementsFromFirestore() async {
   var querySnapshot =
@@ -29,7 +28,7 @@ Future<List<Map<String, dynamic>>> fetchCategoriesFromFirestore() async {
   }).toList();
 }
 
-Future<List<ProductsCategoryModel>> futureCheckSelectedCategoryProducts(
+Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
     String category) async {
   var querySnapshot =
       await FirebaseFirestore.instance.collection('product_items').get();
@@ -38,17 +37,21 @@ Future<List<ProductsCategoryModel>> futureCheckSelectedCategoryProducts(
       querySnapshot.docs.where((doc) => doc['prdItemCategory'] == category);
 
   return filteredDocs.map((doc) {
-    return ProductsCategoryModel(
-      prdItemCategory: doc['prdItemCategory'],
-      pid: doc['pid'],
-      itemThumbnail: doc['itemThumbnail'],
-      itemName: doc['itemName'],
-      itemSubCategory: doc['itemSubCategory'],
-      itemMrp: (doc['itemMrp'] as num).toDouble() ?? 0.0,
-      itemShippingCharge: (doc['itemShippingCharge'] as num).toDouble(),
-      itemDiscountPercentage: (doc['itemDiscountPercentage'] as num).toDouble(),
-      itemOrderCount: doc['itemOrderCount'],
-    );
+    return {
+      // main Category
+      'prdItemCategory': doc['prdItemCategory'],
+      'pid': doc['pid'],
+
+      // basic infos for thumbnail
+      'itemThumbnail': doc['itemThumbnail'],
+      'itemName': doc['itemName'],
+      'itemSubCategory': doc['itemSubCategory'],
+      'itemMrp': (doc['itemMrp'] as num).toDouble(),
+      'itemShippingCharge': doc['itemShippingCharge'],
+      'itemDiscountPercentage':
+          (doc['itemDiscountPercentage'] as num).toDouble(),
+      'itemOrderCount': doc['itemOrderCount'],
+    };
   }).toList();
 }
 
@@ -85,22 +88,31 @@ Future<List<Map<String, dynamic>>> futureSearchResultProducts(
   }).toList();
 }
 
-Future<List<Map<String, dynamic>>> sortByPriceHighToLow(String category) async {
+Future<List<Map<String, dynamic>>> sortByPrice(
+  String keyword,
+  bool isDescending,
+) async {
   var querySnapshot =
       await FirebaseFirestore.instance.collection('product_items').get();
 
   var filteredDocs = querySnapshot.docs
       .where((doc) =>
-          doc['itemName'].toLowerCase().contains(category.toLowerCase()) ||
+          doc['itemName'].toLowerCase().contains(keyword.toLowerCase()) ||
           doc['itemSubCategory']
               .toLowerCase()
-              .contains(category.toLowerCase()) ||
-          doc['prdItemCategory'].toLowerCase().contains(category.toLowerCase()))
+              .contains(keyword.toLowerCase()) ||
+          doc['prdItemCategory'].toLowerCase().contains(keyword.toLowerCase()))
       .toList();
 
-  // Sorting by itemMrp in descending order (high to low)
-  filteredDocs.sort(
-      (a, b) => b['itemMrp'].toDouble().compareTo(a['itemMrp'].toDouble()));
+  if (isDescending) {
+    // Sorting by itemMrp in descending order (high to low)
+    filteredDocs.sort(
+        (a, b) => b['itemMrp'].toDouble().compareTo(a['itemMrp'].toDouble()));
+  } else {
+    // Sorting by itemMrp in ascending order (high to low)
+    filteredDocs.sort(
+        (a, b) => a['itemMrp'].toDouble().compareTo(b['itemMrp'].toDouble()));
+  }
 
   return filteredDocs.map((doc) {
     return {
@@ -112,44 +124,10 @@ Future<List<Map<String, dynamic>>> sortByPriceHighToLow(String category) async {
       'itemThumbnail': doc['itemThumbnail'],
       'itemName': doc['itemName'],
       'itemSubCategory': doc['itemSubCategory'],
-      'itemMrp': doc['itemMrp'],
+      'itemMrp': (doc['itemMrp'] as num).toDouble(),
       'itemShippingCharge': doc['itemShippingCharge'],
-      'itemDiscountPercentage': doc['itemDiscountPercentage'],
-      'itemOrderCount': doc['itemOrderCount'],
-    };
-  }).toList();
-}
-
-Future<List<Map<String, dynamic>>> sortByPriceLowToHigh(String category) async {
-  var querySnapshot =
-      await FirebaseFirestore.instance.collection('product_items').get();
-
-  var filteredDocs = querySnapshot.docs
-      .where((doc) =>
-          doc['itemName'].toLowerCase().contains(category.toLowerCase()) ||
-          doc['itemSubCategory']
-              .toLowerCase()
-              .contains(category.toLowerCase()) ||
-          doc['prdItemCategory'].toLowerCase().contains(category.toLowerCase()))
-      .toList();
-
-  // Sorting by itemMrp in ascending order (low to high)
-  filteredDocs.sort(
-      (a, b) => a['itemMrp'].toDouble().compareTo(b['itemMrp'].toDouble()));
-
-  return filteredDocs.map((doc) {
-    return {
-      // main Category
-      'prdItemCategory': doc['prdItemCategory'],
-      'pid': doc['pid'],
-
-      // basic infos for thumbnail
-      'itemThumbnail': doc['itemThumbnail'],
-      'itemName': doc['itemName'],
-      'itemSubCategory': doc['itemSubCategory'],
-      'itemMrp': doc['itemMrp'],
-      'itemShippingCharge': doc['itemShippingCharge'],
-      'itemDiscountPercentage': doc['itemDiscountPercentage'],
+      'itemDiscountPercentage':
+          (doc['itemDiscountPercentage'] as num).toDouble(),
       'itemOrderCount': doc['itemOrderCount'],
     };
   }).toList();

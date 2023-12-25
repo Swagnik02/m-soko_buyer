@@ -95,17 +95,22 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  Future<List<Map<String, dynamic>>> fetchSortedProducts() async {
+  Future<List<Map<String, dynamic>>> fetchSortedProducts(
+      String keyword, isCategory) async {
     switch (currentSortOption) {
       case SortOptions.relevance:
-        return futureSearchResultProducts(widget.keyword);
+        switch (isCategory) {
+          case true:
+            return futureCheckSelectedCategoryProducts(widget.keyword);
+          case false:
+            return futureSearchResultProducts(widget.keyword);
+        }
       case SortOptions.popularity:
-        // TODO: Implement logic for popularity sorting
         break;
       case SortOptions.priceHighToLow:
-        return sortByPriceHighToLow(widget.keyword);
+        return sortByPrice(widget.keyword, true);
       case SortOptions.priceLowToHigh:
-        return sortByPriceLowToHigh(widget.keyword);
+        return sortByPrice(widget.keyword, false);
     }
     return [];
   }
@@ -119,22 +124,14 @@ class _ResultPageState extends State<ResultPage> {
         value: option,
         groupValue: currentSortOption,
         onChanged: (SortOptions? value) {
-          // Update the state when the radio button is selected
           if (value != null) {
             Navigator.pop(context);
             setState(() {
               currentSortOption = value;
             });
-            // TODO: Call the function to apply sorting logic based on the selected option
-            // You might want to modify your product fetching functions accordingly
           }
         },
       ),
-      onTap: () {
-        // You can also handle the onTap event if needed
-        // For example, you might want to close the bottom sheet when a tile is tapped
-        Navigator.pop(context);
-      },
     );
   }
 
@@ -213,7 +210,7 @@ class _ResultPageState extends State<ResultPage> {
 
   Widget _searchBody(String searchKeyword) {
     return FutureBuilder<List<Map<String, dynamic>>>(
-      future: futureSearchResultProducts(searchKeyword),
+      future: fetchSortedProducts(searchKeyword, false),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
@@ -259,22 +256,19 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Widget _categorisedBody(String title) {
-    return FutureBuilder<List<ProductsCategoryModel>>(
-      future: futureCheckSelectedCategoryProducts(title),
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: fetchSortedProducts(title, true),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
-        } else if (snapshot.data == null) {
-          log(snapshot.data.toString());
+        } else if (snapshot.data == null || snapshot.data!.isEmpty) {
           return const Center(child: Text('No data found'));
-        } else if (snapshot.data!.isEmpty) {
-          return const Center(child: Text('Data is empty'));
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          List<ProductsCategoryModel> products = snapshot.data!;
-          log(products.toString());
+          List<Map<String, dynamic>> products = snapshot.data!;
           return Container(
+            // color: Colors.red,
             height: (products.length / 2) * 700,
             child: GridView.builder(
               primary: false,
@@ -287,17 +281,18 @@ class _ResultPageState extends State<ResultPage> {
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
-                ProductsCategoryModel currentProduct = products[index];
                 return ProductThumbnail(
-                  itemPid: currentProduct.pid,
-                  itemThumbnail: currentProduct.itemThumbnail,
-                  itemSubCategory: currentProduct.itemSubCategory,
-                  itemName: currentProduct.itemName,
-                  itemMrp: currentProduct.itemMrp,
+                  itemPid: (products[index]['pid']),
+                  itemThumbnail: (products[index]['itemThumbnail']),
+                  itemSubCategory: (products[index]['itemSubCategory']),
+                  itemName: (products[index]['itemName']),
+                  itemMrp: (products[index]['itemMrp']),
                   itemShippingCharge:
-                      currentProduct.itemShippingCharge.toString(),
-                  itemDiscountPercentage: currentProduct.itemDiscountPercentage,
-                  itemOrderCount: currentProduct.itemOrderCount.toString(),
+                      (products[index]['itemShippingCharge']).toString(),
+                  itemDiscountPercentage: (products[index]
+                      ['itemDiscountPercentage']),
+                  itemOrderCount:
+                      (products[index]['itemOrderCount']).toString(),
                 );
               },
             ),
