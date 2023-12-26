@@ -56,17 +56,60 @@ Future<List<Map<String, dynamic>>> futureCheckSelectedCategoryProducts(
 }
 
 Future<List<Map<String, dynamic>>> futureSearchResultProducts(
-    String category) async {
+    String keyword) async {
   var querySnapshot =
       await FirebaseFirestore.instance.collection('product_items').get();
 
   var filteredDocs = querySnapshot.docs
       .where((doc) =>
-          doc['itemName'].toLowerCase().contains(category.toLowerCase()) ||
+          doc['itemName'].toLowerCase().contains(keyword.toLowerCase()) ||
           doc['itemSubCategory']
               .toLowerCase()
-              .contains(category.toLowerCase()) ||
-          doc['prdItemCategory'].toLowerCase().contains(category.toLowerCase()))
+              .contains(keyword.toLowerCase()) ||
+          doc['prdItemCategory'].toLowerCase().contains(keyword.toLowerCase()))
+      .toList();
+
+  return filteredDocs.map((doc) {
+    return {
+      // main Category
+      'prdItemCategory': doc['prdItemCategory'],
+      'pid': doc['pid'],
+
+      // basic infos for thumbnail
+      'itemThumbnail': doc['itemThumbnail'],
+      'itemName': doc['itemName'],
+      'itemSubCategory': doc['itemSubCategory'],
+      'itemMrp': (doc['itemMrp'] as num).toDouble(),
+      'itemShippingCharge': doc['itemShippingCharge'],
+      'itemDiscountPercentage':
+          (doc['itemDiscountPercentage'] as num).toDouble(),
+      'itemOrderCount': doc['itemOrderCount'],
+    };
+  }).toList();
+}
+
+Future<List<Map<String, dynamic>>> futureSearchFilterProducts(
+  String keyword,
+  String ratings,
+  String ram,
+  String rom,
+  String display,
+) async {
+  var querySnapshot =
+      await FirebaseFirestore.instance.collection('product_items').get();
+
+  var filteredDocs = querySnapshot.docs
+      .where((doc) =>
+          doc['itemName'].toLowerCase().contains(keyword.toLowerCase()) ||
+          doc['itemSubCategory']
+              .toLowerCase()
+              .contains(keyword.toLowerCase()) ||
+          doc['prdItemCategory']
+                  .toLowerCase()
+                  .contains(keyword.toLowerCase()) &&
+              doc['ram'].toLowerCase().contains(ram.toLowerCase()) &&
+              doc['rom'].toLowerCase().contains(rom.toLowerCase()) &&
+              doc['display'].toLowerCase().contains(display.toLowerCase()))
       .toList();
 
   return filteredDocs.map((doc) {

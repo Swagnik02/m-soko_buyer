@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
@@ -15,6 +17,7 @@ enum SortOptions {
 class ResultPage extends StatefulWidget {
   final String keyword;
   final bool isSearchResults;
+
   ResultPage({
     required this.keyword,
     required this.isSearchResults,
@@ -26,7 +29,7 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPageState extends State<ResultPage> {
   SortOptions currentSortOption = SortOptions.relevance;
-
+  bool isFiltered = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,6 +64,87 @@ class _ResultPageState extends State<ResultPage> {
         ),
       ),
     );
+  }
+
+  Widget filtersBottomSheet() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
+      child: SizedBox(
+        // height: 270,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Filter',
+              style: TextStyle(fontSize: 20),
+            ),
+            Divider(),
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Text('Price'),
+                  // Dropdown for Max Price
+                  DropdownButton<int>(
+                    items: [
+                      DropdownMenuItem(value: 100, child: Text('100'))
+                    ], // Replace with your actual items
+                    onChanged: (value) {
+                      // Handle the change
+                    },
+                  ),
+                  // Dropdown for Min Price
+                  DropdownButton<int>(
+                    items: [
+                      DropdownMenuItem(value: 50, child: Text('50'))
+                    ], // Replace with your actual items
+                    onChanged: (value) {
+                      // Handle the change
+                    },
+                  ),
+                  Text('Brand'),
+                  // Add your ToggleButtons for Brand
+
+                  Text('Ram'),
+                  // Add your ToggleButtons for Ram
+
+                  Text('Rom'),
+                  // Add your ToggleButtons for Rom
+
+                  Text('ScreenSize'),
+                  // Add your ToggleButtons for ScreenSize
+
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        isFiltered = true;
+                      });
+                      Navigator.pop(context); // Close the bottom sheet
+                    },
+                    child: Text('Apply Filter'),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> fetchFilteredProducts(
+      String keyword) async {
+    switch (isFiltered) {
+      case true:
+        return futureSearchFilterProducts(
+          keyword,
+          'ratings',
+          '4 GB',
+          '64 GB',
+          '6.5 inch',
+        );
+      case false:
+        return futureSearchResultProducts(keyword);
+    }
   }
 
   Widget sortOptionsBottomSheet() {
@@ -169,18 +253,7 @@ class _ResultPageState extends State<ResultPage> {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return const SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text('Filters'),
-                        ],
-                      ),
-                    ),
-                  );
+                  return filtersBottomSheet();
                 },
               );
             },
@@ -207,7 +280,8 @@ class _ResultPageState extends State<ResultPage> {
 
   Widget _searchBody(String searchKeyword) {
     return FutureBuilder<List<Map<String, dynamic>>>(
-      future: fetchSortedProducts(searchKeyword, false),
+      // future: fetchSortedProducts(searchKeyword, false),
+      future: fetchFilteredProducts(searchKeyword),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
