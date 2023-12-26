@@ -55,6 +55,7 @@ dependencies:
   carousel_slider: ^4.2.1
   page_view_dot_indicator: ^2.3.0
   flutter_pannable_rating_bar: ^2.7.2+1
+  filter_list: ^1.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
@@ -66,11 +65,15 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
+  String filteredRam = '';
+  Set<String> filteredRams = {};
+  String filteredRom = '';
+  String filteredDisplay = '';
   Widget filtersBottomSheet() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
       child: SizedBox(
-        // height: 270,
+        // height: 500,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -79,51 +82,88 @@ class _ResultPageState extends State<ResultPage> {
               style: TextStyle(fontSize: 20),
             ),
             Divider(),
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Text('Price'),
-                  // Dropdown for Max Price
-                  DropdownButton<int>(
-                    items: [
-                      DropdownMenuItem(value: 100, child: Text('100'))
-                    ], // Replace with your actual items
-                    onChanged: (value) {
-                      // Handle the change
-                    },
-                  ),
-                  // Dropdown for Min Price
-                  DropdownButton<int>(
-                    items: [
-                      DropdownMenuItem(value: 50, child: Text('50'))
-                    ], // Replace with your actual items
-                    onChanged: (value) {
-                      // Handle the change
-                    },
-                  ),
-                  Text('Brand'),
-                  // Add your ToggleButtons for Brand
+            Column(
+              children: <Widget>[
+                // Text('Price'),
+                // Dropdown for Max Price
+                // Row(
+                //   children: [
+                //     DropdownButton<int>(
+                //       items: [
+                //         DropdownMenuItem(value: 100, child: Text('100'))
+                //       ], // Replace with your actual items
+                //       onChanged: (value) {
+                //         // Handle the change
+                //       },
+                //     ),
+                //     // Dropdown for Min Price
+                //     DropdownButton<int>(
+                //       items: [
+                //         DropdownMenuItem(value: 50, child: Text('50'))
+                //       ], // Replace with your actual items
+                //       onChanged: (value) {
+                //         // Handle the change
+                //       },
+                //     ),
+                //   ],
+                // ),
+                Text('Brand'),
+                SelectableRow(
+                  items: [
+                    'Realme',
+                    'OnePlus',
+                    'Sony',
+                    'Oppo',
+                    'Vivo',
+                  ],
+                  selectedItems: filteredRams,
+                ),
 
-                  Text('Ram'),
-                  // Add your ToggleButtons for Ram
+                Text('Ram'),
+                SelectableRow(
+                  items: [
+                    '2 GB',
+                    '4 GB',
+                    '6 GB',
+                    '8 GB',
+                    '12 GB',
+                  ],
+                  selectedItems: filteredRams,
+                ),
 
-                  Text('Rom'),
-                  // Add your ToggleButtons for Rom
+                Text('Rom'),
+                SelectableRow(
+                  items: [
+                    '64 GB',
+                    '128 GB',
+                    '256 GB',
+                  ],
+                  selectedItems: filteredRams,
+                ),
 
-                  Text('ScreenSize'),
-                  // Add your ToggleButtons for ScreenSize
+                Text('ScreenSize'),
+                SelectableRow(
+                  items: [
+                    '6.2 inch',
+                    '6.5 inch',
+                    '6.8 inch',
+                  ],
+                  selectedItems: filteredRams,
+                ),
 
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        isFiltered = true;
-                      });
-                      Navigator.pop(context); // Close the bottom sheet
-                    },
-                    child: Text('Apply Filter'),
-                  )
-                ],
-              ),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      isFiltered = true;
+                    });
+
+                    Fluttertoast.showToast(msg: filteredRams.first);
+                    filteredRam = filteredRams.first;
+                    Navigator.pop(context); // Close the bottom sheet
+                  },
+                  child: Text('Apply Filter'),
+                )
+              ],
             ),
           ],
         ),
@@ -138,9 +178,9 @@ class _ResultPageState extends State<ResultPage> {
         return futureSearchFilterProducts(
           keyword,
           'ratings',
-          '4 GB',
-          '64 GB',
-          '6.5 inch',
+          filteredRam,
+          filteredRom,
+          filteredDisplay,
         );
       case false:
         return futureSearchResultProducts(keyword);
@@ -370,6 +410,61 @@ class _ResultPageState extends State<ResultPage> {
           );
         }
       },
+    );
+  }
+}
+
+class SelectableRow extends StatefulWidget {
+  final List<String> items;
+  final Set<String> selectedItems;
+
+  SelectableRow({
+    required this.items,
+    required this.selectedItems,
+  });
+
+  @override
+  _SelectableRowState createState() => _SelectableRowState();
+}
+
+class _SelectableRowState extends State<SelectableRow> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: List.generate(widget.items.length, (index) {
+          bool isSelected = widget.selectedItems.contains(widget.items[index]);
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                if (isSelected) {
+                  widget.selectedItems.remove(widget.items[index]);
+                } else {
+                  widget.selectedItems.add(widget.items[index]);
+                }
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: isSelected ? Colors.blue : Colors.transparent,
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                widget.items[index],
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.black,
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }
