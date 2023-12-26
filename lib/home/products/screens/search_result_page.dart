@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -66,10 +68,15 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   String filteredRam = '';
-  Set<String> filteredRams = {};
   String filteredRom = '';
   String filteredDisplay = '';
+  String filteredBrand = '';
+
   Widget filtersBottomSheet() {
+    Set<String> setFilteredRam = {};
+    Set<String> setFilteredRom = {};
+    Set<String> setFilteredDisplay = {};
+    Set<String> setFilteredBrand = {};
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
       child: SizedBox(
@@ -83,6 +90,7 @@ class _ResultPageState extends State<ResultPage> {
             ),
             Divider(),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // Text('Price'),
                 // Dropdown for Max Price
@@ -116,7 +124,7 @@ class _ResultPageState extends State<ResultPage> {
                     'Oppo',
                     'Vivo',
                   ],
-                  selectedItems: filteredRams,
+                  selectedItems: setFilteredBrand,
                 ),
 
                 Text('Ram'),
@@ -128,7 +136,7 @@ class _ResultPageState extends State<ResultPage> {
                     '8 GB',
                     '12 GB',
                   ],
-                  selectedItems: filteredRams,
+                  selectedItems: setFilteredRam,
                 ),
 
                 Text('Rom'),
@@ -138,7 +146,7 @@ class _ResultPageState extends State<ResultPage> {
                     '128 GB',
                     '256 GB',
                   ],
-                  selectedItems: filteredRams,
+                  selectedItems: setFilteredRom,
                 ),
 
                 Text('ScreenSize'),
@@ -148,7 +156,7 @@ class _ResultPageState extends State<ResultPage> {
                     '6.5 inch',
                     '6.8 inch',
                   ],
-                  selectedItems: filteredRams,
+                  selectedItems: setFilteredDisplay,
                 ),
 
                 TextButton(
@@ -157,8 +165,16 @@ class _ResultPageState extends State<ResultPage> {
                       isFiltered = true;
                     });
 
-                    Fluttertoast.showToast(msg: filteredRams.first);
-                    filteredRam = filteredRams.first;
+                    filteredRam = setFilteredRam.first;
+                    filteredRom = setFilteredRom.first;
+                    filteredDisplay = setFilteredDisplay.first;
+                    filteredBrand = setFilteredBrand.first;
+
+                    log(filteredRam);
+                    log(filteredRom);
+                    log(filteredDisplay);
+                    log(filteredBrand);
+
                     Navigator.pop(context); // Close the bottom sheet
                   },
                   child: Text('Apply Filter'),
