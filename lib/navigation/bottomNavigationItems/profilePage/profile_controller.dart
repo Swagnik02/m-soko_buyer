@@ -22,17 +22,17 @@ class ProfileController extends GetxController {
     super.onInit();
 
     userNameController =
-        TextEditingController(text: UserDataService().userModel!.userName);
+        TextEditingController(text: UserDataService().userModel?.userName);
     mobileController =
-        TextEditingController(text: UserDataService().userModel!.mobile);
+        TextEditingController(text: UserDataService().userModel?.mobile);
     cityController =
-        TextEditingController(text: UserDataService().userModel!.city);
+        TextEditingController(text: UserDataService().userModel?.city);
     stateController =
-        TextEditingController(text: UserDataService().userModel!.state);
+        TextEditingController(text: UserDataService().userModel?.state);
     countryController =
-        TextEditingController(text: UserDataService().userModel!.country);
+        TextEditingController(text: UserDataService().userModel?.country);
     pincodeController =
-        TextEditingController(text: UserDataService().userModel!.pin);
+        TextEditingController(text: UserDataService().userModel?.pin);
   }
 
   @override

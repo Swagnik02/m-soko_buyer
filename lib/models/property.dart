@@ -8,6 +8,7 @@ class PropertyModel {
   final dynamic
       locationPoint; // You might need to define a custom class for GeoPoint
   final int storeRoom;
+  final String email;
   final String agentNumber;
   final String agentName;
   final int sellingPrice;
@@ -40,6 +41,7 @@ class PropertyModel {
     required this.category,
     required this.loanAvailable,
     required this.locationPoint,
+    required this.email,
     required this.storeRoom,
     required this.agentNumber,
     required this.agentName,
@@ -86,6 +88,7 @@ class PropertyModel {
       locationPoint: json['Location Point'],
       // Assuming this might be a complex type
       storeRoom: parsetoInt(json['Store Room']),
+      email: json['Email'],
       agentNumber: json['Agent Number'] as String? ?? '',
       agentName: json['Agent Name'] as String? ?? '',
       sellingPrice: parsetoInt(json['Selling Price']),
@@ -127,6 +130,7 @@ class PropertyModel {
       'Store Room': storeRoom,
       'Agent Number': agentNumber,
       'Agent Name': agentName,
+      'Email': email,
       'Selling Price': sellingPrice,
       'Bank Name': bankName,
       'Listing Status': listingStatus,
@@ -171,6 +175,7 @@ class PropertyModel {
       category: data?['Category'] ?? '',
       loanAvailable: data?['Loan Available'] ?? false,
       locationPoint: data?['Location Point'],
+      email: data?['Email'],
       storeRoom: parsetoInt(data?['Store Room']),
       agentNumber: data?['Agent Number'] ?? '',
       agentName: data?['Agent Name'] ?? '',

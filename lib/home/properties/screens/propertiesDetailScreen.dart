@@ -7,7 +7,9 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
 import 'package:m_soko/models/property.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/call_page/CallInvitationPage.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 class PropertiesDetailScreen extends StatelessWidget {
   const PropertiesDetailScreen({super.key});
@@ -21,6 +23,7 @@ class PropertiesDetailScreen extends StatelessWidget {
       backgroundColor: ColorConstants.bgColour,
       appBar: AppBar(
         backgroundColor: ColorConstants.green800,
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: Get.width * 0.04),
@@ -163,7 +166,20 @@ class PropertiesDetailScreen extends StatelessWidget {
           ),
           Expanded(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                // Get.to(CallInvitationPage(callId: properties.email));
+                Get.to(ZegoSendCallInvitationButton(
+                  isVideoCall: false,
+                  resourceID: "zego_sokoni",
+                  //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
+                  invitees: [
+                    ZegoUIKitUser(
+                      id: "qwerty",
+                      name: "Mohd'Phone",
+                    ),
+                  ],
+                ));
+              },
               child: Container(
                 alignment: Alignment.center,
                 height: Get.height * 0.08,

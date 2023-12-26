@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/routes/app_routes.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 class LoginController extends GetxController {
   late final TextEditingController email;
@@ -29,6 +32,22 @@ class LoginController extends GetxController {
     super.dispose();
   }
 
+  void intializeCalling({
+    required String userId,
+    required String userName,
+  }) {
+    /// 1.2.1. initialized ZegoUIKitPrebuiltCallInvitationService
+    /// when app's user is logged in or re-logged in
+    /// We recommend calling this method as soon as the user logs in to your app.
+    ZegoUIKitPrebuiltCallInvitationService().init(
+      appID: GlobalUtil.appIdForCalling /*input your AppID*/,
+      appSign: GlobalUtil.appSignForCalling /*input your AppSign*/,
+      userID: userId,
+      userName: userName,
+      plugins: [ZegoUIKitSignalingPlugin()],
+    );
+  }
+
   // Future<void> logIn() async {
   //   try {
   //     await FirebaseAuth.instance
@@ -52,6 +71,8 @@ class LoginController extends GetxController {
         UserDataService().fetchUserData(email.text).then((_) {
           // // Store user data locally after successful login
           UserDataService().storeUserDataLocally();
+          // intializeCalling(userId: '12324', userName: "Mohd'Emulator");
+          intializeCalling(userId: 'qwerty', userName: "Mohd'Phone");
         });
 
         // Navigate to the home screen

@@ -7,7 +7,7 @@ import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.da
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';

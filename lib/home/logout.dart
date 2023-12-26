@@ -50,8 +50,9 @@ class LogoutScreen extends StatelessWidget {
                   // addProducts();
                   // updateUserData();
                   // someFunction();
+                  FirebaseAuth.instance.signOut();
                   Fluttertoast.showToast(
-                      msg: '${UserDataService().userModel?.pin} ');
+                      msg: '${UserDataService().userModel?.userName} ');
                   // Call fetchUserData to update the user data
                   // fecthUsersData(
                   //     FirebaseAuth.instance.currentUser?.email ?? "");
