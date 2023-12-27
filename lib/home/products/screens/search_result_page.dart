@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
@@ -72,51 +70,63 @@ class _ResultPageState extends State<ResultPage> {
   String filteredDisplay = '';
   String filteredBrand = '';
 
+  Set<String> setFilteredRam = {};
+  Set<String> setFilteredRom = {};
+  Set<String> setFilteredDisplay = {};
+  Set<String> setFilteredBrand = {};
+
   Widget filtersBottomSheet() {
-    Set<String> setFilteredRam = {};
-    Set<String> setFilteredRom = {};
-    Set<String> setFilteredDisplay = {};
-    Set<String> setFilteredBrand = {};
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
-      child: SizedBox(
-        // height: 500,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20.0, right: 25, left: 25),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
               'Filter',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 23),
             ),
-            Divider(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+        ),
+        Divider(),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: ListView(
+              //body
               children: <Widget>[
-                // Text('Price'),
+                Text(
+                  'Price',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 19,
+                  ),
+                ),
                 // Dropdown for Max Price
-                // Row(
-                //   children: [
-                //     DropdownButton<int>(
-                //       items: [
-                //         DropdownMenuItem(value: 100, child: Text('100'))
-                //       ], // Replace with your actual items
-                //       onChanged: (value) {
-                //         // Handle the change
-                //       },
-                //     ),
-                //     // Dropdown for Min Price
-                //     DropdownButton<int>(
-                //       items: [
-                //         DropdownMenuItem(value: 50, child: Text('50'))
-                //       ], // Replace with your actual items
-                //       onChanged: (value) {
-                //         // Handle the change
-                //       },
-                //     ),
-                //   ],
-                // ),
-                Text('Brand'),
+                Row(
+                  children: [
+                    DropdownButton<int>(
+                      items: [
+                        DropdownMenuItem(value: 100, child: Text('100'))
+                      ], // Replace with your actual items
+                      onChanged: (value) {
+                        // Handle the change
+                      },
+                    ),
+                    // Dropdown for Min Price
+                    DropdownButton<int>(
+                      items: [
+                        DropdownMenuItem(value: 50, child: Text('50'))
+                      ], // Replace with your actual items
+                      onChanged: (value) {
+                        // Handle the change
+                      },
+                    ),
+                  ],
+                ),
+
                 SelectableRow(
+                  title: 'Brand',
                   items: [
                     'Realme',
                     'OnePlus',
@@ -127,8 +137,8 @@ class _ResultPageState extends State<ResultPage> {
                   selectedItems: setFilteredBrand,
                 ),
 
-                Text('Ram'),
                 SelectableRow(
+                  title: 'Ram',
                   items: [
                     '2 GB',
                     '4 GB',
@@ -139,8 +149,8 @@ class _ResultPageState extends State<ResultPage> {
                   selectedItems: setFilteredRam,
                 ),
 
-                Text('Rom'),
                 SelectableRow(
+                  title: 'Rom',
                   items: [
                     '64 GB',
                     '128 GB',
@@ -149,8 +159,8 @@ class _ResultPageState extends State<ResultPage> {
                   selectedItems: setFilteredRom,
                 ),
 
-                Text('ScreenSize'),
                 SelectableRow(
+                  title: 'ScreenSize',
                   items: [
                     '6.2 inch',
                     '6.5 inch',
@@ -158,32 +168,38 @@ class _ResultPageState extends State<ResultPage> {
                   ],
                   selectedItems: setFilteredDisplay,
                 ),
-
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      isFiltered = true;
-                    });
-
-                    filteredRam = setFilteredRam.first;
-                    filteredRom = setFilteredRom.first;
-                    filteredDisplay = setFilteredDisplay.first;
-                    filteredBrand = setFilteredBrand.first;
-
-                    log(filteredRam);
-                    log(filteredRom);
-                    log(filteredDisplay);
-                    log(filteredBrand);
-
-                    Navigator.pop(context); // Close the bottom sheet
-                  },
-                  child: Text('Apply Filter'),
-                )
               ],
             ),
-          ],
+          ),
         ),
-      ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isFiltered = true;
+            });
+
+            log(setFilteredRam.toString());
+            log(setFilteredRom.toString());
+            log(setFilteredDisplay.toString());
+            log(setFilteredBrand.toString());
+
+            Navigator.pop(context);
+          },
+          child: Container(
+            alignment: Alignment.center,
+            height: 60,
+            width: double.infinity,
+            color: Color(0xFFFA7023),
+            child: Text(
+              'Apply',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -194,9 +210,9 @@ class _ResultPageState extends State<ResultPage> {
         return futureSearchFilterProducts(
           keyword,
           'ratings',
-          filteredRam,
-          filteredRom,
-          filteredDisplay,
+          setFilteredRam,
+          setFilteredRom,
+          setFilteredDisplay,
         );
       case false:
         return futureSearchResultProducts(keyword);
@@ -308,8 +324,19 @@ class _ResultPageState extends State<ResultPage> {
             onTap: () {
               showModalBottomSheet<void>(
                 context: context,
+                isScrollControlled: true,
                 builder: (BuildContext context) {
-                  return filtersBottomSheet();
+                  return LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      return Container(
+                        constraints: BoxConstraints(
+                          maxHeight: 500,
+                        ),
+                        child: filtersBottomSheet(),
+                      );
+                    },
+                  );
                 },
               );
             },
@@ -433,10 +460,12 @@ class _ResultPageState extends State<ResultPage> {
 class SelectableRow extends StatefulWidget {
   final List<String> items;
   final Set<String> selectedItems;
+  final String title;
 
   SelectableRow({
     required this.items,
     required this.selectedItems,
+    required this.title,
   });
 
   @override
@@ -446,41 +475,60 @@ class SelectableRow extends StatefulWidget {
 class _SelectableRowState extends State<SelectableRow> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(widget.items.length, (index) {
-          bool isSelected = widget.selectedItems.contains(widget.items[index]);
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                if (isSelected) {
-                  widget.selectedItems.remove(widget.items[index]);
-                } else {
-                  widget.selectedItems.add(widget.items[index]);
-                }
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: isSelected ? Colors.blue : Colors.transparent,
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                widget.items[index],
-                style: TextStyle(
-                  color: isSelected ? Colors.white : Colors.black,
-                ),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 19,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: List.generate(widget.items.length, (index) {
+                bool isSelected =
+                    widget.selectedItems.contains(widget.items[index]);
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (isSelected) {
+                        widget.selectedItems.remove(widget.items[index]);
+                      } else {
+                        widget.selectedItems.add(widget.items[index]);
+                      }
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 9),
+                    margin: EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                      color:
+                          isSelected ? Color(0xFF3072D4) : Colors.transparent,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      widget.items[index],
+                      style: TextStyle(
+                        fontSize: 19,
+                        color: isSelected ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ),
-          );
-        }),
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

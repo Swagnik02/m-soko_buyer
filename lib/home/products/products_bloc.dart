@@ -91,26 +91,25 @@ Future<List<Map<String, dynamic>>> futureSearchResultProducts(
 Future<List<Map<String, dynamic>>> futureSearchFilterProducts(
   String keyword,
   String ratings,
-  String ram,
-  String rom,
-  String display,
+  Set<String> ramSet,
+  Set<String> romSet,
+  Set<String> displaySet,
 ) async {
   var querySnapshot =
       await FirebaseFirestore.instance.collection('product_items').get();
 
-  var filteredDocs = querySnapshot.docs
-      .where((doc) =>
-          doc['itemName'].toLowerCase().contains(keyword.toLowerCase()) ||
-          doc['itemSubCategory']
-              .toLowerCase()
-              .contains(keyword.toLowerCase()) ||
-          doc['prdItemCategory']
-                  .toLowerCase()
-                  .contains(keyword.toLowerCase()) &&
-              doc['ram'].toLowerCase().contains(ram.toLowerCase()) &&
-              doc['rom'].toLowerCase().contains(rom.toLowerCase()) &&
-              doc['display'].toLowerCase().contains(display.toLowerCase()))
-      .toList();
+  var filteredDocs = querySnapshot.docs.where((doc) {
+    return (doc['itemName'].toLowerCase().contains(keyword.toLowerCase()) ||
+            doc['itemSubCategory']
+                .toLowerCase()
+                .contains(keyword.toLowerCase()) ||
+            doc['prdItemCategory']
+                .toLowerCase()
+                .contains(keyword.toLowerCase())) &&
+        ramSet.contains(doc['ram'].toLowerCase()) &&
+        romSet.contains(doc['rom'].toLowerCase()) &&
+        displaySet.contains(doc['display'].toLowerCase());
+  }).toList();
 
   return filteredDocs.map((doc) {
     return {
