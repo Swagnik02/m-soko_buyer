@@ -106,9 +106,9 @@ Future<List<Map<String, dynamic>>> futureSearchFilterProducts(
             doc['prdItemCategory']
                 .toLowerCase()
                 .contains(keyword.toLowerCase())) &&
-        ramSet.contains(doc['ram'].toLowerCase()) &&
-        romSet.contains(doc['rom'].toLowerCase()) &&
-        displaySet.contains(doc['display'].toLowerCase());
+        doc['ram']
+            .toLowerCase()
+            .contains(ramSet.first.toString().toLowerCase());
   }).toList();
 
   return filteredDocs.map((doc) {

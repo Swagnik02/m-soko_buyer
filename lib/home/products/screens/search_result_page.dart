@@ -179,11 +179,11 @@ class _ResultPageState extends State<ResultPage> {
               isFiltered = true;
             });
 
-            log(filteredMaxPrice.toString());
+            // log(filteredMaxPrice.toString());
             log(setFilteredRam.toString());
-            log(setFilteredRom.toString());
-            log(setFilteredDisplay.toString());
-            log(setFilteredBrand.toString());
+            // log(setFilteredRom.toString());
+            // log(setFilteredDisplay.toString());
+            // log(setFilteredBrand.toString());
 
             Navigator.pop(context);
           },
