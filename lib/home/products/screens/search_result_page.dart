@@ -98,7 +98,7 @@ class _ResultPageState extends State<ResultPage> {
                   'Price',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 19,
+                    fontSize: 16,
                   ),
                 ),
                 Row(
@@ -106,6 +106,7 @@ class _ResultPageState extends State<ResultPage> {
                   children: [
                     DropdownMenu<double>(
                       hintText: 'MaxPrice',
+                      textStyle: TextStyle(fontSize: 15),
                       onSelected: (double? value) {
                         filteredMaxPrice = value!;
                       },
@@ -484,7 +485,7 @@ class _SelectableRowState extends State<SelectableRow> {
           widget.title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 19,
+            fontSize: 16,
           ),
         ),
         Padding(
