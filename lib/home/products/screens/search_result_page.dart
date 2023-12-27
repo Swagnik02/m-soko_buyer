@@ -65,10 +65,8 @@ class _ResultPageState extends State<ResultPage> {
     );
   }
 
-  String filteredRam = '';
-  String filteredRom = '';
-  String filteredDisplay = '';
-  String filteredBrand = '';
+  late double filteredMaxPrice;
+  late double filteredMinPrice;
 
   Set<String> setFilteredRam = {};
   Set<String> setFilteredRom = {};
@@ -76,6 +74,7 @@ class _ResultPageState extends State<ResultPage> {
   Set<String> setFilteredBrand = {};
 
   Widget filtersBottomSheet() {
+    const List<double> priceList = <double>[10000.0, 15000.0, 20000.0];
     return Column(
       children: [
         Padding(
@@ -93,7 +92,7 @@ class _ResultPageState extends State<ResultPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: ListView(
-              //body
+              // body
               children: <Widget>[
                 Text(
                   'Price',
@@ -102,29 +101,33 @@ class _ResultPageState extends State<ResultPage> {
                     fontSize: 19,
                   ),
                 ),
-                // Dropdown for Max Price
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    DropdownButton<int>(
-                      items: [
-                        DropdownMenuItem(value: 100, child: Text('100'))
-                      ], // Replace with your actual items
-                      onChanged: (value) {
-                        // Handle the change
+                    DropdownMenu<double>(
+                      hintText: 'MaxPrice',
+                      onSelected: (double? value) {
+                        filteredMaxPrice = value!;
                       },
+                      dropdownMenuEntries: priceList
+                          .map<DropdownMenuEntry<double>>((double value) {
+                        return DropdownMenuEntry<double>(
+                            value: value, label: value.toString());
+                      }).toList(),
                     ),
-                    // Dropdown for Min Price
-                    DropdownButton<int>(
-                      items: [
-                        DropdownMenuItem(value: 50, child: Text('50'))
-                      ], // Replace with your actual items
-                      onChanged: (value) {
-                        // Handle the change
+                    DropdownMenu<double>(
+                      hintText: 'MinPrice',
+                      onSelected: (double? value) {
+                        filteredMaxPrice = value!;
                       },
+                      dropdownMenuEntries: priceList
+                          .map<DropdownMenuEntry<double>>((double value) {
+                        return DropdownMenuEntry<double>(
+                            value: value, label: value.toString());
+                      }).toList(),
                     ),
                   ],
                 ),
-
                 SelectableRow(
                   title: 'Brand',
                   items: [
@@ -136,7 +139,6 @@ class _ResultPageState extends State<ResultPage> {
                   ],
                   selectedItems: setFilteredBrand,
                 ),
-
                 SelectableRow(
                   title: 'Ram',
                   items: [
@@ -148,7 +150,6 @@ class _ResultPageState extends State<ResultPage> {
                   ],
                   selectedItems: setFilteredRam,
                 ),
-
                 SelectableRow(
                   title: 'Rom',
                   items: [
@@ -158,7 +159,6 @@ class _ResultPageState extends State<ResultPage> {
                   ],
                   selectedItems: setFilteredRom,
                 ),
-
                 SelectableRow(
                   title: 'ScreenSize',
                   items: [
@@ -178,6 +178,7 @@ class _ResultPageState extends State<ResultPage> {
               isFiltered = true;
             });
 
+            log(filteredMaxPrice.toString());
             log(setFilteredRam.toString());
             log(setFilteredRom.toString());
             log(setFilteredDisplay.toString());
