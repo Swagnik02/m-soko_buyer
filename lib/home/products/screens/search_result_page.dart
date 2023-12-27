@@ -519,7 +519,7 @@ class _SelectableRowState extends State<SelectableRow> {
                     child: Text(
                       widget.items[index],
                       style: TextStyle(
-                        fontSize: 19,
+                        fontSize: 15,
                         color: isSelected ? Colors.white : Colors.black,
                       ),
                     ),
