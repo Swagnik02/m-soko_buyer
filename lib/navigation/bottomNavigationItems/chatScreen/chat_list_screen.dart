@@ -51,7 +51,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     // displays all users except the current user
     if (UserDataService().userModel!.email.toString() != data['email']) {
       return ListTile(
-        title: Text(data['email']),
+        title: Text(data['userName']),
         onTap: () {
           // pass the clicked users uid to the chat page
           Navigator.push(
@@ -60,6 +60,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
               builder: (context) => ChatPage(
                 receiverUserEmail: data['email'],
                 receiverUserID: data['uid'],
+                receiverUserName: data['userName'],
               ),
             ),
           );

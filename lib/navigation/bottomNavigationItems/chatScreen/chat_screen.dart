@@ -8,11 +8,13 @@ import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receiverUserID;
+  final String receiverUserName;
 
   ChatPage(
       {super.key,
       required this.receiverUserEmail,
-      required this.receiverUserID});
+      required this.receiverUserID,
+      required this.receiverUserName});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -37,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
+        title: Text(widget.receiverUserName),
       ),
       body: Column(children: [
         // messages
