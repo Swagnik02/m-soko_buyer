@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_buble.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final String currentUserId = UserDataService().userModel!.uid.toString();
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -83,30 +85,15 @@ class _ChatPageState extends State<ChatPage> {
   _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-    // Get the timestamp from Firestore
-    DateTime timestamp = (data['timestamp'] as Timestamp).toDate();
-
-    // Calculate the time difference
-    Duration difference = DateTime.now().difference(timestamp);
-
     // Format the time difference as "time ago"
+    DateTime timestamp = (data['timestamp'] as Timestamp).toDate();
+    Duration difference = DateTime.now().difference(timestamp);
     String timeAgo = formatDuration(difference);
 
-    // align to right if the sender is the current user
-    var alignment =
-        (data['senderId'] == UserDataService().userModel!.uid.toString())
-            ? Alignment.centerRight
-            : Alignment.centerLeft;
-
-    return Container(
-      alignment: alignment,
-      child: Column(
-        children: [
-          Text(data['message']),
-          // Text(data['timestamp'].toString()),
-          Text(timeAgo),
-        ],
-      ),
+    return ChatBubble(
+      message: data['message'],
+      isSender: data['senderId'] == currentUserId,
+      timeAgo: timeAgo,
     );
   }
 
