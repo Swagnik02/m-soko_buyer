@@ -48,3 +48,21 @@ class EmptyFieldException implements Exception {
     return '$fieldName cannot be empty';
   }
 }
+
+class InvalidCredentialsException implements Exception {
+  @override
+  String toString() {
+    Fluttertoast.showToast(
+        msg: 'Invalid email or password', toastLength: Toast.LENGTH_SHORT);
+    return 'Invalid email or password';
+  }
+}
+
+class NetworkErrorException implements Exception {
+  @override
+  String toString() {
+    Fluttertoast.showToast(
+        msg: 'Network error occurred', toastLength: Toast.LENGTH_SHORT);
+    return 'Network error occurred';
+  }
+}

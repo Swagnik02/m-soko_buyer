@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/authentication/Views/registerView/register_controller.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -218,105 +219,119 @@ class RegisterViewState extends State<RegisterView> {
                   ),
                   // Sign Up button
                   const SizedBox(height: 5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    ColorConstants.blue700),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () async {
-                                // Fluttertoast.showToast(msg: 'btn pressed');
-                                controller.createUser();
-                              },
-                              child: const SizedBox(
-                                height: 35,
-                                child: Center(
-                                  child: Text(
-                                    'Sign Up!',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 25),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // switch to login
-                      const SizedBox(height: 4),
-                      RichText(
-                        text: TextSpan(
+
+                  if (controller.isLoading)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text('Loading'),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Utils.customLoadingSpinner(),
+                        ),
+                      ],
+                    )
+                  else
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
                           children: [
-                            const TextSpan(
-                              text: 'By signing up, you agree to our ',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Terms And Policy',
-                              style: const TextStyle(
-                                color: Colors.blue,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // Implement your navigation or action here
-                                  log('Navigate to Terms And Policy');
+                            Expanded(
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      ColorConstants.blue700),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  // Fluttertoast.showToast(msg: 'btn pressed');
+                                  controller.createUser();
                                 },
+                                child: const SizedBox(
+                                  height: 35,
+                                  child: Center(
+                                    child: Text(
+                                      'Sign Up!',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 25),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Have an account?'),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Fluttertoast.showToast(
-                                msg: 'Login Screen',
-                              );
-                              Get.back();
-                            },
-                            style: ButtonStyle(
-                              side: MaterialStateProperty.all(
-                                const BorderSide(
+                        // switch to login
+                        const SizedBox(height: 4),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'By signing up, you agree to our ',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Terms And Policy',
+                                style: const TextStyle(
                                   color: Colors.blue,
-                                  width: 2.0,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
                                 ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // Implement your navigation or action here
+                                    log('Navigate to Terms And Policy');
+                                  },
                               ),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                              ),
-                            ),
-                            child: const Text('Login'),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Have an account?'),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Fluttertoast.showToast(
+                                  msg: 'Login Screen',
+                                );
+                                Get.back();
+                              },
+                              style: ButtonStyle(
+                                side: MaterialStateProperty.all(
+                                  const BorderSide(
+                                    color: Colors.blue,
+                                    width: 2.0,
+                                  ),
+                                ),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                  ),
+                                ),
+                              ),
+                              child: const Text('Login'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),

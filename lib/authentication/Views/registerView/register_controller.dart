@@ -15,6 +15,8 @@ class RegisterController extends GetxController {
   bool isPasswordVisible1 = false;
   bool isPasswordVisible2 = false;
 
+  bool isLoading = false;
+
   @override
   void onInit() {
     name = TextEditingController();
@@ -43,6 +45,11 @@ class RegisterController extends GetxController {
     update();
   }
 
+  void toggleLoading() {
+    isLoading = !isLoading;
+    update();
+  }
+
   Future<void> createUser() async {
     if (name.text.isEmpty ||
         email.text.isEmpty ||
@@ -51,6 +58,7 @@ class RegisterController extends GetxController {
       throw EmptyFieldException('All fields');
     }
     try {
+      toggleLoading();
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
         email: email.text,
@@ -65,7 +73,7 @@ class RegisterController extends GetxController {
           'userName': name.text,
           'email': value.user!.email,
         });
-
+        toggleLoading();
         FirebaseAuth.instance
             .signOut()
             .then((value) => Get.offAllNamed(AppRoutes.loginScreen));
@@ -75,12 +83,16 @@ class RegisterController extends GetxController {
     } on FirebaseAuthException catch (e) {
       Logger().e(e);
       if (e.code == 'weak-password') {
+        toggleLoading();
         throw WeakPasswordException();
       } else if (e.code == 'email-already-in-use') {
+        toggleLoading();
         throw EmailAlreadyInUseException();
       } else if (e.code == 'invalid-email') {
+        toggleLoading();
         throw InvalidEmailException();
       } else {
+        toggleLoading();
         throw AuthException();
       }
     }
