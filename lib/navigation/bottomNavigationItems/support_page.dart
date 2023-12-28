@@ -9,11 +9,8 @@ class SupportPage extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            // Handle button press action
-            print('Button pressed!');
-          },
-          child: Text('Press Me'),
+          onPressed: () {},
+          child: Text('Go to Chat List'),
         ),
       ),
     );

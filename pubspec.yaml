@@ -56,6 +56,13 @@ dependencies:
   page_view_dot_indicator: ^2.3.0
   flutter_pannable_rating_bar: ^2.7.2+1
   filter_list: ^1.0.2
+  # chat_ui_kit: ^1.4.0
+  implicitly_animated_reorderable_list_2: ^0.5.0
+  functional_widget_annotation: ^0.10.0
+  just_audio: ^0.9.10 #play audio files
+  flutter_video_info: ^1.2.0 #retrieve video metadata
+  video_thumbnail: ^0.5.2 #get a thumbnail from a file
+  collection: ^1.15.0
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +94,8 @@ flutter:
     - assets/tests/mobiles/
     - assets/PropertyImage/
     - assets/icons/
+    - assets/avatars/
+    - assets/other/
 
 
     # - assets/products_category_icons/
