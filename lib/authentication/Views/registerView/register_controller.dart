@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -59,16 +57,14 @@ class RegisterController extends GetxController {
         password: password.text,
       )
           .then((value) async {
-        if (value != null) {
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(value.user!.email)
-              .set({
-            'uid': value.user!.uid,
-            'userName': name.text,
-            'email': value.user!.email,
-          });
-        }
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(value.user!.email)
+            .set({
+          'uid': value.user!.uid,
+          'userName': name.text,
+          'email': value.user!.email,
+        });
 
         FirebaseAuth.instance
             .signOut()
