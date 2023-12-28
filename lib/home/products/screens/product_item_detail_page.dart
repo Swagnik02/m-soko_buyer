@@ -95,13 +95,13 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                  receiverUserEmail: widget
+                                builder: (context) => ChatScreen(
+                                  sellerUserEmail: widget
                                       .productModel.sellerEmail
                                       .toString(),
-                                  receiverUserID:
+                                  sellerUserID:
                                       widget.productModel.sellerUid.toString(),
-                                  receiverUserName: widget
+                                  sellerUserName: widget
                                       .productModel.sellerUserName
                                       .toString(),
                                 ),

@@ -6,22 +6,22 @@ import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_buble.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
 
-class ChatPage extends StatefulWidget {
-  final String receiverUserEmail;
-  final String receiverUserID;
-  final String receiverUserName;
+class ChatScreen extends StatefulWidget {
+  final String sellerUserEmail;
+  final String sellerUserID;
+  final String sellerUserName;
 
-  ChatPage(
+  ChatScreen(
       {super.key,
-      required this.receiverUserEmail,
-      required this.receiverUserID,
-      required this.receiverUserName});
+      required this.sellerUserEmail,
+      required this.sellerUserID,
+      required this.sellerUserName});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatScreenState extends State<ChatScreen> {
   final String currentUserId = UserDataService().userModel!.uid.toString();
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
@@ -30,7 +30,7 @@ class _ChatPageState extends State<ChatPage> {
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
-          widget.receiverUserID, _messageController.text);
+          widget.sellerUserID, widget.sellerUserEmail, _messageController.text);
 
       // clear the controller after sending the message
       _messageController.clear();
@@ -41,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserName),
+        title: Text(widget.sellerUserName),
       ),
       body: Column(children: [
         // messages
@@ -58,7 +58,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget _buildMessageList() {
     return StreamBuilder(
       stream: _chatService.getMessages(
-        widget.receiverUserID,
+        widget.sellerUserID,
         UserDataService().userModel!.uid.toString(),
       ),
       builder: (context, snapshot) {
@@ -92,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
 
     return ChatBubble(
       message: data['message'],
-      isSender: data['senderId'] == currentUserId,
+      isBuyer: data['buyerId'] == currentUserId,
       timeAgo: timeAgo,
     );
   }

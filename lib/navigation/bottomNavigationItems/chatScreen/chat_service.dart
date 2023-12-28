@@ -11,7 +11,8 @@ class ChatService extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // SEND MESSAGE
-  Future<void> sendMessage(String receiverId, String message) async {
+  Future<void> sendMessage(
+      String sellerId, String sellerEmail, String message) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
     final String currentUserEmail =
@@ -20,14 +21,15 @@ class ChatService extends ChangeNotifier {
 
     // create a new message
     Message newMessage = Message(
-        senderId: currentUserId,
-        senderEmail: currentUserEmail,
-        receiverId: receiverId,
+        buyerId: currentUserId,
+        buyerEmail: currentUserEmail,
+        sellerId: sellerId,
+        sellerEmail: sellerEmail,
         message: message,
         timestamp: timestamp);
 
-    // construct a chatroom Id from current user id and receiver id (sorted to ensure uniqueness)
-    List<String> ids = [currentUserId, receiverId];
+    // construct a chatroom Id from current user id and seller id (sorted to ensure uniqueness)
+    List<String> ids = [currentUserId, sellerId];
     ids.sort(); // ensures the chat room id will same for any two people
     String chatRoomId = ids.join("_");
 

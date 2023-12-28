@@ -19,7 +19,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     );
   }
 
-  // buld a loist of users except for the current logged in user
+  // buld a list of users except for the current logged in user
   Widget _buildUserList() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
@@ -57,10 +57,10 @@ class _ChatListScreenState extends State<ChatListScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ChatPage(
-                receiverUserEmail: data['email'],
-                receiverUserID: data['uid'],
-                receiverUserName: data['userName'],
+              builder: (context) => ChatScreen(
+                sellerUserEmail: data['email'],
+                sellerUserID: data['uid'],
+                sellerUserName: data['userName'],
               ),
             ),
           );
