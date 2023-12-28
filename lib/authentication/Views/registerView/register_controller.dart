@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:m_soko/authentication/auth_exceptions.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class RegisterController extends GetxController {
@@ -66,7 +67,7 @@ class RegisterController extends GetxController {
       )
           .then((value) async {
         await FirebaseFirestore.instance
-            .collection('users')
+            .collection(FirestoreCollections.usersCollection)
             .doc(value.user!.email)
             .set({
           'uid': value.user!.uid,

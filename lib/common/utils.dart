@@ -13,6 +13,10 @@ class GlobalUtil {
       'Lorem ipsum dolor sit amet consectetur adipisicing elit.';
 }
 
+class FirestoreCollections {
+  static const String usersCollection = "Users";
+}
+
 class Utils {
   static Widget customLoadingSpinner() {
     return const Center(

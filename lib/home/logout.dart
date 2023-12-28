@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
@@ -84,8 +85,8 @@ class LogoutScreen extends StatelessWidget {
 
 Future<void> fecthUsersData(String email) async {
   try {
-    CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('users');
+    CollectionReference usersCollection = FirebaseFirestore.instance
+        .collection(FirestoreCollections.usersCollection);
     QuerySnapshot querySnapshot =
         await usersCollection.where('email', isEqualTo: email).get();
 
@@ -136,9 +137,10 @@ class CategoryWidget extends StatelessWidget {
 
 Future<void> updateUserData() async {
   try {
-    // Replace 'users' with your actual collection name
+    // Replace FirestoreCollection.usersCollection with your actual collection name
     CollectionReference<Map<String, dynamic>> usersCollection =
-        FirebaseFirestore.instance.collection('users');
+        FirebaseFirestore.instance
+            .collection(FirestoreCollections.usersCollection);
 
     // Use the user's email as the document ID
     String userEmail = FirebaseAuth.instance.currentUser?.email ?? "";

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel {
@@ -54,8 +55,8 @@ class UserDataService {
         return;
       }
 
-      CollectionReference usersCollection =
-          FirebaseFirestore.instance.collection('users');
+      CollectionReference usersCollection = FirebaseFirestore.instance
+          .collection(FirestoreCollections.usersCollection);
       QuerySnapshot querySnapshot =
           await usersCollection.where('email', isEqualTo: userEmail).get();
 
@@ -125,8 +126,8 @@ class UserDataService {
         return;
       }
 
-      CollectionReference usersCollection =
-          FirebaseFirestore.instance.collection('users');
+      CollectionReference usersCollection = FirebaseFirestore.instance
+          .collection(FirestoreCollections.usersCollection);
       await usersCollection.doc(userEmail).update({
         'country': updatedUserData.country,
         // 'uid': updatedUserData.uid,
