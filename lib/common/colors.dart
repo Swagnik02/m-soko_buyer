@@ -49,9 +49,8 @@ class ColorConstants {
   static const Color orange700 = Color(0xFFA05000);
   static const Color orange800 = Color(0xFF844600);
   static const Color orange900 = Color(0xFF653600);
-}
 
-class AppColors {
+  // ChatUI
   static const Color white18 = Color(0x2EFFFFFF);
   static const Color black18 = Color(0x2E000000);
 
