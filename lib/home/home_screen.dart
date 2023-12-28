@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/ui/chats_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_soko/home/logout.dart';
@@ -102,7 +103,7 @@ class HomeScreenState extends State<HomeScreen> {
       case 1:
         switch (_topBarIndex) {
           case 0: // Products Section
-            return SupportPage();
+            return ChatsScreen();
           case 1: // Property Section
             return CallPage();
           case 2: // Services Section
