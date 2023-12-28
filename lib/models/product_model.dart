@@ -34,6 +34,11 @@ class ProductModel {
   String? isQuickCharging;
   String? inTheBox;
 
+  // seller info
+  String? sellerUid;
+  String? sellerEmail;
+  String? sellerUserName;
+
   // Constructor
   ProductModel({
     this.itemName,
@@ -67,6 +72,11 @@ class ProductModel {
     this.isAudioJack,
     this.isQuickCharging,
     this.inTheBox,
+
+    // seller info
+    this.sellerUid,
+    this.sellerEmail,
+    this.sellerUserName,
   });
 
   // Factory method to create a ProductModel from a Map
@@ -107,6 +117,11 @@ class ProductModel {
       isAudioJack: data['isAudioJack'] == 1 ? 'YES' : 'NO',
       isQuickCharging: data['isQuickCharging'] == 1 ? 'YES' : 'NO',
       inTheBox: data['inTheBox'],
+
+      // seller info
+      sellerUid: data['seller_uid'],
+      sellerEmail: data['seller_email'],
+      sellerUserName: data['seller_userName'],
     );
   }
   static String determineRatingGrade(double? itemAvgRating) {

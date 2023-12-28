@@ -94,8 +94,7 @@ flutter:
     - assets/tests/mobiles/
     - assets/PropertyImage/
     - assets/icons/
-    - assets/avatars/
-    - assets/other/
+
 
 
     # - assets/products_category_icons/

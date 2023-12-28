@@ -7,6 +7,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
   final String pId;
@@ -85,9 +86,36 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(
-                      child: Container(
-                        color: Colors.white,
-                        child: const Center(child: Text('Chat Now')),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (widget.productModel.sellerEmail.toString() !=
+                                  'null' &&
+                              widget.productModel.sellerUid.toString() !=
+                                  'null') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                  receiverUserEmail: widget
+                                      .productModel.sellerEmail
+                                      .toString(),
+                                  receiverUserID:
+                                      widget.productModel.sellerUid.toString(),
+                                  receiverUserName: widget
+                                          .productModel.sellerUserName
+                                          .toString() ??
+                                      'Seller',
+                                ),
+                              ),
+                            );
+                          } else
+                            Fluttertoast.showToast(
+                                msg: 'SellerID doesnt exists');
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          child: const Center(child: Text('Chat Now')),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -519,79 +547,110 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
   }
 
   Widget _buildDetailsSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 16, bottom: 8.0),
-            child: Text(
-              'Highlights',
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 16, bottom: 8.0),
+              child: Text(
+                'Highlights',
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          if (widget.productModel.mainCategory == 'Mobiles')
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('RAM | ROM'),
-                Text('${widget.productModel.ram} | ${widget.productModel.rom}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                const Text('Processor'),
-                Text('${widget.productModel.processor}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+            if (widget.productModel.mainCategory == 'Mobiles')
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('RAM | ROM'),
+                  Text(
+                      '${widget.productModel.ram} | ${widget.productModel.rom}',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const Text('Processor'),
+                  Text('${widget.productModel.processor}',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
 
-                const Text('Rear Camera'),
-                Text('${widget.productModel.rearCamera}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const Text('Rear Camera'),
+                  Text('${widget.productModel.rearCamera}',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
 
-                const Text('Front Camera'),
-                Text('${widget.productModel.frontCamera}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                const Text('Display'),
-                Text('${widget.productModel.display}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                const Text('Battery'),
-                Text('${widget.productModel.battery}',
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const Text('Front Camera'),
+                  Text('${widget.productModel.frontCamera}',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const Text('Display'),
+                  Text('${widget.productModel.display}',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  const Text('Battery'),
+                  Text('${widget.productModel.battery}',
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
 
-                // Other Details
+                  // Other Details
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          'Other Details',
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            'Other Details',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 19,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      mobileOtherDetailsRow('Network Type',
-                          '${widget.productModel.networkType}', ''),
-                      mobileOtherDetailsRow(
-                          'Sim Type', '${widget.productModel.simType}', ''),
-                      mobileOtherDetailsRow('Expandable Storage',
-                          '${widget.productModel.isExpandableStorage}', ''),
-                      mobileOtherDetailsRow('Audio Jack',
-                          '${widget.productModel.isAudioJack}', ''),
-                      mobileOtherDetailsRow('Quick Charging',
-                          '${widget.productModel.isQuickCharging}', ''),
-                      mobileOtherDetailsRow(
-                          'In The Box', '${widget.productModel.inTheBox}', ''),
-                    ],
+                        mobileOtherDetailsRow('Network Type',
+                            '${widget.productModel.networkType}', ''),
+                        mobileOtherDetailsRow(
+                            'Sim Type', '${widget.productModel.simType}', ''),
+                        mobileOtherDetailsRow('Expandable Storage',
+                            '${widget.productModel.isExpandableStorage}', ''),
+                        mobileOtherDetailsRow('Audio Jack',
+                            '${widget.productModel.isAudioJack}', ''),
+                        mobileOtherDetailsRow('Quick Charging',
+                            '${widget.productModel.isQuickCharging}', ''),
+                        mobileOtherDetailsRow('In The Box',
+                            '${widget.productModel.inTheBox}', ''),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-        ],
+
+                  // Other Details
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8.0),
+                          child: Text(
+                            'Seller Details',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 19,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        mobileOtherDetailsRow('Seller Name',
+                            '${widget.productModel.sellerUserName}', ''),
+                        mobileOtherDetailsRow('Seller Email',
+                            '${widget.productModel.sellerEmail}', ''),
+                        mobileOtherDetailsRow('Seller UID',
+                            '${widget.productModel.sellerUid}', ''),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
