@@ -1,11 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
 
 class GlobalUtil {
+  static const String LOCAL_USER_ID = "my_test_local_user_id";
+
   static const String currencySymbol = '₹';
   static int? isViewed;
   static const String onBordingToken = '';
@@ -150,15 +150,46 @@ class Utils {
   }
 }
 
-// class Users {
-//   static final String? userId = UserDataService().userModel?.uid;
-//   static final String? userName = UserDataService().userModel?.userName;
-//   static final String email = UserDataService().userModel?.email ??
-//       FirebaseAuth.instance.currentUser?.email ??
-//       'user@email.com';
-//   static final String? mobile = UserDataService().userModel?.mobile;
-//   static final String? city = UserDataService().userModel?.city;
-//   static final String? pin = UserDataService().userModel?.pin;
-//   static final String? state = UserDataService().userModel?.state;
-//   static final String? country = UserDataService().userModel?.country;
-// }
+///helper class to show an item is selected, to use across the application
+class SwitchAppBar extends StatelessWidget implements PreferredSizeWidget {
+  SwitchAppBar(
+      {this.primaryAppBar,
+      this.switchAppBar,
+      this.showSwitch = false,
+      this.switchLeadingCallback,
+      this.switchTitle,
+      this.switchActions})
+      : preferredSize = Size.fromHeight(showSwitch
+            ? kToolbarHeight
+            : primaryAppBar?.preferredSize.height ?? kToolbarHeight);
+
+  final bool showSwitch;
+  final PreferredSizeWidget? primaryAppBar;
+  final PreferredSizeWidget? switchAppBar;
+  final VoidCallback? switchLeadingCallback;
+  final Widget? switchTitle;
+  final List<Widget>? switchActions;
+
+  @override
+  Widget build(BuildContext context) {
+    return showSwitch
+        ? switchAppBar != null
+            ? switchAppBar!
+            : AppBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                leading: IconButton(
+                  onPressed: switchLeadingCallback,
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.black,
+                  ),
+                ),
+                title: switchTitle,
+                actions: switchActions,
+              )
+        : primaryAppBar ?? AppBar();
+  }
+
+  @override
+  final Size preferredSize;
+}

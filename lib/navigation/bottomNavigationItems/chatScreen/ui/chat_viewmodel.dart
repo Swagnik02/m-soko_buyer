@@ -1,7 +1,8 @@
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat_message.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat_user.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/utils/app_const.dart';
+
 import 'package:m_soko/packages/chatUi/chat_ui_kit.dart';
 
 class ChatViewModel {
@@ -90,7 +91,7 @@ class ChatViewModel {
 
   List<ChatUser> chatUsers = [
     ChatUser(
-        id: AppConstants.LOCAL_USER_ID,
+        id: GlobalUtil.LOCAL_USER_ID,
         username: "MrJ",
         fullname: "Jonas S.",
         avatarURL: 'assets/avatars/local_user_avatar.png'),

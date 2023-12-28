@@ -1,3 +1,4 @@
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat_message.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat_user.dart';
@@ -7,9 +8,8 @@ import 'package:m_soko/packages/chatUi/chat_ui_kit.dart' hide ChatMessageImage;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:m_soko/packages/chatUi/src/utils/date_formatter.dart';
 
-import '../utils/date_formatter.dart';
-import '../utils/switch_appbar.dart';
 import '../utils/chat_message_image.dart';
 
 part 'chat_screen.g.dart';

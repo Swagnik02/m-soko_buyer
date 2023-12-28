@@ -1,4 +1,4 @@
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/utils/app_const.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/packages/chatUi/chat_ui_kit.dart';
 
 import 'chat_message.dart';
@@ -36,7 +36,7 @@ class ChatWithMembers extends ChatBase {
   List<ChatUser> get membersWithoutSelf {
     List<ChatUser> membersWithoutSelf = [];
     for (ChatUser chatUser in members) {
-      if (AppConstants.LOCAL_USER_ID != chatUser.id)
+      if (GlobalUtil.LOCAL_USER_ID != chatUser.id)
         membersWithoutSelf.add(chatUser);
     }
     return membersWithoutSelf;

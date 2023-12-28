@@ -1,12 +1,12 @@
+import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/models/chat_message.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/ui/chat_viewmodel.dart';
 import 'package:m_soko/packages/chatUi/chat_ui_kit.dart';
 
 import 'package:flutter/material.dart';
+import 'package:m_soko/packages/chatUi/src/utils/date_formatter.dart';
 
-import '../utils/date_formatter.dart';
-import '../utils/app_colors.dart';
 import '../ui/chat_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
