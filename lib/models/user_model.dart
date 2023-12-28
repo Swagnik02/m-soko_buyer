@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel {
-  String userName;
+  String? userName;
   String email;
   String? country;
   String? uid;
@@ -91,7 +91,7 @@ class UserDataService {
     if (_userModel != null) {
       SharedPreferences.getInstance().then((prefs) {
         prefs.setString('user_email', _userModel!.email);
-        prefs.setString('user_name', _userModel!.userName);
+        prefs.setString('user_name', _userModel?.userName ?? '');
         prefs.setString('country', _userModel?.country ?? '');
         prefs.setString('uid', _userModel?.uid ?? '');
         prefs.setString('pin', _userModel?.pin ?? '');

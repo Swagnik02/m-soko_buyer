@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:m_soko/models/user_model.dart';
+import 'package:m_soko/routes/app_routes.dart';
 
 String lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
@@ -61,7 +63,10 @@ class LogoutScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  devtools.log(userId);
+                  FirebaseAuth.instance
+                      .signOut()
+                      .then((value) => Get.offAllNamed(AppRoutes.loginScreen));
+                  Fluttertoast.showToast(msg: 'Logged Out');
                 },
                 child: const Text('Logout'),
               ),
