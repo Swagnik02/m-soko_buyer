@@ -29,7 +29,7 @@ class ChatService extends ChangeNotifier {
         timestamp: timestamp);
 
     // construct a chatroom Id from current user id and seller id (sorted to ensure uniqueness)
-    List<String> ids = [currentUserId, sellerId];
+    List<String> ids = [currentUserEmail, sellerEmail];
     ids.sort(); // ensures the chat room id will same for any two people
     String chatRoomId = ids.join("_");
 
@@ -43,9 +43,26 @@ class ChatService extends ChangeNotifier {
   }
 
   // GET MESSAGE
-  Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
+
+  // using uid
+  // Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
+  //   // construct chatroom id from user ids
+  //   List<String> ids = [userId, otherUserId];
+  //   ids.sort();
+  //   String chatRoomId = ids.join("_");
+  //   return _firestore
+  //       .collection(FirestoreCollections.productsChatRoom)
+  //       .doc(chatRoomId)
+  //       .collection('messages')
+  //       .orderBy('timestamp', descending: false)
+  //       .snapshots();
+  // }
+
+  // using emailId
+  Stream<QuerySnapshot> getMessages(
+      String currentUserEmail, String otherUserEmail) {
     // construct chatroom id from user ids
-    List<String> ids = [userId, otherUserId];
+    List<String> ids = [currentUserEmail, otherUserEmail];
     ids.sort();
     String chatRoomId = ids.join("_");
     return _firestore

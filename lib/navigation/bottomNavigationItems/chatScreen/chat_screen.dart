@@ -23,6 +23,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final String currentUserId = UserDataService().userModel!.uid.toString();
+  final String currentUserEmail = UserDataService().userModel!.email.toString();
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -58,8 +59,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _buildMessageList() {
     return StreamBuilder(
       stream: _chatService.getMessages(
-        widget.sellerUserID,
-        UserDataService().userModel!.uid.toString(),
+        currentUserEmail,
+        widget.sellerUserEmail,
       ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -92,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return ChatBubble(
       message: data['message'],
-      isBuyer: data['buyerId'] == currentUserId,
+      isBuyer: data['buyerEmail'] == currentUserEmail,
       timeAgo: timeAgo,
     );
   }
