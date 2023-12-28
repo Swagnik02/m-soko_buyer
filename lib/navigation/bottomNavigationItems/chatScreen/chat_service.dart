@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +34,7 @@ class ChatService extends ChangeNotifier {
     List<String> ids = [currentUserEmail, sellerEmail];
     ids.sort(); // ensures the chat room id will same for any two people
     String chatRoomId = ids.join("_");
+    // log(chatRoomId);
 
     // add new message to database
 
