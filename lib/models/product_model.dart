@@ -121,7 +121,7 @@ class ProductModel {
       // seller info
       sellerUid: data['seller_uid'],
       sellerEmail: data['seller_email'],
-      sellerUserName: data['seller_userName'],
+      sellerUserName: data['seller_userName'] ?? 'Seller',
     );
   }
   static String determineRatingGrade(double? itemAvgRating) {

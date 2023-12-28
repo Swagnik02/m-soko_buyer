@@ -102,9 +102,8 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                                   receiverUserID:
                                       widget.productModel.sellerUid.toString(),
                                   receiverUserName: widget
-                                          .productModel.sellerUserName
-                                          .toString() ??
-                                      'Seller',
+                                      .productModel.sellerUserName
+                                      .toString(),
                                 ),
                               ),
                             );
@@ -642,8 +641,8 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                             '${widget.productModel.sellerUserName}', ''),
                         mobileOtherDetailsRow('Seller Email',
                             '${widget.productModel.sellerEmail}', ''),
-                        mobileOtherDetailsRow('Seller UID',
-                            '${widget.productModel.sellerUid}', ''),
+                        // mobileOtherDetailsRow('Seller UID',
+                        //     '${widget.productModel.sellerUid}', ''),
                       ],
                     ),
                   ),
