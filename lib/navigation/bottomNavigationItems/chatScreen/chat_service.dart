@@ -14,7 +14,11 @@ class ChatService extends ChangeNotifier {
 
   // SEND MESSAGE
   Future<void> sendMessage(
-      String sellerId, String sellerEmail, String message) async {
+    String sellerId,
+    String sellerEmail,
+    String sellerUsername,
+    String message,
+  ) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
     final String currentUserEmail =
@@ -37,7 +41,24 @@ class ChatService extends ChangeNotifier {
     // log(chatRoomId);
 
     // add new message to database
+    final existingDoc = await _firestore
+        .collection(FirestoreCollections.productsChatRoom)
+        .doc(chatRoomId)
+        .get();
+    if (!existingDoc.exists) {
+      await _firestore
+          .collection(FirestoreCollections.productsChatRoom)
+          .doc(chatRoomId)
+          .set({
+        'chatRoomId': chatRoomId,
+        'buyerEmail': currentUserEmail,
+        'sellerEmail': sellerEmail,
+        'sellerId': sellerId,
+        'sellerUsername': sellerUsername,
+      });
+    }
 
+    // add new message to database
     await _firestore
         .collection(FirestoreCollections.productsChatRoom)
         .doc(chatRoomId)

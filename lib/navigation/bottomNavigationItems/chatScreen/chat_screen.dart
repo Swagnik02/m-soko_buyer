@@ -31,7 +31,11 @@ class _ChatScreenState extends State<ChatScreen> {
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       await _chatService.sendMessage(
-          widget.sellerUserID, widget.sellerUserEmail, _messageController.text);
+        widget.sellerUserID,
+        widget.sellerUserEmail,
+        widget.sellerUserName,
+        _messageController.text,
+      );
 
       // clear the controller after sending the message
       _messageController.clear();

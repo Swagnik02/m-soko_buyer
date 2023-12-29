@@ -12,6 +12,8 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
+  final String currentUserId = UserDataService().userModel!.uid.toString();
+  final String currentUserEmail = UserDataService().userModel!.email.toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +21,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
     );
   }
 
-  // buld a list of users except for the current logged in user
+  // buld a list of sellers
   Widget _buildUserList() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
-          .collection(FirestoreCollections.usersCollection)
+          .collection(FirestoreCollections.productsChatRoom)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -44,30 +46,34 @@ class _ChatListScreenState extends State<ChatListScreen> {
     );
   }
 
-  // build individual user list items
+// build individual chat list items
   Widget _buildUserListItem(DocumentSnapshot document) {
-    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    Map<String, dynamic> chatRoom = document.data() as Map<String, dynamic>;
 
-    // displays all users except the current user
-    if (UserDataService().userModel!.email.toString() != data['email']) {
+    if (chatRoom['buyerEmail'] == currentUserEmail) {
+      String sellerEmail = chatRoom['sellerEmail'];
+      String sellerId = chatRoom['sellerId'];
+      String sellerUsername = chatRoom['sellerUsername'];
+
       return ListTile(
-        title: Text(data['userName']),
+        title: Text(sellerUsername),
         onTap: () {
           // pass the clicked users uid to the chat page
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ChatScreen(
-                sellerUserEmail: data['email'],
-                sellerUserID: data['uid'],
-                sellerUserName: data['userName'],
+                sellerUserEmail: sellerEmail,
+                sellerUserID: sellerId,
+                sellerUserName: sellerUsername,
               ),
             ),
           );
         },
       );
     } else {
-      return Container();
+      // If buyerEmail doesn't match, return an empty container or null
+      return Container(); // or return null;
     }
   }
 }

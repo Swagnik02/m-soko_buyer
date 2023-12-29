@@ -1,5 +1,10 @@
 import 'dart:developer' as devtools show log;
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:m_soko/common/utils.dart';
+
+late String globalSellerUid;
+late String globalSellerUserName;
 
 class ProductModel {
   String? itemName;
@@ -85,6 +90,11 @@ class ProductModel {
 
     String itemRatingGrade = determineRatingGrade(itemAvgRating);
 
+    String sellerEmail = (data['seller_email']);
+    collectSellerData(sellerEmail);
+    // String sellerId = collectSellerData.sellerId;
+    // String sellerUserName = collectSellerData.sellerUserName;
+
     return ProductModel(
       itemName: data['itemName'],
       itemSubCategory: data['itemSubCategory'],
@@ -119,9 +129,10 @@ class ProductModel {
       inTheBox: data['inTheBox'],
 
       // seller info
-      sellerUid: data['seller_uid'],
-      sellerEmail: data['seller_email'],
-      sellerUserName: data['seller_userName'] ?? 'Seller',
+      sellerUid: globalSellerUid,
+
+      sellerEmail: sellerEmail,
+      sellerUserName: globalSellerUserName,
     );
   }
   static String determineRatingGrade(double? itemAvgRating) {
@@ -137,6 +148,31 @@ class ProductModel {
       return 'Below Average';
     }
   }
+}
+
+Future<Map<String, dynamic>?> collectSellerData(String sellerEmail) async {
+  try {
+    var sellerData = await FirebaseFirestore.instance
+        .collection(FirestoreCollections.usersCollection)
+        .doc(sellerEmail)
+        .get();
+
+    if (sellerData.exists) {
+      globalSellerUid = sellerData['uid'];
+      globalSellerUserName = sellerData['userName'];
+
+      // return {
+      //   'sellerUid': sellerUid,
+      //   'sellerUserName': sellerUserName,
+      // };
+    } else {
+      devtools.log('Seller document does not exist');
+    }
+  } catch (e) {
+    devtools.log('Error retrieving seller data: $e');
+  }
+
+  return null; // Return null in case of an error or if the document doesn't exist
 }
 
 Future<ProductModel?> collectProductData(String pid) async {
