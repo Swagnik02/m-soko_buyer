@@ -105,14 +105,16 @@ Widget buildContainer(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return BottomSheetSelectedItemPage(
-                destinationPage: labelName,
-              );
-            },
-            transitionsBuilder: customTransition(const Offset(0, 0)),
-          ));
+          labelName == 'Home'
+              ? Navigator.pop(context)
+              : Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return BottomSheetSelectedItemPage(
+                      destinationPage: labelName,
+                    );
+                  },
+                  transitionsBuilder: customTransition(const Offset(0, 0)),
+                ));
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),

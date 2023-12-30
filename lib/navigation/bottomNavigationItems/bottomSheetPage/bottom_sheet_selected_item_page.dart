@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/screens/all_categories_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/orders_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 
@@ -40,10 +41,8 @@ class _BottomSheetSelectedItemPageState
 
   Widget _mainBody(String destinationPage) {
     switch (destinationPage) {
-      case 'Home':
-        return ProfilePage();
       case 'Orders':
-        return ProfilePage();
+        return OrdersPage();
       case 'Requirements':
         return ProfilePage();
       case 'Save':
