@@ -24,36 +24,33 @@ class _BottomSheetSelectedItemPageState
 
   Widget _mainBody(String destinationPage) {
     switch (destinationPage) {
-      case 'Profile':
+      case 'Home':
+        return ProfilePage();
+      case 'Orders':
+        return ProfilePage();
+      case 'Requirements':
+        return ProfilePage();
+      case 'Save':
         return ProfilePage();
       case 'Categories':
-        return AllCategoriesPage();
+        return const AllCategoriesPage();
+      case 'Profile':
+        return const ProfilePage();
+      case 'Address':
+        return ProfilePage();
+      case 'Payment':
+        return ProfilePage();
+      case 'About':
+        return ProfilePage();
+      case 'Feedback':
+        return ProfilePage();
+      case 'Help/Support':
+        return ProfilePage();
+      case 'Settings':
+        return ProfilePage();
+
       default:
         return ProfilePage();
     }
   }
 }
-
-
-
-              // 'Home',
-
-              // 'Orders',
-
-              // 'Requirements',
-
-              // 'Save',
-
-              // 'Categories',
-       
-              // 'Profile',
-              // 'Address',
-              // 'Payment',
-              // 'About',
-   
-              // 'Feedback',
-  
-              // 'Help/Support',
-           
-              // 'Settings',
-          
