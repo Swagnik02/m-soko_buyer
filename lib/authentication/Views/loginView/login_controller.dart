@@ -12,6 +12,7 @@ class LoginController extends GetxController {
   late final TextEditingController email;
   late final TextEditingController password;
   bool isPasswordVisible = false;
+  final currentUser = FirebaseAuth.instance.currentUser;
 
   void togglePasswordVisibleFunc() {
     isPasswordVisible = !isPasswordVisible;
@@ -71,8 +72,9 @@ class LoginController extends GetxController {
         UserDataService().fetchUserData(email.text).then((_) {
           // // Store user data locally after successful login
           UserDataService().storeUserDataLocally();
-          // intializeCalling(userId: '12324', userName: "Mohd'Emulator");
-          intializeCalling(userId: 'qwerty', userName: "Mohd'Phone");
+          intializeCalling(
+              userId: currentUser!.uid,
+              userName: currentUser!.displayName.toString());
         });
 
         // Navigate to the home screen

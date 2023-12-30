@@ -84,31 +84,6 @@ class BottomNavBarState extends State<BottomNavBar> {
           Get.delete<ProfileController>();
         });
         widget.onIndexChanged(mainNavBarIndex);
-
-        if (mainNavBarIndex == 4) {
-          showModalBottomSheet<void>(
-            context: context,
-            useRootNavigator: true,
-            builder: (BuildContext context) {
-              return SizedBox(
-                height: 200,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Text('Modal BottomSheet'),
-                      ElevatedButton(
-                        child: const Text('Close BottomSheet'),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        }
       },
     );
   }

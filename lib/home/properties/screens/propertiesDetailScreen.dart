@@ -8,6 +8,7 @@ import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
 import 'package:m_soko/models/property.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/CallInvitationPage.dart';
+import 'package:m_soko/routes/app_routes.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
@@ -150,51 +151,50 @@ class PropertiesDetailScreen extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              onTap: () {},
-              child: Container(
-                  alignment: Alignment.center,
-                  height: Get.height * 0.08,
-                  color: Colors.white,
-                  child: const Text(
-                    'Chat Now',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  )),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
               onTap: () {
-                // Get.to(CallInvitationPage(callId: properties.email));
-                Get.to(ZegoSendCallInvitationButton(
-                  isVideoCall: false,
-                  resourceID: "zego_sokoni",
-                  //You need to use the resourceID that you created in the subsequent steps. Please continue reading this document.
-                  invitees: [
-                    ZegoUIKitUser(
-                      id: "qwerty",
-                      name: "Mohd'Phone",
-                    ),
-                  ],
-                ));
+                Get.toNamed(AppRoutes.propertyMessageScreen, arguments: {
+                  "agentId": properties.agentUid,
+                  "agentEmail": properties.email,
+                  "agentName": properties.agentName,
+                });
               },
               child: Container(
                 alignment: Alignment.center,
                 height: Get.height * 0.08,
-                color: ColorConstants.yellow400,
+                color: Colors.white,
                 child: const Text(
-                  'Call Agent',
+                  'Chat Now',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-          )
+          ),
+          Expanded(
+            child: ZegoSendCallInvitationButton(
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              borderRadius: 0,
+              buttonSize: Size(Get.width, Get.height * 0.08),
+              text: "Call Agent",
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+              iconVisible: false,
+              clickableBackgroundColor: Colors.yellow,
+              isVideoCall: false,
+              resourceID: "zego_sokoni",
+              invitees: [
+                ZegoUIKitUser(
+                  id: properties.email,
+                  name: "afs",
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

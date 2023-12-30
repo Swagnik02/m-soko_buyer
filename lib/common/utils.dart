@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalUtil {
   static const String currencySymbol = '₹';
@@ -21,6 +23,33 @@ class Utils {
     return const Center(
       child: CircularProgressIndicator(),
     );
+  }
+
+// Function to generate a random dark color
+  static Color generateRandomDarkColor() {
+    Random random = Random();
+    int red = random.nextInt(128); // Limiting red channel to darker shades
+    int green = random.nextInt(128); // Limiting green channel to darker shades
+    int blue = random.nextInt(128); // Limiting blue channel to darker shades
+    return Color.fromARGB(255, red, green, blue);
+  }
+
+  // Function to save color to SharedPreferences
+  static Future<void> saveColorToPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String colorHex =
+        generateRandomDarkColor().value.toRadixString(16).padLeft(8, '0');
+    await prefs.setString('storedColor', colorHex);
+  }
+
+  // Function to retrieve color from SharedPreferences
+  static Future<Color?> getColorFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? colorHex = prefs.getString('storedColor');
+    if (colorHex != null) {
+      return Color(int.parse(colorHex, radix: 16));
+    }
+    return null;
   }
 
   static int calculateColumnCount(double screenWidth) {

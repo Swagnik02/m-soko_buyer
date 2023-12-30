@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_list.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_soko/home/logout.dart';
@@ -128,7 +129,7 @@ class HomeScreenState extends State<HomeScreen> {
           case 0: // Products Section
             return _home();
           case 1: // Property Section
-            return SupportPage();
+            return PropertyMessageList();
           case 2: // Services Section
             return _home();
           default:

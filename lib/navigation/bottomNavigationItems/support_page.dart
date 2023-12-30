@@ -5,16 +5,10 @@ class SupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Support Page'),
+        title: const Text('Message'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Handle button press action
-            print('Button pressed!');
-          },
-          child: Text('Press Me'),
-        ),
+        child: Text("support"),
       ),
     );
   }

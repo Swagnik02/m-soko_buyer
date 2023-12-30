@@ -6,4 +6,5 @@ class AppRoutes {
   static const homeScreen = '/homeScreen';
   static const propertiesDetailScreen = '/propertiesDetailScreen';
   static const propertiesSeeAllScreen = '/propertiesSeeAllScreen';
+  static const propertyMessageScreen = '/propertyMessageScreen';
 }

@@ -57,6 +57,8 @@ dependencies:
   flutter_pannable_rating_bar: ^2.7.2+1
   zego_uikit_prebuilt_call: ^3.18.4
   zego_uikit_signaling_plugin: ^2.7.2
+  chat_bubbles: ^1.5.0
+
 
 dev_dependencies:
   flutter_test:
