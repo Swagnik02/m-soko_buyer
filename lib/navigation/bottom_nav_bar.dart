@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bottom_sheet_menu.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -76,45 +77,29 @@ class BottomNavBarState extends State<BottomNavBar> {
           icon: Icon(widget.iconIndex3),
           label: '',
         ),
-        // if (widget.topBarIndex == 0 || widget.topBarIndex == 2)
-        //   BottomNavigationBarItem(
-        //     icon: GestureDetector(
-        //       child: Icon(
-        //         widget.iconIndex4,
-        //       ),
-        //       onTap: () {
-        //         showModalBottomSheet<void>(
-        //           context: context,
-        //           useRootNavigator: true,
-        //           builder: (BuildContext context) {
-        //             return SizedBox(
-        //               height: 200,
-        //               child: Center(
-        //                 child: Column(
-        //                   mainAxisAlignment: MainAxisAlignment.center,
-        //                   mainAxisSize: MainAxisSize.min,
-        //                   children: <Widget>[
-        //                     const Text('Modal BottomSheet'),
-        //                     ElevatedButton(
-        //                       child: const Text('Close BottomSheet'),
-        //                       onPressed: () => Navigator.pop(context),
-        //                     ),
-        //                   ],
-        //                 ),
-        //               ),
-        //             );
-        //           },
-        //         );
-        //       },
-        //     ),
-        //     label: '',
-        //   )
-        // else
-
-        BottomNavigationBarItem(
-          icon: Icon(widget.iconIndex4),
-          label: '',
-        ),
+        if (widget.topBarIndex == 0 || widget.topBarIndex == 2)
+          BottomNavigationBarItem(
+            icon: InkWell(
+              child: Icon(
+                widget.iconIndex4,
+              ),
+              onTap: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  useRootNavigator: true,
+                  builder: (BuildContext context) {
+                    return bottomNavigaitonMenu(context);
+                  },
+                );
+              },
+            ),
+            label: '',
+          )
+        else
+          BottomNavigationBarItem(
+            icon: Icon(widget.iconIndex4),
+            label: '',
+          ),
       ],
       onTap: (index) {
         setState(() {
