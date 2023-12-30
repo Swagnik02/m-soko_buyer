@@ -108,17 +108,18 @@ Widget buildContainer(
           _navigateToProfilePage(context);
         },
         child: Container(
-          // width: 180,
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
           decoration: BoxDecoration(
               border: Border.all(), borderRadius: BorderRadius.circular(8)),
-          child: Center(
-            child: Row(
-              children: [
-                Icon(labelIcon),
-                Text(labelName),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: Icon(labelIcon),
+              ),
+              Text(labelName),
+            ],
           ),
         ),
       ),
