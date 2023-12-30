@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bottom_sheet_selected_item_page.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 
 Widget bottomNavigaitonMenu(BuildContext context) {
@@ -18,68 +18,68 @@ Widget bottomNavigaitonMenu(BuildContext context) {
             ),
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
+              Icons.event_note_sharp,
+              'Orders',
             ),
           ]),
           buildRow([
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
+              CupertinoIcons.text_bubble,
+              'Requirements',
             ),
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
-            ),
-          ]),
-          buildRow([
-            buildContainer(
-              context,
-              Icons.home_outlined,
-              'Home',
-            ),
-            buildContainer(
-              context,
-              Icons.home_outlined,
-              'Home',
+              Icons.bookmark_border_rounded,
+              'Save',
             ),
           ]),
           buildRow([
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
+              Icons.now_widgets_outlined,
+              'Categories',
             ),
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
-            ),
-          ]),
-          buildRow([
-            buildContainer(
-              context,
-              Icons.home_outlined,
-              'Home',
-            ),
-            buildContainer(
-              context,
-              Icons.home_outlined,
-              'Home',
+              Icons.person_outline_rounded,
+              'Profile',
             ),
           ]),
           buildRow([
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
+              Icons.location_on_outlined,
+              'Address',
             ),
             buildContainer(
               context,
-              Icons.home_outlined,
-              'Home',
+              Icons.payments_outlined,
+              'Payment',
+            ),
+          ]),
+          buildRow([
+            buildContainer(
+              context,
+              Icons.info_outline,
+              'About',
+            ),
+            buildContainer(
+              context,
+              Icons.feedback_outlined,
+              'Feedback',
+            ),
+          ]),
+          buildRow([
+            buildContainer(
+              context,
+              Icons.help_outline_rounded,
+              'Help/Support',
+            ),
+            buildContainer(
+              context,
+              Icons.settings_outlined,
+              'Settings',
             ),
           ]),
         ],
@@ -105,7 +105,14 @@ Widget buildContainer(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       child: InkWell(
         onTap: () {
-          _navigateToProfilePage(context);
+          Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return BottomSheetSelectedItemPage(
+                destinationPage: labelName,
+              );
+            },
+            transitionsBuilder: customTransition(const Offset(0, 0)),
+          ));
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -125,15 +132,4 @@ Widget buildContainer(
       ),
     ),
   );
-}
-
-Future _navigateToProfilePage(
-  BuildContext context,
-) {
-  return Navigator.of(context).push(PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) {
-      return ProfilePage();
-    },
-    transitionsBuilder: customTransition(const Offset(0, 0)),
-  ));
 }
