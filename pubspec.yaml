@@ -63,6 +63,7 @@ dependencies:
   flutter_video_info: ^1.2.0 #retrieve video metadata
   video_thumbnail: ^0.5.2 #get a thumbnail from a file
   collection: ^1.15.0
+  url_launcher: ^6.2.2
 
 dev_dependencies:
   flutter_test:
