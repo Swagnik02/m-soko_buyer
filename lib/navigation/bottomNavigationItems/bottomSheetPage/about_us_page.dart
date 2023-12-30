@@ -19,13 +19,13 @@ class AboutUsPage extends StatelessWidget {
                         horizontal: 10.0, vertical: 8),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'About Sokoni',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          lorem + '\n' + lorem + '\n' + lorem,
+                          '$lorem\n$lorem\n$lorem',
                           textAlign: TextAlign.justify,
                         ),
                       ],
