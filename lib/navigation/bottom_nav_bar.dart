@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 
@@ -12,6 +13,7 @@ class BottomNavBar extends StatefulWidget {
   final IconData iconIndex3;
   final IconData iconIndex4;
   final Color circleIndicatorColor;
+  final int topBarIndex;
 
   const BottomNavBar({
     super.key,
@@ -22,6 +24,7 @@ class BottomNavBar extends StatefulWidget {
     this.iconIndex3 = Icons.payment,
     this.iconIndex4 = Icons.menu,
     this.circleIndicatorColor = ColorConstants.blue700,
+    required this.topBarIndex,
   });
 
   @override
@@ -73,6 +76,41 @@ class BottomNavBarState extends State<BottomNavBar> {
           icon: Icon(widget.iconIndex3),
           label: '',
         ),
+        // if (widget.topBarIndex == 0 || widget.topBarIndex == 2)
+        //   BottomNavigationBarItem(
+        //     icon: GestureDetector(
+        //       child: Icon(
+        //         widget.iconIndex4,
+        //       ),
+        //       onTap: () {
+        //         showModalBottomSheet<void>(
+        //           context: context,
+        //           useRootNavigator: true,
+        //           builder: (BuildContext context) {
+        //             return SizedBox(
+        //               height: 200,
+        //               child: Center(
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //                   mainAxisSize: MainAxisSize.min,
+        //                   children: <Widget>[
+        //                     const Text('Modal BottomSheet'),
+        //                     ElevatedButton(
+        //                       child: const Text('Close BottomSheet'),
+        //                       onPressed: () => Navigator.pop(context),
+        //                     ),
+        //                   ],
+        //                 ),
+        //               ),
+        //             );
+        //           },
+        //         );
+        //       },
+        //     ),
+        //     label: '',
+        //   )
+        // else
+
         BottomNavigationBarItem(
           icon: Icon(widget.iconIndex4),
           label: '',
@@ -84,31 +122,6 @@ class BottomNavBarState extends State<BottomNavBar> {
           Get.delete<ProfileController>();
         });
         widget.onIndexChanged(mainNavBarIndex);
-
-        if (mainNavBarIndex == 4) {
-          showModalBottomSheet<void>(
-            context: context,
-            useRootNavigator: true,
-            builder: (BuildContext context) {
-              return SizedBox(
-                height: 200,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Text('Modal BottomSheet'),
-                      ElevatedButton(
-                        child: const Text('Close BottomSheet'),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        }
       },
     );
   }

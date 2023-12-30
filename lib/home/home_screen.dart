@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/menu_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -121,17 +122,18 @@ class HomeScreenState extends State<HomeScreen> {
             return const PropertySavedScreen();
           case 2: // Services Section
             return PaymentsPage();
+
           default:
             return Container();
         }
       case 4:
         switch (_topBarIndex) {
           case 0: // Products Section
-            return _home();
+            return MenuScreen();
           case 1: // Property Section
             return SupportPage();
           case 2: // Services Section
-            return _home();
+            return MenuScreen();
           default:
             return Container();
         }
@@ -239,6 +241,7 @@ class HomeScreenState extends State<HomeScreen> {
               navBarIndex = changedIndex;
             });
           },
+          topBarIndex: _topBarIndex,
         );
       case 1:
         return BottomNavBar(
@@ -251,6 +254,7 @@ class HomeScreenState extends State<HomeScreen> {
           iconIndex1: CupertinoIcons.phone,
           iconIndex3: Icons.bookmark_border,
           iconIndex4: CupertinoIcons.text_bubble,
+          topBarIndex: _topBarIndex,
         );
       case 2:
         return BottomNavBar(
@@ -260,6 +264,7 @@ class HomeScreenState extends State<HomeScreen> {
             });
           },
           circleIndicatorColor: ColorConstants.orange500,
+          topBarIndex: _topBarIndex,
         );
       default:
         // return Container();
@@ -269,6 +274,7 @@ class HomeScreenState extends State<HomeScreen> {
               navBarIndex = changedIndex;
             });
           },
+          topBarIndex: _topBarIndex,
         );
     }
   }
