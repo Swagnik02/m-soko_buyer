@@ -3,17 +3,15 @@ import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 
-class BottomSheetSelectedItemPage extends StatefulWidget {
+class SelectedSettingsPage extends StatefulWidget {
   final String destinationPage;
-  const BottomSheetSelectedItemPage({super.key, required this.destinationPage});
+  const SelectedSettingsPage({super.key, required this.destinationPage});
 
   @override
-  State<BottomSheetSelectedItemPage> createState() =>
-      _BottomSheetSelectedItemPageState();
+  State<SelectedSettingsPage> createState() => _SelectedSettingsPageState();
 }
 
-class _BottomSheetSelectedItemPageState
-    extends State<BottomSheetSelectedItemPage> {
+class _SelectedSettingsPageState extends State<SelectedSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
