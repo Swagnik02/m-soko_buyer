@@ -7,6 +7,7 @@ import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_scr
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_soko/home/logout.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
@@ -127,14 +128,11 @@ class HomeScreenState extends State<HomeScreen> {
         }
       case 4:
         switch (_topBarIndex) {
-          case 0: // Products Section
-            return _home();
           case 1: // Property Section
             return SupportPage();
-          case 2: // Services Section
-            return _home();
+
           default:
-            return Container();
+            return SettingsPage();
         }
       default:
         return Container();

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/screens/all_categories_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/about_us_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/address_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bookmarks_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/feedback_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/help_support_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/orders_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/requirements_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 
@@ -30,7 +37,7 @@ class _BottomSheetSelectedItemPageState
         // actions: [Icon(Icons.search)],
         title: Text(
           widget.destinationPage,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: SafeArea(
@@ -42,30 +49,30 @@ class _BottomSheetSelectedItemPageState
   Widget _mainBody(String destinationPage) {
     switch (destinationPage) {
       case 'Orders':
-        return OrdersPage();
+        return const OrdersPage();
       case 'Requirements':
-        return ProfilePage();
+        return const RequirementsPage();
       case 'Save':
-        return ProfilePage();
+        return const BookmarksPage();
       case 'Categories':
         return const AllCategoriesPage();
       case 'Profile':
         return const ProfilePage();
       case 'Address':
-        return ProfilePage();
+        return const AddressPage();
       case 'Payment':
-        return ProfilePage();
+        return PaymentsPage();
       case 'About':
-        return ProfilePage();
+        return const AboutUsPage();
       case 'Feedback':
-        return ProfilePage();
+        return const FeedbackPage();
       case 'Help/Support':
-        return ProfilePage();
+        return const HelpSupportPage();
       case 'Settings':
-        return SettingsPage();
+        return const SettingsPage();
 
       default:
-        return ProfilePage();
+        return const SettingsPage();
     }
   }
 }
