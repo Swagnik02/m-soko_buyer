@@ -11,7 +11,7 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
-  late final TextEditingController _reviewCOntroller = TextEditingController();
+  late final TextEditingController _reviewController = TextEditingController();
   double rating = 0.0;
 
   @override
@@ -69,11 +69,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
-                          controller: _reviewCOntroller,
+                          controller: _reviewController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText:
                                 'Write your words and suggestions to help us improve.',
+                            hintStyle: TextStyle(
+                              color: Colors.black38,
+                            ),
                             hintMaxLines: null,
                           ),
                           maxLines: null,
@@ -90,6 +93,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       child: InkWell(
                         onTap: () {
                           Fluttertoast.showToast(msg: 'Submit');
+                          Navigator.pop(context);
                         },
                         child: Container(
                           height: 60,
