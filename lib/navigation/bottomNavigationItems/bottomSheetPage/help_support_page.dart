@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/widgets/launch_link_from_browser.dart';
 import 'package:m_soko/widgets/web_view.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class HelpSupportPage extends StatelessWidget {
@@ -22,20 +26,38 @@ class HelpSupportPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _linkTo('Visit', 'https://help.sokoni.com', () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return TestWebViewPage();
-                          },
-                        ));
-                      }),
-                      _linkTo('Email Us', 'customercare@sokoni.com', () {
-                        launchEmail('customercare@sokoni.com');
-                      }),
-                      _linkTo('Call Us', '+91 6257899906', () {
-                        launchCall('+91 6257899906');
-                      }),
+                      _linkTo(
+                        'Visit',
+                        GlobalUtil.visitUrl,
+                        () async {
+                          //  launch from browser
+                          // launchURLfromExternalbrowser(GlobalUtil.visitUrl);
+
+                          // launch from WebView
+                          Navigator.of(context).push(PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return TestWebViewPage(GlobalUtil.visitUrl);
+                            },
+                          ));
+                        },
+                      ),
+                      _linkTo(
+                        'Email Us',
+                        'customercare@sokoni.com',
+                        () {
+                          // launchEmail('customercare@sokoni.com');
+
+                          _launchEmailApp();
+                        },
+                      ),
+                      _linkTo(
+                        'Call Us',
+                        '+91 6257899906',
+                        () {
+                          // launchCall('+91 6257899906');
+                        },
+                      ),
                     ],
                   ),
                 )
@@ -69,32 +91,12 @@ class HelpSupportPage extends StatelessWidget {
     );
   }
 
-  void launchEmail(String email) async {
-    print('testing');
-    // final Uri _emailLaunchUri = Uri(
-    //   scheme: 'mailto',
-    //   path: email,
-    // );
-    // final String _emailLaunchUriString = _emailLaunchUri.toString();
-
-    // if (await canLaunch(_emailLaunchUriString)) {
-    //   await launch(_emailLaunchUriString);
-    // } else {
-    //   throw 'Could not launch $_emailLaunchUriString';
-    // }
-  }
-
-  void launchCall(String phoneNumber) async {
-    // final Uri _callLaunchUri = Uri(
-    //   scheme: 'tel',
-    //   path: phoneNumber,
-    // );
-    // final String _callLaunchUriString = _callLaunchUri.toString();
-
-    // if (await canLaunch(_callLaunchUriString)) {
-    //   await launch(_callLaunchUriString);
-    // } else {
-    //   throw 'Could not launch $_callLaunchUriString';
-    // }
+  _launchEmailApp() async {
+    final url = 'mailto:customercare@sokoni.com';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
