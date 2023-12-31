@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:m_soko/widgets/web_view.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class HelpSupportPage extends StatelessWidget {
   const HelpSupportPage({Key? key}) : super(key: key);
@@ -22,7 +23,12 @@ class HelpSupportPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _linkTo('Visit', 'https://help.sokoni.com', () {
-                        print('Visit link tapped!');
+                        Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) {
+                            return TestWebViewPage();
+                          },
+                        ));
                       }),
                       _linkTo('Email Us', 'customercare@sokoni.com', () {
                         launchEmail('customercare@sokoni.com');
