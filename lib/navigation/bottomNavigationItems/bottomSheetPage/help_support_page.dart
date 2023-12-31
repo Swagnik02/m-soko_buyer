@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/widgets/launch_link_from_browser.dart';
 import 'package:m_soko/widgets/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-class HelpSupportPage extends StatelessWidget {
+class HelpSupportPage extends StatefulWidget {
   const HelpSupportPage({Key? key}) : super(key: key);
 
+  @override
+  _HelpSupportPageState createState() => _HelpSupportPageState();
+}
+
+class _HelpSupportPageState extends State<HelpSupportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +32,6 @@ class HelpSupportPage extends StatelessWidget {
                         'Visit',
                         GlobalUtil.visitUrl,
                         () async {
-                          //  launch from browser
-                          // launchURLfromExternalbrowser(GlobalUtil.visitUrl);
-
                           // launch from WebView
                           Navigator.of(context).push(PageRouteBuilder(
                             pageBuilder:
@@ -44,18 +43,22 @@ class HelpSupportPage extends StatelessWidget {
                       ),
                       _linkTo(
                         'Email Us',
-                        'customercare@sokoni.com',
+                        GlobalUtil.contactEmail,
                         () {
-                          // launchEmail('customercare@sokoni.com');
+                          final Uri emailLaunchUri = Uri(
+                              scheme: 'mailto', path: GlobalUtil.contactEmail);
 
-                          _launchEmailApp();
+                          launchUrl(emailLaunchUri);
                         },
                       ),
                       _linkTo(
                         'Call Us',
-                        '+91 6257899906',
+                        GlobalUtil.contactMobile,
                         () {
-                          // launchCall('+91 6257899906');
+                          final Uri emailLaunchUri = Uri(
+                              scheme: 'tel', path: GlobalUtil.contactMobile);
+
+                          launchUrl(emailLaunchUri);
                         },
                       ),
                     ],
@@ -80,23 +83,18 @@ class HelpSupportPage extends StatelessWidget {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           InkWell(
+            onTap: onTapAction,
             child: Text(
               link,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Colors.blue[500],
+              ),
             ),
-            onTap: onTapAction,
           ),
         ],
       ),
     );
-  }
-
-  _launchEmailApp() async {
-    final url = 'mailto:customercare@sokoni.com';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }
