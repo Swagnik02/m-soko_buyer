@@ -78,7 +78,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color: ColorConstants.blueButtons,
+                                  color: ColorConstants.skyBlue,
                                 ),
                                 alignment: Alignment.center,
                                 width: double.infinity,
@@ -153,7 +153,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: ColorConstants.blueButtons,
+                color: ColorConstants.skyBlue,
               ),
             ),
           ),
