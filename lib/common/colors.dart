@@ -13,6 +13,7 @@ class ColorConstants {
   static const Color blue700 = Color(0xFF08215E);
   static const Color blue800 = Color(0xFF061A49);
   static const Color blue900 = Color(0xFF051437);
+  static const Color blueButtons = Color(0xFF3072D4);
 
   // Define yellow shades
   static const Color yellow50 = Color(0xFFFBF8E7);

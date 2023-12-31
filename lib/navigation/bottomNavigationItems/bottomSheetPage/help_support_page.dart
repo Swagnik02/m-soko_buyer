@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/widgets/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,6 +63,45 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                           launchUrl(emailLaunchUri);
                         },
                       ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: InkWell(
+                            onTap: () {
+                              Fluttertoast.showToast(msg: 'Chat With US');
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: ColorConstants.blueButtons,
+                              ),
+                              alignment: Alignment.center,
+                              width: double.infinity,
+                              height: 50,
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 8.0),
+                                    child: ImageIcon(
+                                      AssetImage(
+                                          'assets/icons/chat_bubble_icon.png'),
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Chat with us!',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )),
+                        ],
+                      )
                     ],
                   ),
                 )
@@ -86,10 +127,10 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
             onTap: onTapAction,
             child: Text(
               link,
-              style: TextStyle(
-                fontSize: 20,
+              style: const TextStyle(
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: Colors.blue[500],
+                color: ColorConstants.blueButtons,
               ),
             ),
           ),

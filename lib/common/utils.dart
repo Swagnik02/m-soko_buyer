@@ -13,7 +13,7 @@ class GlobalUtil {
       'Lorem ipsum dolor sit amet consectetur adipisicing elit.';
   static const String visitUrl = 'https://help.sokoni.com';
   static const String contactEmail = 'customercare@sokoni.com';
-  static const String contactMobile = '+916257899906';
+  static const String contactMobile = '+91 6257899906';
 }
 
 class FirestoreCollections {
