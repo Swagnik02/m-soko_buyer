@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/widgets/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -63,45 +64,67 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                           launchUrl(emailLaunchUri);
                         },
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: InkWell(
-                            onTap: () {
-                              Fluttertoast.showToast(msg: 'Chat With US');
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: ColorConstants.blueButtons,
-                              ),
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              height: 50,
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 8.0),
-                                    child: ImageIcon(
-                                      AssetImage(
-                                          'assets/icons/chat_bubble_icon.png'),
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Chat with us!',
-                                    style: TextStyle(
+
+                      // Chat with us Button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: InkWell(
+                              onTap: () {
+                                Fluttertoast.showToast(msg: 'Chat With US');
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: ColorConstants.blueButtons,
+                                ),
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                height: 50,
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 8.0),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'assets/icons/chat_bubble_icon.png'),
                                         color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
+                                      ),
+                                    ),
+                                    Text(
+                                      'Chat with us!',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )),
-                        ],
-                      )
+                            )),
+                          ],
+                        ),
+                      ),
+
+                      // Get help and support anytime
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Get help and support anytime',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Text(
+                        lorem,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -121,7 +144,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
         children: [
           Text(
             '$linkTo:',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           InkWell(
             onTap: onTapAction,
