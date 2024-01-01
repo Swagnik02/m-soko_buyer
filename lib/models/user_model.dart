@@ -16,7 +16,7 @@ class UserModel {
   String? state;
 
   UserModel({
-    required this.userName,
+    this.userName,
     required this.email,
     this.country,
     this.uid,
