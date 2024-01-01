@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +14,8 @@ class AddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, List<String>>? addressLinesMap =
+        UserDataService().userModel?.addressLines;
     final AddressController controller = Get.put(AddressController());
     return Scaffold(
       body: GetBuilder<AddressController>(
@@ -31,8 +35,7 @@ class AddressPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: InkWell(
                       onTap: () {
-                        controller.updateAddAddressIndex();
-
+                        controller.onTapAddNewAddress();
                         Fluttertoast.showToast(msg: 'Add');
                       },
                       child: const Row(
@@ -62,8 +65,23 @@ class AddressPage extends StatelessWidget {
                   ? _buildAddressContainer(context, controller, '', '')
                   : Container(),
               Expanded(
-                child: _builder(context, controller),
-              )
+                child: ListView.builder(
+                  itemCount: addressLinesMap?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    String name =
+                        addressLinesMap?.values.elementAt(index)[0] ?? '';
+                    String address =
+                        addressLinesMap?.values.elementAt(index)[1] ?? '';
+
+                    return _buildAddressContainer(
+                      context,
+                      controller,
+                      name,
+                      address,
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -131,40 +149,6 @@ class AddressPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _builder(BuildContext context, AddressController controller) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-      future: fetchAddressLines(UserDataService().userModel!.email),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Column(
-            children: [
-              _buildAddressContainer(context, controller, '', ''),
-              _buildAddressContainer(context, controller, '', ''),
-              _buildAddressContainer(context, controller, '', ''),
-            ],
-          );
-        } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found'));
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          List<Map<String, dynamic>> addressLines = snapshot.data!;
-          return ListView.builder(
-            itemCount: addressLines.length,
-            itemBuilder: (context, index) {
-              return _buildAddressContainer(
-                context,
-                controller,
-                (addressLines[index]['name']).toString(),
-                (addressLines[index]['address']).toString(),
-              );
-            },
-          );
-        }
-      },
     );
   }
 

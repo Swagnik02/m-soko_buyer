@@ -14,6 +14,7 @@ class UserModel {
   String? city;
   String? mobile;
   String? state;
+  Map<String, List<String>>? addressLines;
 
   UserModel({
     this.userName,
@@ -24,6 +25,7 @@ class UserModel {
     this.city,
     this.mobile,
     this.state,
+    this.addressLines,
   });
 
   // Add any other methods or properties you need
@@ -74,6 +76,14 @@ class UserDataService {
             state: userData['state']?.toString() ?? '',
             userName: userData['userName']?.toString() ?? '',
             email: userData['email']?.toString() ?? '',
+            addressLines: (userData['addressLines'] as Map<String, dynamic>?)
+                ?.map((key, value) {
+              if (value is List<dynamic>) {
+                return MapEntry(key, value.cast<String>());
+              } else {
+                return MapEntry(key, <String>[]);
+              }
+            }),
           );
 
           log('Users Data for $userEmail: $userData');
@@ -99,6 +109,10 @@ class UserDataService {
         prefs.setString('city', _userModel?.city ?? '');
         prefs.setString('mobile', _userModel?.mobile ?? '');
         prefs.setString('state', _userModel?.state ?? '');
+        prefs.setString(
+          'addressLines',
+          _userModel?.addressLines?.toString() ?? '',
+        );
       });
     }
   }
