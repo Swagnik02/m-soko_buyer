@@ -13,7 +13,9 @@ class AddressPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<String, List<String>>? addressLinesMap =
         UserDataService().userModel?.addressLines;
+
     final AddressController controller = Get.put(AddressController());
+    controller.count = addressLinesMap!.length;
     return Scaffold(
       body: GetBuilder<AddressController>(
         builder: (_) => SafeArea(
@@ -220,8 +222,9 @@ class AddressPage extends StatelessWidget {
                       TextButton(
                         child: const Text('save'),
                         onPressed: () => controller.onTapAddNewAddress(
-                            controller.addReceipentNameController,
-                            controller.addAddressController),
+                          controller.addReceipentNameController,
+                          controller.addAddressController,
+                        ),
                       )
                   ],
                 ),

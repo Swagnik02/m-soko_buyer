@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -11,7 +11,7 @@ class AddressController extends GetxController {
   bool editAddressIndex = false;
   bool saveAddressIndex = false;
   bool isLoading = false;
-
+  late int count;
   late TextEditingController addressLineController;
   late TextEditingController addAddressController;
   late TextEditingController addReceipentNameController;
@@ -57,7 +57,10 @@ class AddressController extends GetxController {
       updateisLoadingIndex();
       // await Future.delayed(Duration(seconds: 2));
 
-      await addAddressToFirestore(name, address);
+      await addAddressToFirestore(
+        name,
+        address,
+      );
 
       // // UserModel updatedUserData = getUserDataFromEditedValues();
       // // await UserDataService().updateUserData(updatedUserData);
@@ -93,7 +96,8 @@ class AddressController extends GetxController {
           .collection(FirestoreCollections.usersCollection)
           .doc(email)
           .update({
-        'addressLines.addressLine1': FieldValue.arrayUnion([name, address]),
+        'addressLines.addNum${count + 1}':
+            FieldValue.arrayUnion([name, address]),
       });
     } else {
       // Handle the case where either name or address is empty
