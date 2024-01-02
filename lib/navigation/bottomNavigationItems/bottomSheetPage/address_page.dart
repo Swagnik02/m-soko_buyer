@@ -219,7 +219,9 @@ class AddressPage extends StatelessWidget {
                     else
                       TextButton(
                         child: const Text('save'),
-                        onPressed: () => controller.onTapAddNewAddress(),
+                        onPressed: () => controller.onTapAddNewAddress(
+                            controller.addReceipentNameController,
+                            controller.addAddressController),
                       )
                   ],
                 ),
