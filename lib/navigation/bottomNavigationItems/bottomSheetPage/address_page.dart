@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -35,7 +32,7 @@ class AddressPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: InkWell(
                       onTap: () {
-                        controller.onTapAddNewAddress();
+                        controller.updateAddAddressIndex();
                         Fluttertoast.showToast(msg: 'Add');
                       },
                       child: const Row(
@@ -62,7 +59,10 @@ class AddressPage extends StatelessWidget {
                 ),
               ),
               controller.addAddressIndex
-                  ? _buildAddressContainer(context, controller, '', '')
+                  ? _addAddressContainer(
+                      context,
+                      controller,
+                    )
                   : Container(),
               Expanded(
                 child: ListView.builder(
@@ -106,42 +106,63 @@ class AddressPage extends StatelessWidget {
           ),
           height: 186,
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: InkWell(
-                          onTap: () {
-                            controller.updateEditAddressIndex();
-                          },
-                          child: Icon(Icons.edit_outlined)),
+                      padding: const EdgeInsets.only(top: 10.0, left: 15),
+                      child: Text(
+                        name,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    controller.editAddressIndex
-                        ? Icon(
-                            Icons.check,
-                            color: Colors.green,
-                          )
-                        : Icon(
-                            Icons.delete_outline_rounded,
-                            color: Colors.red,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: InkWell(
+                                onTap: () {
+                                  controller.updateEditAddressIndex();
+                                },
+                                child: const Icon(Icons.edit_outlined)),
                           ),
+                          controller.editAddressIndex
+                              ? InkWell(
+                                  onTap: () =>
+                                      controller.updateEditAddressIndex(),
+                                  child: const Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  ),
+                                )
+                              : const InkWell(
+                                  child: Icon(
+                                    Icons.delete_outline_rounded,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                Text(
-                  name,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                TextField(
-                  controller: controller.addressLineController,
-                  readOnly: controller.editAddressIndex ? false : true,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
+                Expanded(
+                  child: TextField(
+                    controller: controller.addressLineController,
+                    readOnly: controller.editAddressIndex ? false : true,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
                   ),
                 ),
               ],
@@ -152,18 +173,86 @@ class AddressPage extends StatelessWidget {
     );
   }
 
-  Future<List<Map<String, dynamic>>> fetchAddressLines(String email) async {
-    var querySnapshot = await FirebaseFirestore.instance
-        .collection(FirestoreCollections.usersCollection)
-        .doc(email)
-        .collection('addressLines')
-        .get();
-
-    return querySnapshot.docs.map((doc) {
-      return {
-        'name': doc['name'],
-        'address': doc['address'],
-      };
-    }).toList();
+  Widget _addAddressContainer(
+      BuildContext context, AddressController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3.0),
+      child: Material(
+        elevation: 6,
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border.symmetric(
+              horizontal: BorderSide(
+                color: ColorConstants.bgColour,
+              ),
+            ),
+          ),
+          height: 170,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller.addReceipentNameController,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Enter name of the reciever',
+                          hintStyle: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    if (controller.isLoading)
+                      Container(
+                        height: 48,
+                        width: 48,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Utils.customLoadingSpinner(),
+                      )
+                    else
+                      TextButton(
+                        child: const Text('save'),
+                        onPressed: () => controller.onTapAddNewAddress(),
+                      )
+                  ],
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: controller.addAddressController,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter the address',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
+
+  // Future<List<Map<String, dynamic>>> fetchAddressLines(String email) async {
+  //   var querySnapshot = await FirebaseFirestore.instance
+  //       .collection(FirestoreCollections.usersCollection)
+  //       .doc(email)
+  //       .collection('addressLines')
+  //       .get();
+
+  //   return querySnapshot.docs.map((doc) {
+  //     return {
+  //       'name': doc['name'],
+  //       'address': doc['address'],
+  //     };
+  //   }).toList();
+  // }
 }

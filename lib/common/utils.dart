@@ -24,7 +24,9 @@ class FirestoreCollections {
 class Utils {
   static Widget customLoadingSpinner() {
     return const Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        
+      ),
     );
   }
 

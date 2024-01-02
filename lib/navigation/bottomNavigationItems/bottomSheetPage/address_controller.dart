@@ -6,24 +6,36 @@ import 'package:m_soko/models/user_model.dart';
 class AddressController extends GetxController {
   bool addAddressIndex = false;
   bool editAddressIndex = false;
-  var isLoading = false.obs;
+  bool saveAddressIndex = false;
+  bool isLoading = false;
 
   late TextEditingController addressLineController;
+  late TextEditingController addAddressController;
+  late TextEditingController addReceipentNameController;
 
   @override
   void onInit() {
     super.onInit();
 
     addressLineController = TextEditingController();
+    addAddressController = TextEditingController();
+    addReceipentNameController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
+    addAddressController.dispose();
+    addReceipentNameController.dispose();
   }
 
   void updateAddAddressIndex() {
     addAddressIndex = !addAddressIndex;
+    update();
+  }
+
+  void updateisLoadingIndex() {
+    isLoading = !isLoading;
     update();
   }
 
@@ -34,31 +46,34 @@ class AddressController extends GetxController {
 
   Future<void> onTapAddNewAddress() async {
     try {
-      isLoading(true);
-      UserModel updatedUserData = getUserDataFromEditedValues();
-      await UserDataService().updateUserData(updatedUserData);
-      isLoading(false);
+      updateisLoadingIndex();
+      await Future.delayed(Duration(seconds: 2));
+
+      // // UserModel updatedUserData = getUserDataFromEditedValues();
+      // // await UserDataService().updateUserData(updatedUserData);
+      updateisLoadingIndex();
       updateAddAddressIndex();
-      Fluttertoast.showToast(msg: 'Profile Updated');
+
+      // Fluttertoast.showToast(msg: 'Address added');
     } catch (error) {
       Fluttertoast.showToast(msg: 'Error updating profile: $error');
-      isLoading(false);
+      updateisLoadingIndex();
     }
   }
 
-  Future<void> onTapUpdateAddress() async {
-    try {
-      isLoading(true);
-      UserModel updatedUserData = getUserDataFromEditedValues();
-      await UserDataService().updateUserData(updatedUserData);
-      isLoading(false);
-      updateAddAddressIndex();
-      Fluttertoast.showToast(msg: 'Profile Updated');
-    } catch (error) {
-      Fluttertoast.showToast(msg: 'Error updating profile: $error');
-      isLoading(false);
-    }
-  }
+  // Future<void> onTapUpdateAddress() async {
+  //   try {
+  //     isLoading(true);
+  //     UserModel updatedUserData = getUserDataFromEditedValues();
+  //     await UserDataService().updateUserData(updatedUserData);
+  //     isLoading(false);
+  //     updateAddAddressIndex();
+  //     Fluttertoast.showToast(msg: 'Profile Updated');
+  //   } catch (error) {
+  //     Fluttertoast.showToast(msg: 'Error updating profile: $error');
+  //     isLoading(false);
+  //   }
+  // }
 
   UserModel getUserDataFromEditedValues() {
     return UserModel(
