@@ -91,16 +91,20 @@ class AddressController extends GetxController {
     String email = UserDataService().userModel!.email;
     // Ensure that both name and address are not empty before proceeding
     if (name.isNotEmpty && address.isNotEmpty) {
+      Map<String, dynamic> newAddressLine = {
+        'addressLines.addNum${count + 1}':
+            FieldValue.arrayUnion([name, address]),
+      };
+
+// Note: 'FieldValue' is assumed to be a type or class in your code.
+// You may need to import the necessary libraries or define 'FieldValue' accordingly.
+
       // Get the Firestore instance and add the address to the collection
       await FirebaseFirestore.instance
           .collection(FirestoreCollections.usersCollection)
           .doc(email)
-          .update({
-        'addressLines.addNum${count + 1}':
-            FieldValue.arrayUnion([name, address]),
-      });
+          .update(newAddressLine);
     } else {
-      // Handle the case where either name or address is empty
       print('Name and address cannot be empty.');
     }
   }

@@ -77,13 +77,14 @@ class UserDataService {
             userName: userData['userName']?.toString() ?? '',
             email: userData['email']?.toString() ?? '',
             addressLines: (userData['addressLines'] as Map<String, dynamic>?)
-                ?.map((key, value) {
-              if (value is List<dynamic>) {
-                return MapEntry(key, value.cast<String>());
-              } else {
-                return MapEntry(key, <String>[]);
-              }
-            }),
+                    ?.map((key, value) {
+                  if (value is List<dynamic>) {
+                    return MapEntry(key, value.cast<String>());
+                  } else {
+                    return MapEntry(key, <String>[]);
+                  }
+                }) ??
+                {},
           );
 
           log('Users Data for $userEmail: $userData');
