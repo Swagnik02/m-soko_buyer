@@ -211,4 +211,19 @@ class UserDataService {
     await prefs.clear();
     _userModel = null;
   }
+
+  Future<void> addAddressToFirestore(
+      Map<String, dynamic> newAddressLine) async {
+    String email = UserDataService().userModel!.email;
+    // Ensure that both name and address are not empty before proceeding
+    if (newAddressLine.isNotEmpty) {
+      // Get the Firestore instance and add the address to the collection
+      await FirebaseFirestore.instance
+          .collection(FirestoreCollections.usersCollection)
+          .doc(email)
+          .update(newAddressLine);
+    } else {
+      print('Name and address cannot be empty.');
+    }
+  }
 }
