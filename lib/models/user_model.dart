@@ -166,6 +166,46 @@ class UserDataService {
     }
   }
 
+  Future<void> updateAddressData(UserModel updatedUserData) async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        // User not authenticated
+        return;
+      }
+
+      String userEmail = currentUser.email ?? "";
+      if (userEmail.isEmpty) {
+        // Email not available
+        return;
+      }
+
+      CollectionReference usersCollection = FirebaseFirestore.instance
+          .collection(FirestoreCollections.usersCollection);
+      await usersCollection.doc(userEmail).update({
+        'addressLines'
+            'country': updatedUserData.country,
+        // 'uid': updatedUserData.uid,
+        'pin': updatedUserData.pin,
+        'city': updatedUserData.city,
+        'mobile': updatedUserData.mobile,
+        'state': updatedUserData.state,
+        'userName': updatedUserData.userName,
+        // 'email': updatedUserData.email,
+      });
+
+      // Update local data
+      _userModel = updatedUserData;
+      storeUserDataLocally();
+
+      // Retrieve updated user data locally
+      await retrieveUserDataLocally();
+    } catch (e) {
+      // Handle specific Firestore exceptions
+      log('Error updating user data: $e');
+    }
+  }
+
   Future<void> clearUserDataLocally() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();

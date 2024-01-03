@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -11,10 +13,14 @@ class AddressController extends GetxController {
   bool editAddressIndex = false;
   bool saveAddressIndex = false;
   bool isLoading = false;
-  late int count;
   late TextEditingController addressLineController;
   late TextEditingController addAddressController;
   late TextEditingController addReceipentNameController;
+
+  Map<String, List<String>>? addressLinesMap =
+      UserDataService().userModel?.addressLines;
+
+  // late int count = addressLinesMap!.length;
 
   @override
   void onInit() {
@@ -56,14 +62,22 @@ class AddressController extends GetxController {
     try {
       updateisLoadingIndex();
       // await Future.delayed(Duration(seconds: 2));
+      log('message');
+      log(addressLinesMap.toString());
 
-      await addAddressToFirestore(
-        name,
-        address,
-      );
+      Map<String, List<String>> newEntries = {
+        'addressLines.addNum${addressLinesMap!.length + 1}': [
+          name,
+          address,
+        ],
+      };
 
-      // // UserModel updatedUserData = getUserDataFromEditedValues();
-      // // await UserDataService().updateUserData(updatedUserData);
+      addressLinesMap?.addEntries(newEntries.entries);
+      log(addressLinesMap.toString());
+
+      // added to firestore
+      await addAddressToFirestore(newEntries);
+
       updateisLoadingIndex();
       updateAddAddressIndex();
       addAddressController.clear();
@@ -71,7 +85,7 @@ class AddressController extends GetxController {
 
       Fluttertoast.showToast(msg: 'Address added');
     } catch (error) {
-      Fluttertoast.showToast(msg: 'Error updating profile: $error');
+      log('Error updating profile: $error');
       updateisLoadingIndex();
     }
   }
@@ -87,18 +101,11 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> addAddressToFirestore(String name, String address) async {
+  Future<void> addAddressToFirestore(
+      Map<String, dynamic> newAddressLine) async {
     String email = UserDataService().userModel!.email;
     // Ensure that both name and address are not empty before proceeding
-    if (name.isNotEmpty && address.isNotEmpty) {
-      Map<String, dynamic> newAddressLine = {
-        'addressLines.addNum${count + 1}':
-            FieldValue.arrayUnion([name, address]),
-      };
-
-// Note: 'FieldValue' is assumed to be a type or class in your code.
-// You may need to import the necessary libraries or define 'FieldValue' accordingly.
-
+    if (newAddressLine.isNotEmpty) {
       // Get the Firestore instance and add the address to the collection
       await FirebaseFirestore.instance
           .collection(FirestoreCollections.usersCollection)

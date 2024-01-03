@@ -15,7 +15,6 @@ class AddressPage extends StatelessWidget {
         UserDataService().userModel?.addressLines;
 
     final AddressController controller = Get.put(AddressController());
-    controller.count = addressLinesMap!.length;
     return Scaffold(
       body: GetBuilder<AddressController>(
         builder: (_) => SafeArea(
