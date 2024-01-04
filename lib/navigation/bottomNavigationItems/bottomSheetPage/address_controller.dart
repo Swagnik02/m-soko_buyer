@@ -17,9 +17,11 @@ class AddressController extends GetxController {
   late TextEditingController addAddressController;
   late TextEditingController addReceipentNameController;
 
-  Map<String, List<String>>? addressLinesMap =
-      UserDataService().userModel?.addressLines;
+  // Map<String, List<String>>? addressLinesMap =
+  //
 
+  Map<String, dynamic> addressLinesMap =
+      UserDataService().userModel?.addressLines ?? {};
   // late int count = addressLinesMap!.length;
 
   @override
@@ -38,18 +40,17 @@ class AddressController extends GetxController {
     addReceipentNameController.dispose();
   }
 
+  // handeling index
+
   void updateAddAddressIndex() {
     addAddressIndex = !addAddressIndex;
     update();
   }
 
+  // handeling index
+
   void updateisLoadingIndex() {
     isLoading = !isLoading;
-    update();
-  }
-
-  void updateEditAddressIndex() {
-    editAddressIndex = !editAddressIndex;
     update();
   }
 
@@ -61,22 +62,13 @@ class AddressController extends GetxController {
     String address = addAddressController.text;
     try {
       updateisLoadingIndex();
-      // await Future.delayed(Duration(seconds: 2));
-      log('message');
+      // add entry locally
+      Map<String, dynamic> newEntry = {name: address};
+      addressLinesMap.addEntries(newEntry.entries);
+
       log(addressLinesMap.toString());
-
-      Map<String, List<String>> newEntries = {
-        'addressLines.addNum${addressLinesMap!.length + 1}': [
-          name,
-          address,
-        ],
-      };
-
-      addressLinesMap?.addEntries(newEntries.entries);
-      log(addressLinesMap.toString());
-
       // added to firestore
-      await addAddressToFirestore(newEntries);
+      await addAddressToFirestore(addressLinesMap);
 
       updateisLoadingIndex();
       updateAddAddressIndex();
@@ -90,15 +82,11 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> onTapUpdateAddress() async {
-    try {
-      UserModel updatedUserData = getUserDataFromEditedValues();
-      await UserDataService().updateUserData(updatedUserData);
-      updateAddAddressIndex();
-      Fluttertoast.showToast(msg: 'Profile Updated');
-    } catch (error) {
-      Fluttertoast.showToast(msg: 'Error updating profile: $error');
-    }
+  void removeEntry(String key) async {
+    addressLinesMap.remove(key);
+    await Future.delayed(Duration(seconds: 2));
+
+    update();
   }
 
   Future<void> addAddressToFirestore(
@@ -110,9 +98,11 @@ class AddressController extends GetxController {
       await FirebaseFirestore.instance
           .collection(FirestoreCollections.usersCollection)
           .doc(email)
-          .update(newAddressLine);
+          .set({
+        'addressLines': newAddressLine,
+      }, SetOptions(merge: true));
     } else {
-      print('Name and address cannot be empty.');
+      log('Name and address cannot be empty.');
     }
   }
 
@@ -120,5 +110,21 @@ class AddressController extends GetxController {
     return UserModel(
       email: UserDataService().userModel!.email,
     );
+  }
+
+  Future<void> onTapUpdateAddress() async {
+    try {
+      UserModel updatedUserData = getUserDataFromEditedValues();
+      await UserDataService().updateUserData(updatedUserData);
+      updateAddAddressIndex();
+      Fluttertoast.showToast(msg: 'Profile Updated');
+    } catch (error) {
+      Fluttertoast.showToast(msg: 'Error updating profile: $error');
+    }
+  }
+
+  void updateEditAddressIndex() {
+    editAddressIndex = !editAddressIndex;
+    update();
   }
 }

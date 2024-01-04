@@ -14,7 +14,7 @@ class UserModel {
   String? city;
   String? mobile;
   String? state;
-  Map<String, List<String>>? addressLines;
+  Map<String, dynamic>? addressLines;
 
   UserModel({
     this.userName,
@@ -68,24 +68,28 @@ class UserDataService {
               productDocument.data() as Map<String, dynamic>;
 
           _userModel = UserModel(
-            country: userData['country']?.toString() ?? '',
-            uid: userData['uid']?.toString() ?? '',
-            pin: userData['pin']?.toString() ?? '',
-            city: userData['city']?.toString() ?? '',
-            mobile: userData['mobile']?.toString() ?? '',
-            state: userData['state']?.toString() ?? '',
-            userName: userData['userName']?.toString() ?? '',
-            email: userData['email']?.toString() ?? '',
-            addressLines: (userData['addressLines'] as Map<String, dynamic>?)
-                    ?.map((key, value) {
-                  if (value is List<dynamic>) {
-                    return MapEntry(key, value.cast<String>());
-                  } else {
-                    return MapEntry(key, <String>[]);
-                  }
-                }) ??
-                {},
-          );
+              country: userData['country']?.toString() ?? '',
+              uid: userData['uid']?.toString() ?? '',
+              pin: userData['pin']?.toString() ?? '',
+              city: userData['city']?.toString() ?? '',
+              mobile: userData['mobile']?.toString() ?? '',
+              state: userData['state']?.toString() ?? '',
+              userName: userData['userName']?.toString() ?? '',
+              email: userData['email']?.toString() ?? '',
+              addressLines: (userData['addressLines'] as Map<String, dynamic>?)
+                  ?.map((key, value) {
+                if (value is Map<String, dynamic>) {
+                  return MapEntry(
+                    key,
+                    value.map((k, v) => MapEntry(k, v as String)),
+                  );
+                } else {
+                  return MapEntry(key, <String, String>{});
+                }
+              })
+
+              // end of user model
+              );
 
           log('Users Data for $userEmail: $userData');
         }
@@ -210,20 +214,5 @@ class UserDataService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     _userModel = null;
-  }
-
-  Future<void> addAddressToFirestore(
-      Map<String, dynamic> newAddressLine) async {
-    String email = UserDataService().userModel!.email;
-    // Ensure that both name and address are not empty before proceeding
-    if (newAddressLine.isNotEmpty) {
-      // Get the Firestore instance and add the address to the collection
-      await FirebaseFirestore.instance
-          .collection(FirestoreCollections.usersCollection)
-          .doc(email)
-          .update(newAddressLine);
-    } else {
-      print('Name and address cannot be empty.');
-    }
   }
 }

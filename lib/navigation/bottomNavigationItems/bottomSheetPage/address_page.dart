@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/address_controller.dart';
 
 class AddressPage extends StatelessWidget {
@@ -11,9 +10,6 @@ class AddressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List<String>>? addressLinesMap =
-        UserDataService().userModel?.addressLines;
-
     final AddressController controller = Get.put(AddressController());
     return Scaffold(
       body: GetBuilder<AddressController>(
@@ -65,28 +61,49 @@ class AddressPage extends StatelessWidget {
                       controller,
                     )
                   : Container(),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: addressLinesMap?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    String name =
-                        addressLinesMap?.values.elementAt(index)[0] ?? '';
-                    String address =
-                        addressLinesMap?.values.elementAt(index)[1] ?? '';
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: controller.addressLinesMap?.length ?? 0,
+              //     itemBuilder: (context, index) {
+              //       String name = controller.addressLinesMap?.values
+              //               .elementAt(index)[0] ??
+              //           '';
+              //       String address = controller.addressLinesMap?.values
+              //               .elementAt(index)[1] ??
+              //           '';
 
-                    return _buildAddressContainer(
-                      context,
-                      controller,
-                      name,
-                      address,
-                    );
-                  },
-                ),
-              ),
+              //       Iterable<String> key = controller.addressLinesMap!.keys;
+              //       return _buildAddressContainer(
+              //         context,
+              //         controller,
+              //         name,
+              //         address,
+              //       );
+              //     },
+              //   ),
+              // ),
+
+              Expanded(child: _listViewBody(controller)),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  // ListView
+  ListView _listViewBody(AddressController controller) {
+    return ListView(
+      children: controller.addressLinesMap.keys.map((String key) {
+        return ListTile(
+          title: Text(key),
+          subtitle: Text((controller.addressLinesMap[key]).toString()),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () => controller.removeEntry(key),
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -244,19 +261,4 @@ class AddressPage extends StatelessWidget {
       ),
     );
   }
-
-  // Future<List<Map<String, dynamic>>> fetchAddressLines(String email) async {
-  //   var querySnapshot = await FirebaseFirestore.instance
-  //       .collection(FirestoreCollections.usersCollection)
-  //       .doc(email)
-  //       .collection('addressLines')
-  //       .get();
-
-  //   return querySnapshot.docs.map((doc) {
-  //     return {
-  //       'name': doc['name'],
-  //       'address': doc['address'],
-  //     };
-  //   }).toList();
-  // }
 }
