@@ -58,6 +58,7 @@ dependencies:
   zego_uikit_prebuilt_call: ^3.18.4
   zego_uikit_signaling_plugin: ^2.7.2
   chat_bubbles: ^1.5.0
+  currency_converter: ^0.0.5
 
 
 dev_dependencies:

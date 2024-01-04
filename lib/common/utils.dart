@@ -79,6 +79,7 @@ class Utils {
     Color? backGroundColor,
     required String title,
     isIcon = true,
+    bool isSelected = false,
     Icon? icon,
     Size? size,
   }) {
@@ -90,6 +91,9 @@ class Utils {
         // padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            width: 2,
+              color: isSelected ? ColorConstants.green700 : Colors.transparent),
           color: backGroundColor ?? ColorConstants.blue700,
         ),
         child: Row(
