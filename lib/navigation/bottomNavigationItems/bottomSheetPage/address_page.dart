@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
@@ -55,10 +54,7 @@ class AddressPage extends StatelessWidget {
             children: [
               // Add Button
               InkWell(
-                onTap: () {
-                  controller.updateAddAddressIndex();
-                  Fluttertoast.showToast(msg: 'Add');
-                },
+                onTap: () => controller.updateAddAddressIndex(),
                 child: const Row(
                   children: [
                     Padding(

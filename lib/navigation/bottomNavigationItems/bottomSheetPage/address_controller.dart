@@ -38,6 +38,7 @@ class AddressController extends GetxController {
   // handeling index
   void updateAddAddressIndex() {
     addAddressIndex = !addAddressIndex;
+    Fluttertoast.showToast(msg: 'Use a unique name !!');
     update();
   }
 
