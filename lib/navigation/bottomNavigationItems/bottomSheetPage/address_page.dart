@@ -16,73 +16,17 @@ class AddressPage extends StatelessWidget {
         builder: (_) => SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Container(
-                  height: 60,
-                  decoration: const BoxDecoration(
-                      color: ColorConstants.blue50,
-                      border: Border.symmetric(
-                          horizontal: BorderSide(
-                              color: ColorConstants.skyBlue, width: 1))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: InkWell(
-                      onTap: () {
-                        controller.updateAddAddressIndex();
-                        Fluttertoast.showToast(msg: 'Add');
-                      },
-                      child: const Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: 4),
-                            child: Icon(
-                              Icons.add_rounded,
-                              size: 20,
-                              color: ColorConstants.skyBlue,
-                            ),
-                          ),
-                          Text(
-                            'Add a new address',
-                            style: TextStyle(
-                                color: ColorConstants.skyBlue,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // add address button
+              _addAddressButton(controller),
+
+              // add address field
               controller.addAddressIndex
                   ? _addAddressContainer(
-                      context,
                       controller,
                     )
                   : Container(),
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: controller.addressLinesMap?.length ?? 0,
-              //     itemBuilder: (context, index) {
-              //       String name = controller.addressLinesMap?.values
-              //               .elementAt(index)[0] ??
-              //           '';
-              //       String address = controller.addressLinesMap?.values
-              //               .elementAt(index)[1] ??
-              //           '';
 
-              //       Iterable<String> key = controller.addressLinesMap!.keys;
-              //       return _buildAddressContainer(
-              //         context,
-              //         controller,
-              //         name,
-              //         address,
-              //       );
-              //     },
-              //   ),
-              // ),
-
+              // Saved Address along with delete button
               Expanded(child: _listViewBody(controller)),
             ],
           ),
@@ -91,23 +35,80 @@ class AddressPage extends StatelessWidget {
     );
   }
 
-  // ListView
+  // body
+  // add address button
+  Widget _addAddressButton(AddressController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Container(
+        height: 60,
+        decoration: const BoxDecoration(
+            color: ColorConstants.blue50,
+            border: Border.symmetric(
+                horizontal:
+                    BorderSide(color: ColorConstants.skyBlue, width: 1))),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Add Button
+              InkWell(
+                onTap: () {
+                  controller.updateAddAddressIndex();
+                  Fluttertoast.showToast(msg: 'Add');
+                },
+                child: const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 4),
+                      child: Icon(
+                        Icons.add_rounded,
+                        size: 20,
+                        color: ColorConstants.skyBlue,
+                      ),
+                    ),
+                    Text(
+                      'Add a new address',
+                      style: TextStyle(
+                          color: ColorConstants.skyBlue,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+
+              // EDIT/SAVE Button
+              controller.editAddressIndex
+                  ? TextButton(
+                      onPressed: () => controller.updateEditAddressIndex(),
+                      child: const Text('Edit'),
+                    )
+                  : TextButton(
+                      onPressed: () => controller.updateEditAddressIndex(),
+                      child: const Text('Save'),
+                    ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ListView saved addresses
   ListView _listViewBody(AddressController controller) {
     return ListView(
       children: controller.addressLinesMap.keys.map((String key) {
-        return ListTile(
-          title: Text(key),
-          subtitle: Text((controller.addressLinesMap[key]).toString()),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () => controller.removeEntry(key),
-          ),
-        );
+        String name = key.toString();
+        String address = (controller.addressLinesMap[key]).toString();
+        return _buildAddressContainer(controller, name, address);
       }).toList(),
     );
   }
 
-  Widget _buildAddressContainer(BuildContext context,
+  // saved address along with delete button containers
+  Widget _buildAddressContainer(
       AddressController controller, String name, String address) {
     controller.addressLineController = TextEditingController(text: address);
     return Padding(
@@ -122,7 +123,7 @@ class AddressPage extends StatelessWidget {
               ),
             ),
           ),
-          height: 186,
+          height: 150,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
             child: Column(
@@ -144,30 +145,13 @@ class AddressPage extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
                       child: Row(
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: InkWell(
-                                onTap: () {
-                                  controller.updateEditAddressIndex();
-                                },
-                                child: const Icon(Icons.edit_outlined)),
+                          InkWell(
+                            onTap: () => controller.removeEntry(name),
+                            child: Icon(
+                              Icons.delete_outline_rounded,
+                              color: Colors.red,
+                            ),
                           ),
-                          controller.editAddressIndex
-                              ? InkWell(
-                                  onTap: () =>
-                                      controller.updateEditAddressIndex(),
-                                  child: const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  ),
-                                )
-                              : const InkWell(
-                                  child: Icon(
-                                    Icons.delete_outline_rounded,
-                                    color: Colors.red,
-                                  ),
-                                ),
                         ],
                       ),
                     ),
@@ -191,8 +175,7 @@ class AddressPage extends StatelessWidget {
     );
   }
 
-  Widget _addAddressContainer(
-      BuildContext context, AddressController controller) {
+  Widget _addAddressContainer(AddressController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
       child: Material(
