@@ -78,14 +78,10 @@ class UserDataService {
               email: userData['email']?.toString() ?? '',
               addressLines: (userData['addressLines'] as Map<String, dynamic>?)
                   ?.map((key, value) {
-                if (value is Map<String, dynamic>) {
-                  return MapEntry(
-                    key,
-                    value.map((k, v) => MapEntry(k, v as String)),
-                  );
-                } else {
-                  return MapEntry(key, <String, String>{});
-                }
+                return MapEntry(
+                  key,
+                  value.toString(),
+                );
               })
 
               // end of user model

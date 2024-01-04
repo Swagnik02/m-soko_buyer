@@ -84,7 +84,6 @@ class AddressController extends GetxController {
 
   void removeEntry(String key) async {
     addressLinesMap.remove(key);
-    await Future.delayed(Duration(seconds: 2));
 
     update();
   }
