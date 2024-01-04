@@ -99,8 +99,22 @@ class AddressController extends GetxController {
   }
 
   // delete address logic
-  void removeEntry(String key) async {
-    addressLinesMap.remove(key);
-    update();
+  Future<void> removeEntry(String key) async {
+    try {
+      addressLinesMap.remove(key);
+      update();
+
+      String email = UserDataService().userModel!.email;
+      await FirebaseFirestore.instance
+          .collection(FirestoreCollections.usersCollection)
+          .doc(email)
+          .update({
+        'addressLines': addressLinesMap,
+      });
+
+      Fluttertoast.showToast(msg: 'Address removed');
+    } catch (error) {
+      log('Error removing address: $error');
+    }
   }
 }
