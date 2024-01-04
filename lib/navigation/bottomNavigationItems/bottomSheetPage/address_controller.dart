@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -17,12 +15,8 @@ class AddressController extends GetxController {
   late TextEditingController addAddressController;
   late TextEditingController addReceipentNameController;
 
-  // Map<String, List<String>>? addressLinesMap =
-  //
-
   Map<String, dynamic> addressLinesMap =
       UserDataService().userModel?.addressLines ?? {};
-  // late int count = addressLinesMap!.length;
 
   @override
   void onInit() {
@@ -41,19 +35,24 @@ class AddressController extends GetxController {
   }
 
   // handeling index
-
   void updateAddAddressIndex() {
     addAddressIndex = !addAddressIndex;
     update();
   }
 
   // handeling index
-
   void updateisLoadingIndex() {
     isLoading = !isLoading;
     update();
   }
 
+  // handeling index
+  void updateEditAddressIndex() {
+    editAddressIndex = !editAddressIndex;
+    update();
+  }
+
+  // add Address whole process
   Future<void> onTapAddNewAddress(
     TextEditingController addReceipentNameController,
     TextEditingController addAddressController,
@@ -82,12 +81,6 @@ class AddressController extends GetxController {
     }
   }
 
-  void removeEntry(String key) async {
-    addressLinesMap.remove(key);
-
-    update();
-  }
-
   Future<void> addAddressToFirestore(
       Map<String, dynamic> newAddressLine) async {
     String email = UserDataService().userModel!.email;
@@ -105,25 +98,9 @@ class AddressController extends GetxController {
     }
   }
 
-  UserModel getUserDataFromEditedValues() {
-    return UserModel(
-      email: UserDataService().userModel!.email,
-    );
-  }
-
-  Future<void> onTapUpdateAddress() async {
-    try {
-      UserModel updatedUserData = getUserDataFromEditedValues();
-      await UserDataService().updateUserData(updatedUserData);
-      updateAddAddressIndex();
-      Fluttertoast.showToast(msg: 'Profile Updated');
-    } catch (error) {
-      Fluttertoast.showToast(msg: 'Error updating profile: $error');
-    }
-  }
-
-  void updateEditAddressIndex() {
-    editAddressIndex = !editAddressIndex;
+  // delete address logic
+  void removeEntry(String key) async {
+    addressLinesMap.remove(key);
     update();
   }
 }
