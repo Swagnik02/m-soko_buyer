@@ -11,6 +11,7 @@ class AddressPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AddressController controller = Get.put(AddressController());
+    controller.context = context;
     return Scaffold(
       body: GetBuilder<AddressController>(
         builder: (_) => SafeArea(

@@ -7,6 +7,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
 
 class AddressController extends GetxController {
+  late BuildContext context;
   bool addAddressIndex = false;
   bool editAddressIndex = false;
   bool saveAddressIndex = false;
@@ -100,21 +101,25 @@ class AddressController extends GetxController {
 
   // delete address logic
   Future<void> removeEntry(String key) async {
-    try {
-      addressLinesMap.remove(key);
-      update();
+    bool confirmDelete = await showConfirmationDialog(context);
 
-      String email = UserDataService().userModel!.email;
-      await FirebaseFirestore.instance
-          .collection(FirestoreCollections.usersCollection)
-          .doc(email)
-          .update({
-        'addressLines': addressLinesMap,
-      });
+    if (confirmDelete) {
+      try {
+        addressLinesMap.remove(key);
+        update();
 
-      Fluttertoast.showToast(msg: 'Address removed');
-    } catch (error) {
-      log('Error removing address: $error');
+        String email = UserDataService().userModel!.email;
+        await FirebaseFirestore.instance
+            .collection(FirestoreCollections.usersCollection)
+            .doc(email)
+            .update({
+          'addressLines': addressLinesMap,
+        });
+
+        Fluttertoast.showToast(msg: 'Address removed');
+      } catch (error) {
+        log('Error removing address: $error');
+      }
     }
   }
 }

@@ -24,9 +24,7 @@ class FirestoreCollections {
 class Utils {
   static Widget customLoadingSpinner() {
     return const Center(
-      child: CircularProgressIndicator(
-        
-      ),
+      child: CircularProgressIndicator(),
     );
   }
 
@@ -158,4 +156,27 @@ class Utils {
       ),
     );
   }
+}
+
+Future<bool> showConfirmationDialog(BuildContext context) async {
+  return await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirmation'),
+            content: Text('Are you sure you want to delete this address?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text('Delete'),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false;
 }
