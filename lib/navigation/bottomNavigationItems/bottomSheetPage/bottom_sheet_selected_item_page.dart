@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/home/products/screens/all_categories_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/about_us_page.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/address_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/address/address_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bookmarks_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/feedback_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/help_support_page.dart';
