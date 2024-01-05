@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/models/user_model.dart';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class FeedbackPage extends StatefulWidget {
 class _FeedbackPageState extends State<FeedbackPage> {
   late final TextEditingController _reviewController = TextEditingController();
   double rating = 0.0;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -89,27 +92,25 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 5.0, horizontal: 80),
-                    child: Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: 'Submit');
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: ColorConstants.skyBlue,
-                          ),
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          child: const Text(
-                            'Submit',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    child: InkWell(
+                      onTap: () {
+                        // Call function to submit feedback
+                        submitFeedback();
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: ColorConstants.skyBlue,
+                        ),
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -122,5 +123,39 @@ class _FeedbackPageState extends State<FeedbackPage> {
         ),
       ),
     );
+  }
+
+  void submitFeedback() async {
+    if (rating > 0) {
+      final timestamp = DateTime.now();
+
+      // Get user's email (replace with your authentication logic)
+      final String userEmail = UserDataService().userModel!.email;
+
+      // Create feedback data
+      final Map<String, dynamic> feedbackData = {
+        'feedback': _reviewController.text,
+        'rating': rating,
+      };
+
+      final DocumentReference feedbackRef =
+          _firestore.collection('buyerAppFeedbacks').doc(userEmail);
+
+      await feedbackRef.set(
+        {
+          timestamp.toString(): feedbackData,
+        },
+        SetOptions(merge: true),
+      );
+
+      // Show success message
+      Fluttertoast.showToast(msg: 'Feedback submitted successfully');
+
+      // Navigate back
+      Navigator.pop(context);
+    } else {
+      // Show error message if no rating is given
+      Fluttertoast.showToast(msg: 'Please provide a rating');
+    }
   }
 }
