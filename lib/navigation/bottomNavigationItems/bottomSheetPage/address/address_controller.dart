@@ -125,19 +125,53 @@ class AddressController extends GetxController {
   }
 
   // Edit address
-  Future<void> onTapEditAddress() async {
-    try {
-      updateisLoadingIndex();
-      await Future.delayed(Duration(seconds: 2));
 
-      log(addressLinesMap.toString());
-      // added to firestore
+  onTapEditAddress(String key) {
+    TextEditingController descriptionController =
+        TextEditingController(text: addressLinesMap[key]);
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return _editAddressDialogue(
+          key,
+          descriptionController,
+          () async {
+            // update locally
+            addressLinesMap[key] = descriptionController.text;
+            update();
+            // update in firebase
+            await addAddressToFirestore(addressLinesMap);
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
 
-      updateisLoadingIndex();
-      updateEditAddressIndex();
-    } catch (error) {
-      log('Error updating profile: $error');
-      updateisLoadingIndex();
-    }
+  Widget _editAddressDialogue(
+    String key,
+    TextEditingController descriptionController,
+    VoidCallback onTapAction,
+  ) {
+    return AlertDialog(
+      title: Text(key),
+      content: TextField(
+        controller: descriptionController,
+        decoration: InputDecoration(labelText: 'New Description'),
+        maxLines: null,
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: onTapAction,
+          child: Text('Save'),
+        ),
+      ],
+    );
   }
 }

@@ -75,24 +75,6 @@ class AddressPage extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // EDIT/SAVE Button
-              controller.editAddressIndex
-                  ? controller.isLoading
-                      ? Container(
-                          height: 40,
-                          width: 40,
-                          padding: const EdgeInsets.all(8.0),
-                          child: Utils.customLoadingSpinner(),
-                        )
-                      : TextButton(
-                          onPressed: () => controller.onTapEditAddress(),
-                          child: const Text('Save'),
-                        )
-                  : TextButton(
-                      onPressed: () => controller.updateEditAddressIndex(),
-                      child: const Text('Edit'),
-                    ),
             ],
           ),
         ),
@@ -106,14 +88,14 @@ class AddressPage extends StatelessWidget {
       children: controller.addressLinesMap.keys.map((String key) {
         String name = key.toString();
         String address = (controller.addressLinesMap[key]).toString();
-        return _buildAddressContainer(controller, name, address);
+        return _buildAddressContainer(controller, name, address, key);
       }).toList(),
     );
   }
 
   // saved address along with delete button containers
   Widget _buildAddressContainer(
-      AddressController controller, String name, String address) {
+      AddressController controller, String name, String address, String key) {
     controller.addressLineController = TextEditingController(text: address);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
@@ -149,9 +131,22 @@ class AddressPage extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
                       child: Row(
                         children: [
+                          // EDIT/SAVE Button
+                          InkWell(
+                            onTap: () => controller.onTapEditAddress(key),
+                            child: const Icon(
+                              Icons.edit_outlined,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+
+                          // delete address button
                           InkWell(
                             onTap: () => controller.removeEntry(name),
-                            child: Icon(
+                            child: const Icon(
                               Icons.delete_outline_rounded,
                               color: Colors.red,
                             ),
