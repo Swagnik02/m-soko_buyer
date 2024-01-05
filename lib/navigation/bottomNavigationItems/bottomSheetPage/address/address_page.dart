@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/address_controller.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/address/address_controller.dart';
 
 class AddressPage extends StatelessWidget {
   const AddressPage({super.key});
