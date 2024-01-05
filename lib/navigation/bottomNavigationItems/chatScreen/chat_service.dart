@@ -18,6 +18,7 @@ class ChatService extends ChangeNotifier {
     String message,
     String? imageUrl,
     bool? isBanner,
+    String pId,
   ) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
@@ -27,6 +28,7 @@ class ChatService extends ChangeNotifier {
 
     // create a new message
     Message newMessage = Message(
+      productId: pId,
       buyerId: currentUserId,
       buyerEmail: currentUserEmail,
       sellerId: sellerId,

@@ -37,6 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
         _messageController.text,
         '',
         false,
+        '',
       );
 
       // clear the controller after sending the message

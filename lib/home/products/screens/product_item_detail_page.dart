@@ -118,6 +118,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                                             'I am interested in ${widget.productModel.itemName}',
                                             widget.productModel.itemThumbnail,
                                             true,
+                                            widget.pId,
                                           );
 
                                           Navigator.push(

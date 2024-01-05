@@ -9,10 +9,12 @@ class Message {
 
   final String imageUrl;
   final Timestamp timestamp;
+  final String productId;
 
   bool isBanner;
 
   Message({
+    this.productId = '',
     required this.buyerId,
     required this.buyerEmail,
     required this.sellerId,
