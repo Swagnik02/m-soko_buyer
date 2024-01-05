@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/home/products/screens/all_categories_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bookmarks_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/feedback_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/help_support_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 
 class SelectedSettingsPage extends StatefulWidget {
   final String destinationPage;
@@ -27,7 +28,7 @@ class _SelectedSettingsPageState extends State<SelectedSettingsPage> {
         // actions: [Icon(Icons.search)],
         title: Text(
           widget.destinationPage,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: SafeArea(
@@ -38,33 +39,44 @@ class _SelectedSettingsPageState extends State<SelectedSettingsPage> {
 
   Widget _mainBody(String destinationPage) {
     switch (destinationPage) {
-      case 'Home':
-        return ProfilePage();
-      case 'Orders':
-        return ProfilePage();
-      case 'Requirements':
-        return ProfilePage();
+      // case 'Notifications':
+      //   return ProfilePage();
+      // case 'Terms, Policies and Licenses':
+      //   return ProfilePage();
+      // case 'Browse FAQs':
+      //   return ProfilePage();
       case 'Save':
-        return ProfilePage();
-      case 'Categories':
-        return const AllCategoriesPage();
-      case 'Profile':
+        return const BookmarksPage();
+      case 'Account':
         return const ProfilePage();
-      case 'Address':
-        return ProfilePage();
-      case 'Payment':
-        return ProfilePage();
-      case 'About':
-        return ProfilePage();
       case 'Feedback':
-        return ProfilePage();
-      case 'Help/Support':
-        return ProfilePage();
-      case 'Settings':
-        return SettingsPage();
+        return const FeedbackPage();
+      // case 'Choose Language':
+      //   return ProfilePage();
+      case 'Help & Support':
+        return const HelpSupportPage();
 
       default:
-        return ProfilePage();
+        return DefaultPage(destinationPage: destinationPage);
     }
+  }
+}
+
+class DefaultPage extends StatelessWidget {
+  String destinationPage;
+  DefaultPage({
+    super.key,
+    required this.destinationPage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+      child: Text(
+        'Welcome to $destinationPage',
+        style: const TextStyle(fontSize: 30),
+      ),
+    ));
   }
 }
