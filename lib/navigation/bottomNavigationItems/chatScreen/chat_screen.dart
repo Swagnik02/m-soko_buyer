@@ -35,6 +35,8 @@ class _ChatScreenState extends State<ChatScreen> {
         widget.sellerUserEmail,
         widget.sellerUserName,
         _messageController.text,
+        '',
+        false,
       );
 
       // clear the controller after sending the message
@@ -138,7 +140,11 @@ class _ChatScreenState extends State<ChatScreen> {
   // buil message input
   Widget _buildMessageInput() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(
+        right: 16.0,
+        left: 16.0,
+        bottom: 16.0,
+      ),
       child: Row(
         children: [
           // textField

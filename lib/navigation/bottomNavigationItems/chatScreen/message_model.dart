@@ -6,15 +6,24 @@ class Message {
   final String sellerId;
   final String sellerEmail;
   final String message;
+
+  final String imageUrl;
   final Timestamp timestamp;
 
-  Message(
-      {required this.buyerId,
-      required this.buyerEmail,
-      required this.sellerId,
-      required this.sellerEmail,
-      required this.message,
-      required this.timestamp});
+  bool isBanner;
+
+  Message({
+    required this.buyerId,
+    required this.buyerEmail,
+    required this.sellerId,
+    required this.sellerEmail,
+    required this.message,
+    this.imageUrl = '',
+
+    //
+    required this.timestamp,
+    this.isBanner = false,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -23,7 +32,11 @@ class Message {
       'sellerId': sellerId,
       'sellerEmail': sellerEmail,
       'message': message,
+      'imageUrl': imageUrl,
+
+      //
       'timestamp': timestamp,
+      'isBanner': isBanner,
     };
   }
 }

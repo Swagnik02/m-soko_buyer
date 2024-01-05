@@ -16,6 +16,8 @@ class ChatService extends ChangeNotifier {
     String sellerEmail,
     String sellerUsername,
     String message,
+    String? imageUrl,
+    bool? isBanner,
   ) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
@@ -25,12 +27,15 @@ class ChatService extends ChangeNotifier {
 
     // create a new message
     Message newMessage = Message(
-        buyerId: currentUserId,
-        buyerEmail: currentUserEmail,
-        sellerId: sellerId,
-        sellerEmail: sellerEmail,
-        message: message,
-        timestamp: timestamp);
+      buyerId: currentUserId,
+      buyerEmail: currentUserEmail,
+      sellerId: sellerId,
+      sellerEmail: sellerEmail,
+      message: message,
+      timestamp: timestamp,
+      isBanner: isBanner ?? false,
+      imageUrl: imageUrl ?? '',
+    );
 
     // construct a chatroom Id from current user id and seller id (sorted to ensure uniqueness)
     List<String> ids = [currentUserEmail, sellerEmail];

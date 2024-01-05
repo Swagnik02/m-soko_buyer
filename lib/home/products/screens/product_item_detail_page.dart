@@ -8,6 +8,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
 
 class ProductItemDetailPage extends StatefulWidget {
   final String pId;
@@ -92,21 +93,55 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                                   'null' &&
                               widget.productModel.sellerUid.toString() !=
                                   'null') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatScreen(
-                                  sellerUserEmail: widget
-                                      .productModel.sellerEmail
-                                      .toString(),
-                                  sellerUserID:
-                                      widget.productModel.sellerUid.toString(),
-                                  sellerUserName: widget
-                                      .productModel.sellerUserName
-                                      .toString(),
-                                ),
-                              ),
-                            );
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text(widget.productModel.itemName ??
+                                        'product'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await ChatService().sendMessage(
+                                            widget.productModel.sellerUid ?? '',
+                                            widget.productModel.sellerEmail ??
+                                                '',
+                                            widget.productModel
+                                                    .sellerUserName ??
+                                                '',
+                                            'I am interested in ${widget.productModel.itemName}',
+                                            widget.productModel.itemThumbnail,
+                                            true,
+                                          );
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ChatScreen(
+                                                sellerUserEmail: widget
+                                                    .productModel.sellerEmail
+                                                    .toString(),
+                                                sellerUserID: widget
+                                                    .productModel.sellerUid
+                                                    .toString(),
+                                                sellerUserName: widget
+                                                    .productModel.sellerUserName
+                                                    .toString(),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Text('Start'),
+                                      ),
+                                    ],
+                                  );
+                                });
                           } else
                             Fluttertoast.showToast(
                                 msg: 'SellerID doesnt exists');
