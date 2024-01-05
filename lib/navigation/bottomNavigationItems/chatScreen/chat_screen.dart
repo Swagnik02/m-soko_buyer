@@ -113,9 +113,8 @@ class _ChatScreenState extends State<ChatScreen> {
     Duration difference = DateTime.now().difference(timestamp);
     String timeAgo = formatDuration(difference);
 
+    // chat is a banner
     bool isBanner = data['isBanner'] ?? false;
-    log('isBanner:$isBanner');
-
     if (isBanner) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0),
