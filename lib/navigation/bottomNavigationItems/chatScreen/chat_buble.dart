@@ -20,7 +20,7 @@ class ChatBubble extends StatelessWidget {
     return Container(
       alignment: alignment,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
         child: Column(
           crossAxisAlignment:
               (isBuyer) ? CrossAxisAlignment.start : CrossAxisAlignment.end,
@@ -40,9 +40,68 @@ class ChatBubble extends StatelessWidget {
                     color: isBuyer ? Colors.black : ColorConstants.blue50),
               ),
             ),
-            Text(timeAgo),
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(timeAgo),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// chat bubble for banners
+class BannerChatBubble extends StatelessWidget {
+  final String imageUrl;
+  final String message;
+  final String timeAgo;
+  final bool isBuyer;
+
+  const BannerChatBubble({
+    super.key,
+    required this.imageUrl,
+    required this.message,
+    required this.isBuyer,
+    required this.timeAgo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 290,
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: ColorConstants.blue50,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.network(imageUrl, height: 185, width: 185),
+                Text(
+                  textAlign: TextAlign.center,
+                  message,
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(timeAgo),
+          ),
+        ],
       ),
     );
   }

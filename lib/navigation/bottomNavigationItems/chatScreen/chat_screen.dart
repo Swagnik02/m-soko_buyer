@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,18 +50,34 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: Text(widget.sellerUserName),
       ),
-      body: Column(children: [
-        // messages
-        Expanded(
-          child: _buildMessageList(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage('assets/chat_bg.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.25),
+              BlendMode.dstATop,
+            ),
+          ),
         ),
-        _buildMessageInput(),
-      ]),
+        child: Column(
+          children: [
+            // messages
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: _buildMessageList(),
+              ),
+            ),
+            _buildMessageInput(),
+          ],
+        ),
+      ),
     );
   }
 
   // Build Message List
-
   Widget _buildMessageList() {
     return StreamBuilder(
       stream: _chatService.getMessages(
@@ -95,35 +113,88 @@ class _ChatScreenState extends State<ChatScreen> {
     Duration difference = DateTime.now().difference(timestamp);
     String timeAgo = formatDuration(difference);
 
-    return ChatBubble(
-      message: data['message'],
-      isBuyer: data['buyerEmail'] == currentUserEmail,
-      timeAgo: timeAgo,
+    bool isBanner = data['isBanner'] ?? false;
+    log('isBanner:$isBanner');
+
+    if (isBanner) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2.0),
+        child: BannerChatBubble(
+          imageUrl: data['imageUrl'],
+          message: data['message'],
+          isBuyer: data['buyerEmail'] == currentUserEmail,
+          timeAgo: timeAgo,
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: ChatBubble(
+        message: data['message'],
+        isBuyer: data['buyerEmail'] == currentUserEmail,
+        timeAgo: timeAgo,
+      ),
     );
   }
 
   // buil message input
   Widget _buildMessageInput() {
-    return Row(
-      children: [
-        // textField
-        Expanded(
-          child: TextField(
-            controller: _messageController,
-            decoration: InputDecoration(
-              hintText: 'Enter Message',
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          // textField
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Material(
+                borderRadius: BorderRadius.circular(16),
+                elevation: 5,
+                child: TextField(
+                  controller: _messageController,
+                  minLines: 1,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(10),
+                    hintText: 'Enter Message',
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
 
-        IconButton(
-          onPressed: sendMessage,
-          icon: Icon(
-            Icons.send,
-            size: 40,
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(50),
+              elevation: 5,
+              child: Transform.rotate(
+                angle: (45 * 3) * (3.14 / 180), // Specify the angle in radians
+                child: IconButton(
+                  onPressed: sendMessage,
+                  icon: const Icon(
+                    Icons.attachment_outlined,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+          Material(
+            borderRadius: BorderRadius.circular(50),
+            elevation: 5,
+            child: IconButton(
+              onPressed: sendMessage,
+              icon: const Icon(
+                Icons.send,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
