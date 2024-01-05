@@ -78,13 +78,20 @@ class AddressPage extends StatelessWidget {
 
               // EDIT/SAVE Button
               controller.editAddressIndex
-                  ? TextButton(
-                      onPressed: () => controller.updateEditAddressIndex(),
-                      child: const Text('Edit'),
-                    )
+                  ? controller.isLoading
+                      ? Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(8.0),
+                          child: Utils.customLoadingSpinner(),
+                        )
+                      : TextButton(
+                          onPressed: () => controller.onTapEditAddress(),
+                          child: const Text('Save'),
+                        )
                   : TextButton(
                       onPressed: () => controller.updateEditAddressIndex(),
-                      child: const Text('Save'),
+                      child: const Text('Edit'),
                     ),
             ],
           ),

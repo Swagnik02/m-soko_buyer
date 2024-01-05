@@ -123,4 +123,21 @@ class AddressController extends GetxController {
       }
     }
   }
+
+  // Edit address
+  Future<void> onTapEditAddress() async {
+    try {
+      updateisLoadingIndex();
+      await Future.delayed(Duration(seconds: 2));
+
+      log(addressLinesMap.toString());
+      // added to firestore
+
+      updateisLoadingIndex();
+      updateEditAddressIndex();
+    } catch (error) {
+      log('Error updating profile: $error');
+      updateisLoadingIndex();
+    }
+  }
 }
