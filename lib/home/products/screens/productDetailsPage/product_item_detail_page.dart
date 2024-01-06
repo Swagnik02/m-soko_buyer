@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
-
 import 'package:m_soko/home/products/screens/productDetailsPage/product_item_detail_controller.dart';
 import 'package:m_soko/home/products/screens/productDetailsPage/sections/build_details_section.dart';
 import 'package:m_soko/home/products/screens/productDetailsPage/sections/build_overview_section.dart';
