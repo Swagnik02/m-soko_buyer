@@ -40,16 +40,13 @@ class ProductItemDetailController extends GetxController
       pId,
     );
 
-    pop();
+    Get.back();
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChatScreen(
-          sellerUserEmail: productModel.sellerEmail.toString(),
-          sellerUserID: productModel.sellerUid.toString(),
-          sellerUserName: productModel.sellerUserName.toString(),
-        ),
+    Get.off(
+      ChatScreen(
+        sellerUserEmail: productModel.sellerEmail.toString(),
+        sellerUserID: productModel.sellerUid.toString(),
+        sellerUserName: productModel.sellerUserName.toString(),
       ),
     );
   }
@@ -77,4 +74,9 @@ class ProductItemDetailController extends GetxController
 
   // checkRatings
   void reviewDetails() {}
+
+  void back() {
+    Get.back();
+    Get.delete<ProductItemDetailController>();
+  }
 }
