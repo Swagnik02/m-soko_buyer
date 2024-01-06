@@ -8,7 +8,6 @@ import 'package:m_soko/home/products/screens/productDetailsPage/sections/build_o
 import 'package:m_soko/home/products/screens/productDetailsPage/sections/build_similar_section.dart';
 import 'package:m_soko/home/products/screens/productDetailsPage/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen.dart';
 
 class ProductItemDetailPage extends StatelessWidget {
   final String pId;
