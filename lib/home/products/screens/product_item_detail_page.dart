@@ -120,6 +120,7 @@ class ProductItemDetailPageState extends State<ProductItemDetailPage>
                                             true,
                                             widget.pId,
                                           );
+                                          Navigator.of(context).pop();
 
                                           Navigator.push(
                                             context,
