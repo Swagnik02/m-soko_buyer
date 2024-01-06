@@ -24,6 +24,7 @@ class ProductItemDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductItemDetailController controller =
         Get.put(ProductItemDetailController());
+    controller.context = context;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -79,35 +80,12 @@ class ProductItemDetailPage extends StatelessWidget {
                                         productModel.itemName ?? 'product'),
                                     actions: <Widget>[
                                       TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                                        onPressed: () => controller.pop(),
                                         child: Text('Cancel'),
                                       ),
                                       TextButton(
-                                        onPressed: () {
-                                          controller.startChat(
-                                              productModel, pId);
-
-                                          Navigator.of(context).pop();
-
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => ChatScreen(
-                                                sellerUserEmail: productModel
-                                                    .sellerEmail
-                                                    .toString(),
-                                                sellerUserID: productModel
-                                                    .sellerUid
-                                                    .toString(),
-                                                sellerUserName: productModel
-                                                    .sellerUserName
-                                                    .toString(),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                        onPressed: () => controller.startChat(
+                                            productModel, pId),
                                         child: Text('Start'),
                                       ),
                                     ],

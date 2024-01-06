@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/models/product_model.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
 
 class ProductItemDetailController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  late BuildContext context;
   late TabController tabController;
   int selectedSectionIndex = 0;
   int selectedImageIndex = 0;
@@ -21,6 +23,11 @@ class ProductItemDetailController extends GetxController
     update();
   }
 
+  // pop
+  void pop() {
+    Navigator.of(context).pop();
+  }
+
   // chatWith fuction
   void startChat(ProductModel productModel, String pId) async {
     await ChatService().sendMessage(
@@ -32,5 +39,42 @@ class ProductItemDetailController extends GetxController
       true,
       pId,
     );
+
+    pop();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(
+          sellerUserEmail: productModel.sellerEmail.toString(),
+          sellerUserID: productModel.sellerUid.toString(),
+          sellerUserName: productModel.sellerUserName.toString(),
+        ),
+      ),
+    );
   }
+
+  // send enquiry
+  void sendEnquiry() {}
+
+  // add to saved
+  void bookmarkProduct() {}
+
+  // share product
+  void shareProduct() {}
+
+  // allDetails
+  void goToAllDetails() {}
+
+  // shipping
+  void shippingDetails() {}
+
+  // shipping
+  void payemntDetails() {}
+
+  // returns&refunds
+  void returnsDetails() {}
+
+  // checkRatings
+  void reviewDetails() {}
 }
