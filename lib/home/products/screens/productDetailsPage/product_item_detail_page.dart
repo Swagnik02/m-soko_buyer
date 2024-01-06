@@ -9,7 +9,6 @@ import 'package:m_soko/home/products/screens/productDetailsPage/sections/build_s
 import 'package:m_soko/home/products/screens/productDetailsPage/widgets/product_detail_widgets.dart';
 import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
 
 class ProductItemDetailPage extends StatelessWidget {
   final String pId;
@@ -25,7 +24,6 @@ class ProductItemDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProductItemDetailController controller =
         Get.put(ProductItemDetailController());
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -87,16 +85,10 @@ class ProductItemDetailPage extends StatelessWidget {
                                         child: Text('Cancel'),
                                       ),
                                       TextButton(
-                                        onPressed: () async {
-                                          await ChatService().sendMessage(
-                                            productModel.sellerUid ?? '',
-                                            productModel.sellerEmail ?? '',
-                                            productModel.sellerUserName ?? '',
-                                            'I am interested in ${productModel.itemName}',
-                                            productModel.itemThumbnail,
-                                            true,
-                                            pId,
-                                          );
+                                        onPressed: () {
+                                          controller.startChat(
+                                              productModel, pId);
+
                                           Navigator.of(context).pop();
 
                                           Navigator.push(
@@ -121,9 +113,10 @@ class ProductItemDetailPage extends StatelessWidget {
                                     ],
                                   );
                                 });
-                          } else
+                          } else {
                             Fluttertoast.showToast(
                                 msg: 'SellerID doesnt exists');
+                          }
                         },
                         child: Container(
                           color: Colors.white,
