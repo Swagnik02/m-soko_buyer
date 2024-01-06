@@ -79,4 +79,9 @@ class ProductItemDetailController extends GetxController
     Get.back();
     Get.delete<ProductItemDetailController>();
   }
+
+  Future<bool> onWillPop() async {
+    back();
+    return true;
+  }
 }
