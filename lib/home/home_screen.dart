@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
