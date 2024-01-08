@@ -11,6 +11,9 @@ class GlobalUtil {
   static const String onBordingToken = '';
   static const String demoText =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit.';
+  static const String visitUrl = 'https://help.sokoni.com';
+  static const String contactEmail = 'customercare@sokoni.com';
+  static const String contactMobile = '+91 6257899906';
 }
 
 class FirestoreCollections {
@@ -153,4 +156,27 @@ class Utils {
       ),
     );
   }
+}
+
+Future<bool> showConfirmationDialog(BuildContext context) async {
+  return await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirmation'),
+            content: Text('Are you sure you want to delete this address?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text('Delete'),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false;
 }

@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/home/logout.dart';
+import 'package:m_soko/widgets/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HelpSupportPage extends StatelessWidget {
+class HelpSupportPage extends StatefulWidget {
   const HelpSupportPage({Key? key}) : super(key: key);
 
+  @override
+  _HelpSupportPageState createState() => _HelpSupportPageState();
+}
+
+class _HelpSupportPageState extends State<HelpSupportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,15 +31,100 @@ class HelpSupportPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _linkTo('Visit', 'https://help.sokoni.com', () {
-                        print('Visit link tapped!');
-                      }),
-                      _linkTo('Email Us', 'customercare@sokoni.com', () {
-                        launchEmail('customercare@sokoni.com');
-                      }),
-                      _linkTo('Call Us', '+91 6257899906', () {
-                        launchCall('+91 6257899906');
-                      }),
+                      _linkTo(
+                        'Visit',
+                        GlobalUtil.visitUrl,
+                        () async {
+                          // launch from WebView
+                          Navigator.of(context).push(PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return TestWebViewPage(GlobalUtil.visitUrl);
+                            },
+                          ));
+                        },
+                      ),
+                      _linkTo(
+                        'Email Us',
+                        GlobalUtil.contactEmail,
+                        () {
+                          final Uri emailLaunchUri = Uri(
+                              scheme: 'mailto', path: GlobalUtil.contactEmail);
+
+                          launchUrl(emailLaunchUri);
+                        },
+                      ),
+                      _linkTo(
+                        'Call Us',
+                        GlobalUtil.contactMobile,
+                        () {
+                          final Uri emailLaunchUri = Uri(
+                              scheme: 'tel', path: GlobalUtil.contactMobile);
+
+                          launchUrl(emailLaunchUri);
+                        },
+                      ),
+
+                      // Chat with us Button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: InkWell(
+                              onTap: () {
+                                Fluttertoast.showToast(msg: 'Chat With US');
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: ColorConstants.skyBlue,
+                                ),
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                height: 50,
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 8.0),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'assets/icons/chat_bubble_icon.png'),
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Chat with us!',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
+
+                      // Get help and support anytime
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Get help and support anytime',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Text(
+                        lorem,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -49,46 +144,21 @@ class HelpSupportPage extends StatelessWidget {
         children: [
           Text(
             '$linkTo:',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           InkWell(
+            onTap: onTapAction,
             child: Text(
               link,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: ColorConstants.skyBlue,
+              ),
             ),
-            onTap: onTapAction,
           ),
         ],
       ),
     );
-  }
-
-  void launchEmail(String email) async {
-    print('testing');
-    // final Uri _emailLaunchUri = Uri(
-    //   scheme: 'mailto',
-    //   path: email,
-    // );
-    // final String _emailLaunchUriString = _emailLaunchUri.toString();
-
-    // if (await canLaunch(_emailLaunchUriString)) {
-    //   await launch(_emailLaunchUriString);
-    // } else {
-    //   throw 'Could not launch $_emailLaunchUriString';
-    // }
-  }
-
-  void launchCall(String phoneNumber) async {
-    // final Uri _callLaunchUri = Uri(
-    //   scheme: 'tel',
-    //   path: phoneNumber,
-    // );
-    // final String _callLaunchUriString = _callLaunchUri.toString();
-
-    // if (await canLaunch(_callLaunchUriString)) {
-    //   await launch(_callLaunchUriString);
-    // } else {
-    //   throw 'Could not launch $_callLaunchUriString';
-    // }
   }
 }

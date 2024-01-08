@@ -1,70 +1,71 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/models/user_model.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_buble.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
+import 'dart:developer';
 
-class ChatScreen extends StatefulWidget {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_buble.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen_controller.dart';
+
+class ChatScreen extends StatelessWidget {
   final String sellerUserEmail;
   final String sellerUserID;
   final String sellerUserName;
 
-  ChatScreen(
-      {super.key,
-      required this.sellerUserEmail,
-      required this.sellerUserID,
-      required this.sellerUserName});
-
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  final String currentUserId = UserDataService().userModel!.uid.toString();
-  final String currentUserEmail = UserDataService().userModel!.email.toString();
-  final TextEditingController _messageController = TextEditingController();
-  final ChatService _chatService = ChatService();
-  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  void sendMessage() async {
-    if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(
-        widget.sellerUserID,
-        widget.sellerUserEmail,
-        widget.sellerUserName,
-        _messageController.text,
-      );
-
-      // clear the controller after sending the message
-      _messageController.clear();
-    }
-  }
+  const ChatScreen({
+    Key? key,
+    required this.sellerUserEmail,
+    required this.sellerUserID,
+    required this.sellerUserName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.sellerUserName),
-      ),
-      body: Column(children: [
-        // messages
-        Expanded(
-          child: _buildMessageList(),
+    final ChatScreenController controller = Get.put(ChatScreenController());
+    return WillPopScope(
+      onWillPop: controller.onWillPop,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(sellerUserName),
+          ),
+          body: GetBuilder<ChatScreenController>(
+            builder: (_) => Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage('assets/chat_bg.png'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.25),
+                    BlendMode.dstATop,
+                  ),
+                ),
+              ),
+              child: Column(
+                children: [
+                  // messages
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: _buildMessageList(controller),
+                    ),
+                  ),
+                  _buildMessageInput(controller),
+                ],
+              ),
+            ),
+          ),
         ),
-        _buildMessageInput(),
-      ]),
+      ),
     );
   }
 
   // Build Message List
-
-  Widget _buildMessageList() {
+  Widget _buildMessageList(ChatScreenController controller) {
     return StreamBuilder(
-      stream: _chatService.getMessages(
-        currentUserEmail,
-        widget.sellerUserEmail,
+      stream: controller.chatService.getMessages(
+        controller.currentUserEmail,
+        sellerUserEmail,
       ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -77,9 +78,10 @@ class _ChatScreenState extends State<ChatScreen> {
           );
         }
         return ListView.builder(
+          controller: controller.scrollController,
           itemCount: snapshot.data!.docs.length,
           itemBuilder: (context, index) {
-            return _buildMessageItem(snapshot.data!.docs[index]);
+            return _buildMessageItem(controller, snapshot.data!.docs[index]);
           },
         );
       },
@@ -87,7 +89,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // Build Message item
-  _buildMessageItem(DocumentSnapshot document) {
+  _buildMessageItem(
+      ChatScreenController controller, DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
     // Format the time difference as "time ago"
@@ -95,35 +98,117 @@ class _ChatScreenState extends State<ChatScreen> {
     Duration difference = DateTime.now().difference(timestamp);
     String timeAgo = formatDuration(difference);
 
-    return ChatBubble(
-      message: data['message'],
-      isBuyer: data['buyerEmail'] == currentUserEmail,
-      timeAgo: timeAgo,
-    );
+    // chat is a banner
+    int msgType = data['messageType'] ?? false;
+
+    switch (msgType) {
+      case 0:
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: ChatBubble(
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+
+      case 1: // banner
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: BannerChatBubble(
+            imageUrl: data['imageUrl'],
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+      case 2: // Confirmation
+        log('case2');
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: ConfirmationChatBubble(
+            productId: data['productId'],
+            imageUrl: data['imageUrl'],
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+
+      default:
+        log('case def');
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: ChatBubble(
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+    }
   }
 
   // buil message input
-  Widget _buildMessageInput() {
-    return Row(
-      children: [
-        // textField
-        Expanded(
-          child: TextField(
-            controller: _messageController,
-            decoration: InputDecoration(
-              hintText: 'Enter Message',
+  Widget _buildMessageInput(ChatScreenController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 16.0,
+        left: 16.0,
+        bottom: 16.0,
+      ),
+      child: Row(
+        children: [
+          // textField
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Material(
+                borderRadius: BorderRadius.circular(16),
+                elevation: 5,
+                child: TextField(
+                  controller: controller.messageController,
+                  minLines: 1,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(10),
+                    hintText: 'Enter Message',
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
 
-        IconButton(
-          onPressed: sendMessage,
-          icon: Icon(
-            Icons.send,
-            size: 40,
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(50),
+              elevation: 5,
+              child: Transform.rotate(
+                angle: (45 * 3) * (3.14 / 180), // Specify the angle in radians
+                child: IconButton(
+                  onPressed: () => controller.sendMessage,
+                  icon: const Icon(
+                    Icons.attachment_outlined,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+          Material(
+            borderRadius: BorderRadius.circular(50),
+            elevation: 5,
+            child: IconButton(
+              onPressed: () => controller.sendMessage,
+              icon: const Icon(
+                Icons.send,
+                size: 30,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

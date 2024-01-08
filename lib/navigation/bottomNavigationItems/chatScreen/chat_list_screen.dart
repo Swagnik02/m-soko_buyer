@@ -56,6 +56,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       String sellerUsername = chatRoom['sellerUsername'];
 
       return ListTile(
+        leading: Icon(Icons.person),
         title: Text(sellerUsername),
         onTap: () {
           // pass the clicked users uid to the chat page

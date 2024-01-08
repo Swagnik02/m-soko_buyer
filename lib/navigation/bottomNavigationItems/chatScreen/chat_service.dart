@@ -1,11 +1,15 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/message_model.dart';
+
+class MessageType {
+  static const int normaltext = 0;
+  static const int banner = 1;
+}
 
 class ChatService extends ChangeNotifier {
   // get instance of auth and firestore
@@ -18,6 +22,8 @@ class ChatService extends ChangeNotifier {
     String sellerEmail,
     String sellerUsername,
     String message,
+    int? msgType,
+    ProductModel? productModel,
   ) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
@@ -27,12 +33,18 @@ class ChatService extends ChangeNotifier {
 
     // create a new message
     Message newMessage = Message(
-        buyerId: currentUserId,
-        buyerEmail: currentUserEmail,
-        sellerId: sellerId,
-        sellerEmail: sellerEmail,
-        message: message,
-        timestamp: timestamp);
+      productId: productModel?.productId ?? '',
+      buyerId: currentUserId,
+      buyerEmail: currentUserEmail,
+      sellerId: sellerId,
+      sellerEmail: sellerEmail,
+      message: message,
+      timestamp: timestamp,
+
+      //
+      imageUrl: productModel?.itemThumbnail ?? '',
+      messageType: msgType ?? 0,
+    );
 
     // construct a chatroom Id from current user id and seller id (sorted to ensure uniqueness)
     List<String> ids = [currentUserEmail, sellerEmail];
@@ -65,22 +77,6 @@ class ChatService extends ChangeNotifier {
         .collection('messages')
         .add(newMessage.toMap());
   }
-
-  // GET MESSAGE
-
-  // using uid
-  // Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
-  //   // construct chatroom id from user ids
-  //   List<String> ids = [userId, otherUserId];
-  //   ids.sort();
-  //   String chatRoomId = ids.join("_");
-  //   return _firestore
-  //       .collection(FirestoreCollections.productsChatRoom)
-  //       .doc(chatRoomId)
-  //       .collection('messages')
-  //       .orderBy('timestamp', descending: false)
-  //       .snapshots();
-  // }
 
   // using emailId
   Stream<QuerySnapshot> getMessages(

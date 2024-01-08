@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/selected_settings_page.dart';
+import 'package:m_soko/navigation/page_transitions.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -15,48 +17,50 @@ class SettingsPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.notifications_active_outlined),
-                title: Text('Notifications'),
-                onTap: () {},
+                leading: const Icon(Icons.notifications_active_outlined),
+                title: const Text('Notifications'),
+                onTap: () => _redirectToSelectedPage(context, 'Notifications'),
               ),
               ListTile(
-                leading: Icon(Icons.receipt_long_rounded),
-                title: Text('Terms, Policies and Licenses'),
-                onTap: () {},
+                leading: const Icon(Icons.receipt_long_rounded),
+                title: const Text('Terms, Policies and Licenses'),
+                onTap: () => _redirectToSelectedPage(
+                    context, 'Terms, Policies and Licenses'),
               ),
               ListTile(
-                leading: Icon(Icons.question_answer_outlined),
-                title: Text('Browse FAQs'),
-                onTap: () {},
+                leading: const Icon(Icons.question_answer_outlined),
+                title: const Text('Browse FAQs'),
+                onTap: () => _redirectToSelectedPage(context, 'Browse FAQs'),
               ),
               ListTile(
-                leading: Icon(Icons.person_outline_rounded),
-                title: Text('Account'),
-                onTap: () {},
+                leading: const Icon(Icons.person_outline_rounded),
+                title: const Text('Account'),
+                onTap: () => _redirectToSelectedPage(context, 'Account'),
               ),
               ListTile(
-                leading: Icon(Icons.feedback_outlined),
-                title: Text('Feedback'),
-                onTap: () {},
+                leading: const Icon(Icons.feedback_outlined),
+                title: const Text('Feedback'),
+                onTap: () => _redirectToSelectedPage(context, 'Feedback'),
               ),
               ListTile(
-                leading: Icon(Icons.language_rounded),
-                title: Text('Choose Language'),
-                onTap: () {},
+                leading: const Icon(Icons.language_rounded),
+                title: const Text('Choose Language'),
+                onTap: () =>
+                    _redirectToSelectedPage(context, 'Choose Language'),
               ),
               ListTile(
-                leading: Icon(Icons.info_outline),
-                title: Text('About Us'),
-                onTap: () {},
+                leading: const Icon(Icons.info_outline),
+                title: const Text('About Us'),
+                onTap: () => _redirectToSelectedPage(context, 'About Us'),
               ),
               ListTile(
-                leading: Icon(Icons.help_outline),
-                title: Text('Help & Support'),
-                onTap: () {},
+                leading: const Icon(Icons.help_outline),
+                title: const Text('Help & Support'),
+                onTap: () => _redirectToSelectedPage(context, 'Help & Support'),
               ),
               ListTile(
-                leading: Icon(Icons.logout_outlined),
-                title: Text('Logout'),
+                leading: const Icon(Icons.logout_outlined),
+                title: const Text('Logout'),
                 onTap: () {
                   FirebaseAuth.instance
                       .signOut()
@@ -66,6 +70,19 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _redirectToSelectedPage(BuildContext context, String destinationPage) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return SelectedSettingsPage(
+            destinationPage: destinationPage,
+          );
+        },
+        transitionsBuilder: customTransition(const Offset(0, 0)),
       ),
     );
   }

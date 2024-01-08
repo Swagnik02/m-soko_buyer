@@ -14,9 +14,10 @@ class UserModel {
   String? city;
   String? mobile;
   String? state;
+  Map<String, dynamic>? addressLines;
 
   UserModel({
-    required this.userName,
+    this.userName,
     required this.email,
     this.country,
     this.uid,
@@ -24,6 +25,7 @@ class UserModel {
     this.city,
     this.mobile,
     this.state,
+    this.addressLines,
   });
 
   // Add any other methods or properties you need
@@ -66,15 +68,24 @@ class UserDataService {
               productDocument.data() as Map<String, dynamic>;
 
           _userModel = UserModel(
-            country: userData['country']?.toString() ?? '',
-            uid: userData['uid']?.toString() ?? '',
-            pin: userData['pin']?.toString() ?? '',
-            city: userData['city']?.toString() ?? '',
-            mobile: userData['mobile']?.toString() ?? '',
-            state: userData['state']?.toString() ?? '',
-            userName: userData['userName']?.toString() ?? '',
-            email: userData['email']?.toString() ?? '',
-          );
+              country: userData['country']?.toString() ?? '',
+              uid: userData['uid']?.toString() ?? '',
+              pin: userData['pin']?.toString() ?? '',
+              city: userData['city']?.toString() ?? '',
+              mobile: userData['mobile']?.toString() ?? '',
+              state: userData['state']?.toString() ?? '',
+              userName: userData['userName']?.toString() ?? '',
+              email: userData['email']?.toString() ?? '',
+              addressLines: (userData['addressLines'] as Map<String, dynamic>?)
+                  ?.map((key, value) {
+                return MapEntry(
+                  key,
+                  value.toString(),
+                );
+              })
+
+              // end of user model
+              );
 
           log('Users Data for $userEmail: $userData');
         }
@@ -99,6 +110,10 @@ class UserDataService {
         prefs.setString('city', _userModel?.city ?? '');
         prefs.setString('mobile', _userModel?.mobile ?? '');
         prefs.setString('state', _userModel?.state ?? '');
+        prefs.setString(
+          'addressLines',
+          _userModel?.addressLines?.toString() ?? '',
+        );
       });
     }
   }
@@ -130,6 +145,46 @@ class UserDataService {
           .collection(FirestoreCollections.usersCollection);
       await usersCollection.doc(userEmail).update({
         'country': updatedUserData.country,
+        // 'uid': updatedUserData.uid,
+        'pin': updatedUserData.pin,
+        'city': updatedUserData.city,
+        'mobile': updatedUserData.mobile,
+        'state': updatedUserData.state,
+        'userName': updatedUserData.userName,
+        // 'email': updatedUserData.email,
+      });
+
+      // Update local data
+      _userModel = updatedUserData;
+      storeUserDataLocally();
+
+      // Retrieve updated user data locally
+      await retrieveUserDataLocally();
+    } catch (e) {
+      // Handle specific Firestore exceptions
+      log('Error updating user data: $e');
+    }
+  }
+
+  Future<void> updateAddressData(UserModel updatedUserData) async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        // User not authenticated
+        return;
+      }
+
+      String userEmail = currentUser.email ?? "";
+      if (userEmail.isEmpty) {
+        // Email not available
+        return;
+      }
+
+      CollectionReference usersCollection = FirebaseFirestore.instance
+          .collection(FirestoreCollections.usersCollection);
+      await usersCollection.doc(userEmail).update({
+        'addressLines'
+            'country': updatedUserData.country,
         // 'uid': updatedUserData.uid,
         'pin': updatedUserData.pin,
         'city': updatedUserData.city,

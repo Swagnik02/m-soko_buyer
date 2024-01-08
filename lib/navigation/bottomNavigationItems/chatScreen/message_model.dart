@@ -6,15 +6,25 @@ class Message {
   final String sellerId;
   final String sellerEmail;
   final String message;
-  final Timestamp timestamp;
 
-  Message(
-      {required this.buyerId,
-      required this.buyerEmail,
-      required this.sellerId,
-      required this.sellerEmail,
-      required this.message,
-      required this.timestamp});
+  final String imageUrl;
+  final Timestamp timestamp;
+  final String productId;
+  final int messageType; //0 - normal text, 1 - banner, 2 - confirmed/payment
+
+  Message({
+    required this.productId,
+    required this.buyerId,
+    required this.buyerEmail,
+    required this.sellerId,
+    required this.sellerEmail,
+    required this.message,
+    this.imageUrl = '',
+
+    //
+    required this.timestamp,
+    this.messageType = 0,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -23,7 +33,12 @@ class Message {
       'sellerId': sellerId,
       'sellerEmail': sellerEmail,
       'message': message,
+      'imageUrl': imageUrl,
+
+      //
       'timestamp': timestamp,
+      'messageType': messageType,
+      'productId': productId,
     };
   }
 }
