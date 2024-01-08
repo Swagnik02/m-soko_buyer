@@ -57,26 +57,7 @@ class _SelectedSettingsPageState extends State<SelectedSettingsPage> {
         return const HelpSupportPage();
 
       default:
-        return DefaultPage(destinationPage: destinationPage);
+        return const ProfilePage();
     }
-  }
-}
-
-class DefaultPage extends StatelessWidget {
-  String destinationPage;
-  DefaultPage({
-    super.key,
-    required this.destinationPage,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Text(
-        'Welcome to $destinationPage',
-        style: const TextStyle(fontSize: 30),
-      ),
-    ));
   }
 }
