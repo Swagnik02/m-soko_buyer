@@ -89,6 +89,7 @@ class BannerChatBubble extends StatelessWidget {
               children: [
                 Image.network(imageUrl, height: 185, width: 185),
                 Text(
+                  maxLines: 3,
                   textAlign: TextAlign.center,
                   message,
                   style: const TextStyle(fontSize: 16, color: Colors.black),
