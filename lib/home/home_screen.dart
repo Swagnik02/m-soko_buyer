@@ -10,7 +10,7 @@ import 'package:m_soko/home/logout.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/paymentsPage/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';

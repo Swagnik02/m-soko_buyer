@@ -7,7 +7,7 @@ import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/feedback
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/help_support_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/orders_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/requirements_page.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/paymentsPage/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 
