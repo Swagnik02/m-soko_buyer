@@ -12,7 +12,7 @@ class ChatScreen extends StatelessWidget {
   final String sellerUserID;
   final String sellerUserName;
 
-  ChatScreen({
+  const ChatScreen({
     Key? key,
     required this.sellerUserEmail,
     required this.sellerUserID,
