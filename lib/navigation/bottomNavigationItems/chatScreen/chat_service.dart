@@ -78,22 +78,6 @@ class ChatService extends ChangeNotifier {
         .add(newMessage.toMap());
   }
 
-  // GET MESSAGE
-
-  // using uid
-  // Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
-  //   // construct chatroom id from user ids
-  //   List<String> ids = [userId, otherUserId];
-  //   ids.sort();
-  //   String chatRoomId = ids.join("_");
-  //   return _firestore
-  //       .collection(FirestoreCollections.productsChatRoom)
-  //       .doc(chatRoomId)
-  //       .collection('messages')
-  //       .orderBy('timestamp', descending: false)
-  //       .snapshots();
-  // }
-
   // using emailId
   Stream<QuerySnapshot> getMessages(
       String currentUserEmail, String otherUserEmail) {
