@@ -23,10 +23,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  String get userId => FirebaseAuth.instance.currentUser?.uid ?? "";
-
-  // String get userName =>
-
   int navBarIndex = 2; // Some Changes here
   int _topBarIndex = 0; // Some Changes here
 
