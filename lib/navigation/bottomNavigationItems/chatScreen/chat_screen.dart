@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_buble.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_service.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_screen_controller.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   final String sellerUserEmail;
   final String sellerUserID;
   final String sellerUserName;
@@ -20,80 +20,52 @@ class ChatScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  final String currentUserId = UserDataService().userModel!.uid.toString();
-  final String currentUserEmail = UserDataService().userModel!.email.toString();
-  final TextEditingController _messageController = TextEditingController();
-  final ChatService _chatService = ChatService();
-  final ScrollController _scrollController = ScrollController();
-
-  void sendMessage() async {
-    if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(
-        widget.sellerUserID,
-        widget.sellerUserEmail,
-        widget.sellerUserName,
-        _messageController.text,
-        MessageType.normaltext,
-        null,
-      );
-
-      _messageController.clear();
-      _scrollToBottom();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Delay the scroll to the bottom to allow time for the ListView to build
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _scrollToBottom();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.sellerUserName),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('assets/chat_bg.png'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.25),
-              BlendMode.dstATop,
-            ),
+    final ChatScreenController controller = Get.put(ChatScreenController());
+    return WillPopScope(
+      onWillPop: controller.onWillPop,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(sellerUserName),
           ),
-        ),
-        child: Column(
-          children: [
-            // messages
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: _buildMessageList(),
+          body: GetBuilder<ChatScreenController>(
+            builder: (_) => Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage('assets/chat_bg.png'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.25),
+                    BlendMode.dstATop,
+                  ),
+                ),
+              ),
+              child: Column(
+                children: [
+                  // messages
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: _buildMessageList(controller),
+                    ),
+                  ),
+                  _buildMessageInput(controller),
+                ],
               ),
             ),
-            _buildMessageInput(),
-          ],
+          ),
         ),
       ),
     );
   }
 
   // Build Message List
-  Widget _buildMessageList() {
+  Widget _buildMessageList(ChatScreenController controller) {
     return StreamBuilder(
-      stream: _chatService.getMessages(
-        currentUserEmail,
-        widget.sellerUserEmail,
+      stream: controller.chatService.getMessages(
+        controller.currentUserEmail,
+        sellerUserEmail,
       ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -106,10 +78,10 @@ class _ChatScreenState extends State<ChatScreen> {
           );
         }
         return ListView.builder(
-          controller: _scrollController,
+          controller: controller.scrollController,
           itemCount: snapshot.data!.docs.length,
           itemBuilder: (context, index) {
-            return _buildMessageItem(snapshot.data!.docs[index]);
+            return _buildMessageItem(controller, snapshot.data!.docs[index]);
           },
         );
       },
@@ -117,7 +89,8 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // Build Message item
-  _buildMessageItem(DocumentSnapshot document) {
+  _buildMessageItem(
+      ChatScreenController controller, DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
     // Format the time difference as "time ago"
@@ -134,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: ChatBubble(
             message: data['message'],
-            isBuyer: data['buyerEmail'] == currentUserEmail,
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
             timeAgo: timeAgo,
           ),
         );
@@ -145,7 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: BannerChatBubble(
             imageUrl: data['imageUrl'],
             message: data['message'],
-            isBuyer: data['buyerEmail'] == currentUserEmail,
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
             timeAgo: timeAgo,
           ),
         );
@@ -157,7 +130,7 @@ class _ChatScreenState extends State<ChatScreen> {
             productId: data['productId'],
             imageUrl: data['imageUrl'],
             message: data['message'],
-            isBuyer: data['buyerEmail'] == currentUserEmail,
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
             timeAgo: timeAgo,
           ),
         );
@@ -168,7 +141,7 @@ class _ChatScreenState extends State<ChatScreen> {
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: ChatBubble(
             message: data['message'],
-            isBuyer: data['buyerEmail'] == currentUserEmail,
+            isBuyer: data['buyerEmail'] == controller.currentUserEmail,
             timeAgo: timeAgo,
           ),
         );
@@ -176,7 +149,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // buil message input
-  Widget _buildMessageInput() {
+  Widget _buildMessageInput(ChatScreenController controller) {
     return Padding(
       padding: const EdgeInsets.only(
         right: 16.0,
@@ -193,7 +166,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 borderRadius: BorderRadius.circular(16),
                 elevation: 5,
                 child: TextField(
-                  controller: _messageController,
+                  controller: controller.messageController,
                   minLines: 1,
                   maxLines: 3,
                   decoration: const InputDecoration(
@@ -214,7 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Transform.rotate(
                 angle: (45 * 3) * (3.14 / 180), // Specify the angle in radians
                 child: IconButton(
-                  onPressed: sendMessage,
+                  onPressed: () => controller.sendMessage,
                   icon: const Icon(
                     Icons.attachment_outlined,
                     size: 30,
@@ -227,7 +200,7 @@ class _ChatScreenState extends State<ChatScreen> {
             borderRadius: BorderRadius.circular(50),
             elevation: 5,
             child: IconButton(
-              onPressed: sendMessage,
+              onPressed: () => controller.sendMessage,
               icon: const Icon(
                 Icons.send,
                 size: 30,
@@ -249,13 +222,5 @@ class _ChatScreenState extends State<ChatScreen> {
     } else {
       return 'Just now';
     }
-  }
-
-  void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
   }
 }
