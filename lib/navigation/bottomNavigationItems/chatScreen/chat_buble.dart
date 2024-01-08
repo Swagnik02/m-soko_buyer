@@ -167,13 +167,13 @@ class ConfirmationChatBubble extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 16, color: Colors.black),
                             ),
-                            SizedBox(height: 5),
-                            Text(
+                            const SizedBox(height: 5),
+                            const Text(
                               'Your order will be delivered on July 25th',
                               maxLines: 2,
                               textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                  fontSize: 14, color: Colors.green),
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.green),
                             ),
                           ],
                         ),

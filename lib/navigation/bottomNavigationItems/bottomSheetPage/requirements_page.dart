@@ -12,8 +12,8 @@ class RequirementsPage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.notifications_active_outlined),
-                title: Text('Notifications'),
+                leading: const Icon(Icons.notifications_active_outlined),
+                title: const Text('Notifications'),
                 onTap: () {},
               ),
             ],

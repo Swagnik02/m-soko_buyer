@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/home/logout.dart';
+
 import 'package:m_soko/widgets/web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpSupportPage extends StatefulWidget {
-  const HelpSupportPage({Key? key}) : super(key: key);
+  const HelpSupportPage({super.key});
 
   @override
-  _HelpSupportPageState createState() => _HelpSupportPageState();
+  HelpSupportPageState createState() => HelpSupportPageState();
 }
 
-class _HelpSupportPageState extends State<HelpSupportPage> {
+class HelpSupportPageState extends State<HelpSupportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,10 +118,10 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Text(
-                        lorem,
+                      const Text(
+                        GlobalUtil.lorem,
                         textAlign: TextAlign.justify,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                         ),
                       ),

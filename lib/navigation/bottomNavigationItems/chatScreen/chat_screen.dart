@@ -13,11 +13,11 @@ class ChatScreen extends StatelessWidget {
   final String sellerUserName;
 
   const ChatScreen({
-    Key? key,
+    super.key,
     required this.sellerUserEmail,
     required this.sellerUserID,
     required this.sellerUserName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

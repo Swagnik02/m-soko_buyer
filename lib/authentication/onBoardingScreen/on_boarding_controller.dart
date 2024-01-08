@@ -20,7 +20,7 @@ class OnBoardingController extends GetxController {
       pref.setInt(GlobalUtil.onBordingToken, 1);
     }
     pageController.nextPage(
-      duration: const Duration(microseconds: 300),
+      duration: const Duration(microseconds: 3000),
       curve: Curves.bounceIn,
     );
   }

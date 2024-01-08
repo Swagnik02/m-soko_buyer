@@ -4,13 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
 
 class GlobalUtil {
-  static const String LOCAL_USER_ID = "my_test_local_user_id";
+  // test user credentials
+  static const String testUserEmail = 'testuser1@gmail.com';
+  static const String testUserPassword = 'password02';
 
   static const String currencySymbol = '₹';
   static int? isViewed;
   static const String onBordingToken = '';
   static const String demoText =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit.';
+  static const String lorem =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
   static const String visitUrl = 'https://help.sokoni.com';
   static const String contactEmail = 'customercare@sokoni.com';
   static const String contactMobile = '+91 6257899906';
@@ -163,16 +168,17 @@ Future<bool> showConfirmationDialog(BuildContext context) async {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Confirmation'),
-            content: Text('Are you sure you want to delete this address?'),
+            title: const Text('Confirmation'),
+            content:
+                const Text('Are you sure you want to delete this address?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text('Delete'),
+                child: const Text('Delete'),
               ),
             ],
           );

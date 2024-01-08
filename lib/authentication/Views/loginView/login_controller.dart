@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:m_soko/authentication/auth_exceptions.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
@@ -24,8 +25,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    email = TextEditingController(text: 'abc@gmail.com');
-    password = TextEditingController(text: 'password02');
+    email = TextEditingController(text: GlobalUtil.testUserEmail);
+    password = TextEditingController(text: GlobalUtil.testUserPassword);
     super.onInit();
   }
 

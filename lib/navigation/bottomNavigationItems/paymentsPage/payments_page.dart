@@ -100,7 +100,7 @@ class PaymentsPage extends StatelessWidget {
                   'Country Code',
                 ),
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
 
               // TextField for number
               Expanded(
@@ -110,11 +110,11 @@ class PaymentsPage extends StatelessWidget {
                   'Seller mobile number',
                 ),
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
 
               // IconButton for contacts
               IconButton(
-                icon: Icon(Icons.contacts),
+                icon: const Icon(Icons.contacts),
                 onPressed: () {},
               ),
             ],

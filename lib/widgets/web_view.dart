@@ -27,7 +27,7 @@ class _TestWebViewPageState extends State<TestWebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sokoni.com'),
+        title: const Text('Sokoni.com'),
       ),
       body: WebViewWidget(
         controller: controller,

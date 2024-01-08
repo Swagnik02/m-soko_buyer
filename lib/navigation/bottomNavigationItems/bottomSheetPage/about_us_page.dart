@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_soko/home/logout.dart';
+import 'package:m_soko/common/utils.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
@@ -14,18 +14,18 @@ class AboutUsPage extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset('assets/about_us_banner.png'),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 8),
+                  const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
                     child: Column(
                       children: [
-                        const Text(
+                        Text(
                           'About Sokoni',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '$lorem\n$lorem\n$lorem',
+                          '${GlobalUtil.lorem}\n${GlobalUtil.lorem}\n${GlobalUtil.lorem}',
                           textAlign: TextAlign.justify,
                         ),
                       ],
