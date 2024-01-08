@@ -28,7 +28,7 @@ class ProductsCategoryModel {
       itemThumbnail: json['itemThumbnail'],
       itemName: json['itemName'],
       itemSubCategory: json['itemSubCategory'],
-      itemMrp: (json['itemMrp'] as num).toDouble() ?? 0.0,
+      itemMrp: (json['itemMrp'] as num).toDouble(),
       itemShippingCharge: (json['itemShippingCharge'] as num).toDouble(),
       itemDiscountPercentage:
           (json['itemDiscountPercentage'] as num).toDouble(),
