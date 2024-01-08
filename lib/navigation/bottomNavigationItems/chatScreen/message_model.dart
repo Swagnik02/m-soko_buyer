@@ -38,6 +38,7 @@ class Message {
       //
       'timestamp': timestamp,
       'messageType': messageType,
+      'productId': productId,
     };
   }
 }

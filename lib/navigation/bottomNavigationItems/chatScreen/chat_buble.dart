@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -93,6 +94,130 @@ class BannerChatBubble extends StatelessWidget {
                   textAlign: TextAlign.center,
                   message,
                   style: const TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(timeAgo),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// chat bubble for banners
+class ConfirmationChatBubble extends StatelessWidget {
+  final String productId;
+  final String imageUrl;
+  final String message;
+  final String timeAgo;
+  final bool isBuyer;
+
+  const ConfirmationChatBubble({
+    super.key,
+    required this.productId,
+    required this.imageUrl,
+    required this.message,
+    required this.timeAgo,
+    required this.isBuyer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 171,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: ColorConstants.blue50,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //details
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Image.network(imageUrl, height: 93, width: 76),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              message,
+                              maxLines: 3,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.black),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              'Your order will be delivered on July 25th',
+                              maxLines: 2,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.green),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                //buttons
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Fluttertoast.showToast(msg: 'cancel'),
+                          child: Container(
+                            height: 40,
+                            color: ColorConstants.blue100,
+                            child: const Center(
+                                child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Fluttertoast.showToast(msg: 'Pay Now'),
+                          child: Container(
+                            color: ColorConstants.blue700,
+                            child: const Center(
+                                child: Text(
+                              'Pay Now',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

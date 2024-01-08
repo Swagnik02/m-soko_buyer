@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -137,8 +139,21 @@ class _ChatScreenState extends State<ChatScreen> {
             timeAgo: timeAgo,
           ),
         );
+      case 2: // Confirmation
+        log('case2');
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: ConfirmationChatBubble(
+            productId: data['productId'],
+            imageUrl: data['imageUrl'],
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
 
       default:
+        log('case def');
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: ChatBubble(
