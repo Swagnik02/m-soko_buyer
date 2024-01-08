@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/models/user_model.dart';
@@ -13,11 +12,12 @@ class ChatScreen extends StatefulWidget {
   final String sellerUserID;
   final String sellerUserName;
 
-  ChatScreen(
-      {super.key,
-      required this.sellerUserEmail,
-      required this.sellerUserID,
-      required this.sellerUserName});
+  ChatScreen({
+    Key? key,
+    required this.sellerUserEmail,
+    required this.sellerUserID,
+    required this.sellerUserName,
+  }) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -28,7 +28,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final String currentUserEmail = UserDataService().userModel!.email.toString();
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
-  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final ScrollController _scrollController = ScrollController();
 
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
@@ -41,9 +41,18 @@ class _ChatScreenState extends State<ChatScreen> {
         null,
       );
 
-      // clear the controller after sending the message
       _messageController.clear();
+      _scrollToBottom();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay the scroll to the bottom to allow time for the ListView to build
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _scrollToBottom();
+    });
   }
 
   @override
@@ -97,6 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
           );
         }
         return ListView.builder(
+          controller: _scrollController,
           itemCount: snapshot.data!.docs.length,
           itemBuilder: (context, index) {
             return _buildMessageItem(snapshot.data!.docs[index]);
@@ -239,5 +249,13 @@ class _ChatScreenState extends State<ChatScreen> {
     } else {
       return 'Just now';
     }
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeInOut,
+    );
   }
 }
