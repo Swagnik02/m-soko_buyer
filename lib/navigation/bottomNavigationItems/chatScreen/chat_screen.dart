@@ -35,7 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
         widget.sellerUserEmail,
         widget.sellerUserName,
         _messageController.text,
-        messageType.normaltext,
+        MessageType.normaltext,
         null,
       );
 

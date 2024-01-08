@@ -6,7 +6,7 @@ import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/message_model.dart';
 
-class messageType {
+class MessageType {
   static const int normaltext = 0;
   static const int banner = 1;
 }
