@@ -157,6 +157,8 @@ class ConfirmationChatBubble extends StatelessWidget {
                       ),
                       Expanded(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
                               message,
