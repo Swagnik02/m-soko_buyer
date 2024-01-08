@@ -10,11 +10,10 @@ class Message {
   final String imageUrl;
   final Timestamp timestamp;
   final String productId;
-
-  bool isBanner;
+  final int messageType; //0 - normal text, 1 - banner, 2 - confirmed/payment
 
   Message({
-    this.productId = '',
+    required this.productId,
     required this.buyerId,
     required this.buyerEmail,
     required this.sellerId,
@@ -24,7 +23,7 @@ class Message {
 
     //
     required this.timestamp,
-    this.isBanner = false,
+    this.messageType = 0,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,7 +37,7 @@ class Message {
 
       //
       'timestamp': timestamp,
-      'isBanner': isBanner,
+      'messageType': messageType,
     };
   }
 }

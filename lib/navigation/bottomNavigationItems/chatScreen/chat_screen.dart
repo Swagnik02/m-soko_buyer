@@ -35,9 +35,8 @@ class _ChatScreenState extends State<ChatScreen> {
         widget.sellerUserEmail,
         widget.sellerUserName,
         _messageController.text,
-        '',
-        false,
-        '',
+        messageType.normaltext,
+        null,
       );
 
       // clear the controller after sending the message
@@ -115,27 +114,40 @@ class _ChatScreenState extends State<ChatScreen> {
     String timeAgo = formatDuration(difference);
 
     // chat is a banner
-    bool isBanner = data['isBanner'] ?? false;
-    if (isBanner) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2.0),
-        child: BannerChatBubble(
-          imageUrl: data['imageUrl'],
-          message: data['message'],
-          isBuyer: data['buyerEmail'] == currentUserEmail,
-          timeAgo: timeAgo,
-        ),
-      );
-    }
+    int msgType = data['messageType'] ?? false;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: ChatBubble(
-        message: data['message'],
-        isBuyer: data['buyerEmail'] == currentUserEmail,
-        timeAgo: timeAgo,
-      ),
-    );
+    switch (msgType) {
+      case 0:
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: ChatBubble(
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+
+      case 1: // banner
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: BannerChatBubble(
+            imageUrl: data['imageUrl'],
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+
+      default:
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2.0),
+          child: ChatBubble(
+            message: data['message'],
+            isBuyer: data['buyerEmail'] == currentUserEmail,
+            timeAgo: timeAgo,
+          ),
+        );
+    }
   }
 
   // buil message input

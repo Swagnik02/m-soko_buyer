@@ -35,9 +35,8 @@ class ProductItemDetailController extends GetxController
       productModel.sellerEmail ?? '',
       productModel.sellerUserName ?? '',
       'I am interested in ${productModel.itemName}',
-      productModel.itemThumbnail,
-      true,
-      pId,
+      messageType.banner,
+      productModel,
     );
 
     Get.back();

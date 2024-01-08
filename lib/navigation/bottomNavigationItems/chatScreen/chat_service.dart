@@ -2,8 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/models/user_model.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/message_model.dart';
+
+class messageType {
+  static const int normaltext = 0;
+  static const int banner = 1;
+}
 
 class ChatService extends ChangeNotifier {
   // get instance of auth and firestore
@@ -16,9 +22,8 @@ class ChatService extends ChangeNotifier {
     String sellerEmail,
     String sellerUsername,
     String message,
-    String? imageUrl,
-    bool? isBanner,
-    String pId,
+    int? msgType,
+    ProductModel? productModel,
   ) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
@@ -28,15 +33,17 @@ class ChatService extends ChangeNotifier {
 
     // create a new message
     Message newMessage = Message(
-      productId: pId,
+      productId: productModel?.productId ?? '',
       buyerId: currentUserId,
       buyerEmail: currentUserEmail,
       sellerId: sellerId,
       sellerEmail: sellerEmail,
       message: message,
       timestamp: timestamp,
-      isBanner: isBanner ?? false,
-      imageUrl: imageUrl ?? '',
+
+      //
+      imageUrl: productModel?.itemThumbnail ?? '',
+      messageType: msgType ?? 0,
     );
 
     // construct a chatroom Id from current user id and seller id (sorted to ensure uniqueness)
