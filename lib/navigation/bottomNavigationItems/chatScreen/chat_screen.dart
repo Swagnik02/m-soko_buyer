@@ -200,7 +200,11 @@ class ChatScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(50),
             elevation: 5,
             child: IconButton(
-              onPressed: () => controller.sendMessage,
+              onPressed: () => controller.sendMessage(
+                sellerUserID,
+                sellerUserEmail,
+                sellerUserName,
+              ),
               icon: const Icon(
                 Icons.send,
                 size: 30,
