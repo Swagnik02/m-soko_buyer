@@ -36,7 +36,8 @@ class ProductsScreen extends StatelessWidget {
               recentlyViewed(false),
               // const SizedBox(height: 15),
               // // top rated
-              // _topRated(),
+              _topRated(),
+
               // const SizedBox(height: 15),
             ],
           ),
@@ -108,5 +109,21 @@ class ProductsScreen extends StatelessWidget {
 }
 
 Widget _topRated() {
-  return Container();
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Padding(
+        padding: EdgeInsets.only(left: 8.0, top: 10),
+        child: Text(
+          'Top Rated',
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      recentlyViewed(false),
+    ],
+  );
 }
