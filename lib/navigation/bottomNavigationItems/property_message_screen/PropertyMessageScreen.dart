@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_controller.dart';
 
 class PropertyMessageScreen extends StatefulWidget {
   String receiverName;
@@ -35,12 +34,10 @@ class _PropertyMessageScreenState extends State<PropertyMessageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PropertyMessageController());
     return Scaffold(
       backgroundColor: ColorConstants.bgColour,
       appBar: AppBar(
-        backgroundColor: ColorConstants.green800,
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: ColorConstants.green700,
         title: Text(
           widget.receiverName,
           style: const TextStyle(
@@ -80,6 +77,12 @@ class _PropertyMessageScreenState extends State<PropertyMessageScreen> {
                       Map<String, dynamic> data =
                           document.data() as Map<String, dynamic>;
                       if (data['Sender'] == widget.receiverEmail) {
+                        // FirebaseFirestore.instance
+                        //     .collection('chatrooms')
+                        //     .doc(roomID)
+                        //     .collection('messages')
+                        //     .doc(document.id)
+                        //     .update({'Seen': 'True'});
                         return ListTile(
                           title: Container(
                               margin: const EdgeInsets.only(right: 30),
@@ -126,58 +129,154 @@ class _PropertyMessageScreenState extends State<PropertyMessageScreen> {
                 },
               ),
             ),
-          _buildTextField(
-            _textController,
-            () {
-              controller.uploadDataToFirebase(
-                roomID: roomID,
-                currentEmail: widget.myEmail,
-                receiverEmail: widget.receiverEmail,
-                receiverName: widget.receiverName,
-                currentName: widget.myName,
-                userType: widget.userType,
-                controller: _textController,
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textController,
+                    style:
+                        const TextStyle(color: Colors.black), // Set text color
+                    cursorColor: Colors.black, // Set cursor color
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: Get.width * 0.03),
+                      hintText: 'Write message here',
+                      hintStyle: const TextStyle(fontSize: 14),
+                      // Set hint text color
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color: Colors.transparent), // Set border color
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color:
+                                Colors.transparent), // Set enabled border color
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.transparent),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorConstants.blue700,
+                  ),
+                  width: 60,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      if (roomID == "blank") {
+                        DocumentReference<Map<String, dynamic>> newChatRoomRef =
+                            FirebaseFirestore.instance
+                                .collection('chatrooms')
+                                .doc();
+                        await newChatRoomRef.set({
+                          'Last Message': "",
+                          'Participants': [
+                            widget.myEmail,
+                            widget.receiverEmail
+                          ],
+                        }).then((value) {
+                          setState(() {
+                            roomID = newChatRoomRef.id;
+                          });
+                        });
+                        String x = _textController.text;
+                        _textController.text = "";
+                        await FirebaseFirestore.instance
+                            .collection('chatrooms')
+                            .doc(roomID)
+                            .collection('messages')
+                            .doc('${DateTime.now().millisecondsSinceEpoch}')
+                            .set({
+                          'Date': DateTime.now(),
+                          'Seen': "False",
+                          'Sender': widget.myEmail,
+                          'Text': x,
+                          'Type': "message",
+                        });
+                        await FirebaseFirestore.instance
+                            .collection('Buyers')
+                            .doc(widget.myEmail)
+                            .collection('Chat History')
+                            .doc(widget.receiverEmail)
+                            .set({
+                          'Last Message Date': DateTime.now(),
+                          'Last Message': x,
+                          'Sender': widget.receiverName,
+                          'User Type': widget.userType
+                        });
+                        await FirebaseFirestore.instance
+                            .collection((widget.userType == "Seller")
+                                ? "users"
+                                : "Agents")
+                            .doc(widget.receiverEmail)
+                            .collection('Chat History')
+                            .doc(widget.myEmail)
+                            .set({
+                          'Last Message Date': DateTime.now(),
+                          'Last Message': x,
+                          'Sender': widget.myName,
+                          'User Type': 'Buyers'
+                        });
+                      } else if (roomID != "") {
+                        String x = _textController.text;
+                        _textController.text = "";
+                        await FirebaseFirestore.instance
+                            .collection('chatrooms')
+                            .doc(roomID)
+                            .collection('messages')
+                            .doc('${DateTime.now().millisecondsSinceEpoch}')
+                            .set({
+                          'Date': DateTime.now(),
+                          'Seen': "False",
+                          'Sender': widget.myEmail,
+                          'Text': x,
+                          'Type': "message",
+                        });
+                        await FirebaseFirestore.instance
+                            .collection('Buyers')
+                            .doc(widget.myEmail)
+                            .collection('Chat History')
+                            .doc(widget.receiverEmail)
+                            .update({
+                          'Last Message Date': DateTime.now(),
+                          'Last Message': x,
+                        });
+                        await FirebaseFirestore.instance
+                            .collection((widget.userType == "Seller")
+                                ? "users"
+                                : "Agents")
+                            .doc(widget.receiverEmail)
+                            .collection('Chat History')
+                            .doc(widget.myEmail)
+                            .update({
+                          'Last Message Date': DateTime.now(),
+                          'Last Message': x,
+                        });
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             height: 10,
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTextField(TextEditingController controller, Function onTap) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0).copyWith(left: 14),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: TextField(
-                controller: controller,
-                decoration: const InputDecoration(
-                  hintText: "Enter text...",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          InkWell(
-            onTap: () => onTap(),
-            child: const CircleAvatar(
-              backgroundColor: Colors.indigo,
-              child: Center(child: Icon(Icons.send, color: Colors.white)),
-            ),
-          )
         ],
       ),
     );
