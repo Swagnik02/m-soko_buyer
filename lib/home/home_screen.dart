@@ -65,22 +65,11 @@ class HomeScreen extends StatelessWidget {
               : 'assets/soko-logo.png',
           height: 51,
         ),
-        Row(
-          children: [
-            InkWell(
-              onTap: () {
-                // Handle notification icon tap
-              },
-              child: const Icon(Icons.notifications, color: Colors.white),
-            ),
-            const SizedBox(width: 16),
-            InkWell(
-              onTap: () {
-                // Handle search icon tap
-              },
-              child: const Icon(Icons.search, color: Colors.white),
-            ),
-          ],
+        InkWell(
+          onTap: () {
+            // Handle notification icon tap
+          },
+          child: const Icon(Icons.notifications, color: Colors.white),
         ),
       ],
     );
