@@ -27,7 +27,7 @@ class GlobalUtil {
 }
 
 class FirestoreCollections {
-  static const String usersCollection = "Users";
+  static const String usersCollection = "users";
   static const String productsChatRoom = "productsChatRoom";
 }
 

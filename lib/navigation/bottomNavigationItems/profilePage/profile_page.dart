@@ -156,6 +156,7 @@ class ProfilePage extends StatelessWidget {
               child: SizedBox(
                 height: 20,
                 child: TextField(
+                  keyboardType: TextInputType.phone,
                   controller: controller.mobileController,
                   decoration: const InputDecoration(
                     hintText: 'Enter you new mobile',

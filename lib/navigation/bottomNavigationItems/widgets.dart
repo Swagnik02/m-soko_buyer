@@ -16,6 +16,9 @@ Widget customRow(
             height: 20,
             child: TextField(
               controller: controller,
+              keyboardType: label == 'Pincode'
+                  ? TextInputType.number
+                  : TextInputType.text,
               decoration: InputDecoration(
                 hintText: hintText,
                 contentPadding: EdgeInsets.only(bottom: 12),
