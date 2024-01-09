@@ -8,7 +8,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/properties/property_controller.dart';
 import 'package:m_soko/models/property.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_screen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/propertyMessageScreen/property_message_screen.dart';
 
 class PropertiesScreenWidget {
   static Widget searchBox() {

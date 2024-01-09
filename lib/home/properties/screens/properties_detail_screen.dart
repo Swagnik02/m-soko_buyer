@@ -7,7 +7,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/properties/property_controller.dart';
 import 'package:m_soko/home/properties/widget/properties_screen_widget.dart';
 import 'package:m_soko/models/property.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_screen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/propertyMessageScreen/property_message_screen.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 

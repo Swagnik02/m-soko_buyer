@@ -6,7 +6,7 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_screen.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_list.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/propertyMessageScreen/property_message_list.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';

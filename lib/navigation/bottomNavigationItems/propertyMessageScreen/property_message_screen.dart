@@ -10,13 +10,14 @@ class PropertyMessageScreen extends StatefulWidget {
   String myEmail;
   String userType;
 
-  PropertyMessageScreen(
-      {super.key,
-      required this.myEmail,
-      required this.userType,
-      required this.myName,
-      required this.receiverEmail,
-      required this.receiverName});
+  PropertyMessageScreen({
+    super.key,
+    required this.myEmail,
+    required this.userType,
+    required this.myName,
+    required this.receiverEmail,
+    required this.receiverName,
+  });
 
   @override
   State<PropertyMessageScreen> createState() => _PropertyMessageScreenState();
