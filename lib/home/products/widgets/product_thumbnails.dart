@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/home/products/screens/product_item_detail_page.dart';
+import 'package:m_soko/home/products/screens/productDetailsPage/product_item_detail_page.dart';
 import 'package:m_soko/models/product_model.dart';
 import 'package:m_soko/navigation/page_transitions.dart';
 import 'dart:developer';

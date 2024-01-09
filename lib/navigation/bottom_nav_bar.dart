@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bottom_sheet_menu.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -12,6 +13,7 @@ class BottomNavBar extends StatefulWidget {
   final IconData iconIndex3;
   final IconData iconIndex4;
   final Color circleIndicatorColor;
+  final int topBarIndex;
 
   const BottomNavBar({
     super.key,
@@ -22,6 +24,7 @@ class BottomNavBar extends StatefulWidget {
     this.iconIndex3 = Icons.payment,
     this.iconIndex4 = Icons.menu,
     this.circleIndicatorColor = ColorConstants.blue700,
+    required this.topBarIndex,
   });
 
   @override
@@ -73,10 +76,29 @@ class BottomNavBarState extends State<BottomNavBar> {
           icon: Icon(widget.iconIndex3),
           label: '',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(widget.iconIndex4),
-          label: '',
-        ),
+        if (widget.topBarIndex == 0 || widget.topBarIndex == 2)
+          BottomNavigationBarItem(
+            icon: InkWell(
+              child: Icon(
+                widget.iconIndex4,
+              ),
+              onTap: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  useRootNavigator: true,
+                  builder: (BuildContext context) {
+                    return bottomNavigaitonMenu(context);
+                  },
+                );
+              },
+            ),
+            label: '',
+          )
+        else
+          BottomNavigationBarItem(
+            icon: Icon(widget.iconIndex4),
+            label: '',
+          ),
       ],
       onTap: (index) {
         setState(() {

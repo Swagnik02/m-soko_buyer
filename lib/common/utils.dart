@@ -8,6 +8,10 @@ import 'package:m_soko/common/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalUtil {
+  // test user credentials
+  static const String testUserEmail = 'testuser1@gmail.com';
+  static const String testUserPassword = 'password02';
+
   static const String currencySymbol = '₹';
   static int? isViewed;
   static const String onBordingToken = '';
@@ -16,6 +20,17 @@ class GlobalUtil {
   static const int appIdForCalling = 268260452;
   static const String appSignForCalling =
       '7a4f548819ac66227eab9c1f882ded0a38b3b62dd3a52f8bba75c313a015a18b';
+  static const String lorem =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+  static const String visitUrl = 'https://help.sokoni.com';
+  static const String contactEmail = 'customercare@sokoni.com';
+  static const String contactMobile = '+91 6257899906';
+}
+
+class FirestoreCollections {
+  static const String usersCollection = "Users";
+  static const String productsChatRoom = "productsChatRoom";
 }
 
 class Utils {
@@ -186,15 +201,26 @@ class Utils {
   }
 }
 
-// class Users {
-//   static final String? userId = UserDataService().userModel?.uid;
-//   static final String? userName = UserDataService().userModel?.userName;
-//   static final String email = UserDataService().userModel?.email ??
-//       FirebaseAuth.instance.currentUser?.email ??
-//       'user@email.com';
-//   static final String? mobile = UserDataService().userModel?.mobile;
-//   static final String? city = UserDataService().userModel?.city;
-//   static final String? pin = UserDataService().userModel?.pin;
-//   static final String? state = UserDataService().userModel?.state;
-//   static final String? country = UserDataService().userModel?.country;
-// }
+Future<bool> showConfirmationDialog(BuildContext context) async {
+  return await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirmation'),
+            content:
+                const Text('Are you sure you want to delete this address?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Delete'),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false;
+}

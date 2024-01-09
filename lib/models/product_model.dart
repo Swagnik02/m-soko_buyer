@@ -1,5 +1,6 @@
 import 'dart:developer' as devtools show log;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:m_soko/common/utils.dart';
 
 class ProductModel {
   String? itemName;
@@ -34,6 +35,11 @@ class ProductModel {
   String? isQuickCharging;
   String? inTheBox;
 
+  // seller info
+  String? sellerUid;
+  String? sellerEmail;
+  String? sellerUserName;
+
   // Constructor
   ProductModel({
     this.itemName,
@@ -67,6 +73,11 @@ class ProductModel {
     this.isAudioJack,
     this.isQuickCharging,
     this.inTheBox,
+
+    // seller info
+    this.sellerUid,
+    this.sellerEmail,
+    this.sellerUserName,
   });
 
   // Factory method to create a ProductModel from a Map
@@ -107,6 +118,12 @@ class ProductModel {
       isAudioJack: data['isAudioJack'] == 1 ? 'YES' : 'NO',
       isQuickCharging: data['isQuickCharging'] == 1 ? 'YES' : 'NO',
       inTheBox: data['inTheBox'],
+
+      // seller info
+      sellerEmail: data['sellerEmail'],
+
+      sellerUid: data['sellerUid'],
+      sellerUserName: data['sellerUsername'],
     );
   }
   static String determineRatingGrade(double? itemAvgRating) {
@@ -136,6 +153,26 @@ Future<ProductModel?> collectProductData(String pid) async {
           productDocument.data() as Map<String, dynamic>;
 
       devtools.log('Product Data for $pid: $productData');
+
+      // seller data
+      String? sellerEmail = productData['seller_email'];
+      if (sellerEmail != null) {
+        String sellerUid;
+        String sellerUsername;
+        var sellerSnapshot = await FirebaseFirestore.instance
+            .collection(FirestoreCollections.usersCollection)
+            .doc(sellerEmail)
+            .get();
+
+        if (sellerSnapshot.exists) {
+          sellerUid = sellerSnapshot['uid'].toString();
+          sellerUsername = sellerSnapshot['userName'].toString();
+          productData['sellerEmail'] = sellerEmail;
+          productData['sellerUid'] = sellerUid;
+          productData['sellerUsername'] = sellerUsername;
+        }
+      }
+      // seller data
 
       // Create a ProductModel from the retrieved data
       ProductModel productModel = ProductModel.fromMap(productData);

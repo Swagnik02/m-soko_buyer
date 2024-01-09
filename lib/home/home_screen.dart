@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -7,11 +6,13 @@ import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_list.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:m_soko/home/logout.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/paymentsPage/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
@@ -132,11 +133,11 @@ class HomeScreenState extends State<HomeScreen> {
     log(_topBarIndex.toString());
     switch (navBarIndex) {
       case 0:
-        return ProfilePage();
+        return const ProfilePage();
       case 1:
         switch (_topBarIndex) {
           case 0: // Products Section
-            return SupportPage();
+            return const ChatListScreen();
           case 1: // Property Section
             return CallsPropertyScreen();
           case 2: // Services Section
@@ -149,24 +150,25 @@ class HomeScreenState extends State<HomeScreen> {
       case 3:
         switch (_topBarIndex) {
           case 0: // Products Section
-            return PaymentsPage();
+            return const PaymentsPage();
           case 1: // Property Section
             return const PropertySavedScreen();
           case 2: // Services Section
-            return PaymentsPage();
+            return const PaymentsPage();
+
           default:
             return Container();
         }
       case 4:
         switch (_topBarIndex) {
-          case 0: // Products Section
-            return _home();
           case 1: // Property Section
             return PropertyMessageList();
           case 2: // Services Section
             return _home();
+            return SupportPage();
+
           default:
-            return Container();
+            return const SettingsPage();
         }
       default:
         return Container();
@@ -197,7 +199,7 @@ class HomeScreenState extends State<HomeScreen> {
         _buildTopBarButton("Products", 0),
         _buildTopBarButton("Properties", 1),
         _buildTopBarButton("Services", 2),
-        _buildTopBarButton("logout", 3),
+        // _buildTopBarButton("logout", 3),
       ],
     );
   }
@@ -254,8 +256,8 @@ class HomeScreenState extends State<HomeScreen> {
         return PropertiesScreen();
       case 2:
         return ServicesScreen();
-      case 3:
-        return LogoutScreen();
+      // case 3:
+      //   return LogoutScreen();
 
       default:
         return Container();
@@ -272,6 +274,7 @@ class HomeScreenState extends State<HomeScreen> {
               navBarIndex = changedIndex;
             });
           },
+          topBarIndex: _topBarIndex,
         );
       case 1:
         return BottomNavBar(
@@ -284,6 +287,7 @@ class HomeScreenState extends State<HomeScreen> {
           iconIndex1: CupertinoIcons.phone,
           iconIndex3: Icons.bookmark_border,
           iconIndex4: CupertinoIcons.text_bubble,
+          topBarIndex: _topBarIndex,
         );
       case 2:
         return BottomNavBar(
@@ -293,6 +297,7 @@ class HomeScreenState extends State<HomeScreen> {
             });
           },
           circleIndicatorColor: ColorConstants.orange500,
+          topBarIndex: _topBarIndex,
         );
       default:
         // return Container();
@@ -302,6 +307,7 @@ class HomeScreenState extends State<HomeScreen> {
               navBarIndex = changedIndex;
             });
           },
+          topBarIndex: _topBarIndex,
         );
     }
   }

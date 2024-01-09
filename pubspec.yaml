@@ -43,7 +43,7 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_auth: ^4.15.2
   iconify_flutter: ^0.0.5
-  cloud_firestore: ^4.13.5
+  cloud_firestore: ^4.13.6
   firebase_storage: ^11.5.5
   image_picker: ^1.0.4
   permission_handler: ^11.1.0
@@ -60,6 +60,15 @@ dependencies:
   chat_bubbles: ^1.5.0
   currency_converter: ^0.0.5
 
+  filter_list: ^1.0.2
+  implicitly_animated_reorderable_list_2: ^0.5.0
+  functional_widget_annotation: ^0.10.0
+  just_audio: ^0.9.10 #play audio files
+  flutter_video_info: ^1.2.0 #retrieve video metadata
+  video_thumbnail: ^0.5.2 #get a thumbnail from a file
+  collection: ^1.15.0
+  url_launcher: ^6.2.2
+  webview_flutter: ^4.4.2
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +100,7 @@ flutter:
     - assets/tests/mobiles/
     - assets/PropertyImage/
     - assets/icons/
+
 
 
     # - assets/products_category_icons/
