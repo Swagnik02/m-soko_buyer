@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/models/product_model.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/paymentsPage/payments_details.dart';
+import 'package:m_soko/navigation/page_transitions.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message;
@@ -205,7 +210,24 @@ class ConfirmationChatBubble extends StatelessWidget {
                       ),
                       Expanded(
                         child: InkWell(
-                          onTap: () => Fluttertoast.showToast(msg: 'Pay Now'),
+                          onTap: () async {
+                            ProductModel? productModel =
+                                await collectProductData(productId);
+                            if (productModel != null) {
+                              Navigator.of(context).push(PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) {
+                                  return PaymentsDetails(
+                                    productModel: productModel,
+                                  );
+                                },
+                                transitionsBuilder:
+                                    customTransition(const Offset(0, 0)),
+                              ));
+                            } else {
+                              log('No product data available for $productId');
+                            }
+                          },
                           child: Container(
                             color: ColorConstants.blue700,
                             child: const Center(
