@@ -6,7 +6,7 @@ import 'package:m_soko/authentication/auth_home.dart';
 import 'package:m_soko/home/home_screen.dart';
 import 'package:m_soko/home/properties/screens/propertiesDetailScreen.dart';
 import 'package:m_soko/home/properties/screens/properySeeAllScreen.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_screen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/PropertyMessageScreen.dart';
 import 'package:m_soko/routes/app_routes.dart';
 
 class AppPages {
@@ -22,10 +22,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.propertiesSeeAllScreen,
       page: () => PropertySeeAllScreen(),
-    ),
-    GetPage(
-      name: AppRoutes.propertyMessageScreen,
-      page: () => PropertyMessageScreen(),
     ),
   ];
 }

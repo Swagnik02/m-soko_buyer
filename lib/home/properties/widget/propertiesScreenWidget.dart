@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -11,42 +12,48 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/widgets/filter_items.dart';
 import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/models/property.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/PropertyMessageScreen.dart';
 
 class PropertiesScreenWidget {
   static Widget searchBox() {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: ColorConstants.blue50,
-        border: Border.all(color: ColorConstants.blue200),
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(CupertinoIcons.search, color: ColorConstants.blue700),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                "Search for products",
-                style: TextStyle(
-                  fontSize: 19,
-                  color: ColorConstants.blue700,
+    return InkWell(
+      onTap: (){
+        Fluttertoast.showToast(msg: 'Under Construction');
+      },
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: ColorConstants.blue50,
+          border: Border.all(color: ColorConstants.blue200),
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(CupertinoIcons.search, color: ColorConstants.blue700),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  "Search for products",
+                  style: TextStyle(
+                    fontSize: 19,
+                    color: ColorConstants.blue700,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(CupertinoIcons.mic, color: ColorConstants.blue700),
-          ),
-        ],
+            SizedBox(
+              width: 15,
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(CupertinoIcons.mic, color: ColorConstants.blue700),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -213,7 +220,7 @@ class PropertiesScreenWidget {
                 const Icon(Icons.location_on, color: ColorConstants.blue700),
                 SizedBox(width: Get.width * 0.01),
                 Text(
-                  propertyModel.location,
+                  propertyModel.locality,
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 )
               ],
@@ -277,7 +284,23 @@ class PropertiesScreenWidget {
             ),
             Utils.customButton(
               title: 'Contact Now',
-              onTap: () {},
+              onTap: () {
+                Get.to(
+                  PropertyMessageScreen(
+                    receiverEmail: propertyModel.agentEmail,
+                    receiverName: propertyModel.agentName,
+                    myEmail: FirebaseAuth
+                        .instance.currentUser?.email
+                        .toString() ??
+                        '',
+                    myName: FirebaseAuth
+                        .instance.currentUser?.displayName
+                        .toString() ??
+                        '',
+                    userType: 'Agents',
+                  ),
+                );
+              },
               size: const Size(160, 60),
             ),
           ],

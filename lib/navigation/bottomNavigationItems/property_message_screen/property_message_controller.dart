@@ -8,6 +8,7 @@ import 'package:m_soko/models/property_message_models.dart';
 class PropertyMessageController extends GetxController {
   final TextEditingController messageController = TextEditingController();
 
+
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -70,5 +71,99 @@ class PropertyMessageController extends GetxController {
         .collection('messages')
         .orderBy('timestamp', descending: false)
         .snapshots();
+  }
+
+  Future uploadDataToFirebase({
+    required String roomID,
+    required String currentEmail,
+    required String receiverEmail,
+    required String receiverName,
+    required String currentName,
+    required String userType,
+    required TextEditingController controller,
+  }) async {
+    if (roomID == "blank") {
+      DocumentReference<Map<String, dynamic>> newChatRoomRef =
+          FirebaseFirestore.instance.collection('chatrooms').doc();
+      await newChatRoomRef.set({
+        'Last Message': "",
+        'Participants': [
+          currentEmail,
+          receiverEmail,
+        ],
+      }).then((value) {
+        roomID = newChatRoomRef.id;
+        update();
+      });
+      String x = controller.text;
+      controller.text = "";
+      await FirebaseFirestore.instance
+          .collection('chatrooms')
+          .doc(roomID)
+          .collection('messages')
+          .doc('${DateTime.now().millisecondsSinceEpoch}')
+          .set({
+        'Date': DateTime.now(),
+        'Seen': "False",
+        'Sender': currentEmail,
+        'Text': x,
+        'Type': "message",
+      });
+      await FirebaseFirestore.instance
+          .collection('Buyers')
+          .doc(currentEmail)
+          .collection('Chat History')
+          .doc(receiverEmail)
+          .set({
+        'Last Message Date': DateTime.now(),
+        'Last Message': x,
+        'Sender': receiverName,
+        'User Type': userType,
+      });
+      await FirebaseFirestore.instance
+          .collection((userType == "Seller") ? "users" : "Agents")
+          .doc(receiverEmail)
+          .collection('Chat History')
+          .doc(currentEmail)
+          .set({
+        'Last Message Date': DateTime.now(),
+        'Last Message': x,
+        'Sender': currentName,
+        'User Type': 'Buyers'
+      });
+    } else if (roomID != "") {
+      String x = controller.text;
+      controller.text = "";
+      await FirebaseFirestore.instance
+          .collection('chatrooms')
+          .doc(roomID)
+          .collection('messages')
+          .doc('${DateTime.now().millisecondsSinceEpoch}')
+          .set({
+        'Date': DateTime.now(),
+        'Seen': "False",
+        'Sender': currentEmail,
+        'Text': x,
+        'Type': "message",
+      });
+      await FirebaseFirestore.instance
+          .collection('Buyers')
+          .doc(currentEmail)
+          .collection('Chat History')
+          .doc(receiverEmail)
+          .update({
+        'Last Message Date': DateTime.now(),
+        'Last Message': x,
+      });
+      await FirebaseFirestore.instance
+          .collection((userType == "Seller") ? "users" : "Agents")
+          .doc(receiverEmail)
+          .collection('Chat History')
+          .doc(currentEmail)
+          .update({
+        'Last Message Date': DateTime.now(),
+        'Last Message': x,
+      });
+    }
   }
 }

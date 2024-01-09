@@ -77,6 +77,7 @@ class PropertySeeAllScreen extends StatelessWidget {
                   itemBuilder: (context, i) {
                     final PropertyModel data =
                         PropertyModel.fromDocument(documents[i]);
+                    log(data.locality.toString());
                     return PropertiesScreenWidget.propertiesBox(
                       margin:
                           EdgeInsets.symmetric(vertical: Get.height * 0.008),
@@ -84,7 +85,7 @@ class PropertySeeAllScreen extends StatelessWidget {
                       rooms: data.rooms,
                       coveredArea: data.coveredArea.toString(),
                       sellingPrice: data.sellingPrice.toString(),
-                      location: data.location,
+                      location: data.locality,
                       postDate: data.postDate.toString(),
                       onTap: () {
                         Get.toNamed(AppRoutes.propertiesDetailScreen,
