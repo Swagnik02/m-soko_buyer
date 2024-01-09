@@ -4,23 +4,24 @@ class PropertyModel {
   final int bathRoom;
   final String agentUid;
   final String category;
-  final bool loanAvailable;
+
+  // final bool loanAvailable;
   final dynamic
-      locationPoint; // You might need to define a custom class for GeoPoint
+      mapLocation; // You might need to define a custom class for GeoPoint
   final int storeRoom;
-  final String agentNumber;
+  final String sellerEmail;
+  final String sellerName;
   final String agentName;
+  final String agentEmail;
   final int sellingPrice;
   final String bankName;
   final String listingStatus;
-  final bool qualityCheck;
-  final int waterAvailability;
+  final String qualityCheck;
+  final String waterAvailability;
   final List<dynamic> images;
   final int electricityAvailability;
   final String title;
   final DateTime postDate;
-  final dynamic
-      plotNumberPoint; // You might need to define a custom class for GeoPoint
   final int bedRoom;
   final String disclaimer;
   final String rooms;
@@ -32,17 +33,19 @@ class PropertyModel {
   final int kitchen;
   final String propertyDescription;
   final int livingRoom;
-  final String location;
+  final String locality;
 
   PropertyModel({
     required this.bathRoom,
     required this.agentUid,
     required this.category,
-    required this.loanAvailable,
-    required this.locationPoint,
+    // required this.loanAvailable,
+    required this.mapLocation,
+    required this.sellerEmail,
+    required this.sellerName,
     required this.storeRoom,
-    required this.agentNumber,
     required this.agentName,
+    required this.agentEmail,
     required this.sellingPrice,
     required this.bankName,
     required this.listingStatus,
@@ -52,7 +55,6 @@ class PropertyModel {
     required this.electricityAvailability,
     required this.title,
     required this.postDate,
-    required this.plotNumberPoint,
     required this.bedRoom,
     required this.disclaimer,
     required this.rooms,
@@ -64,11 +66,10 @@ class PropertyModel {
     required this.kitchen,
     required this.propertyDescription,
     required this.livingRoom,
-    required this.location,
+    required this.locality,
   });
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
-
     int parsetoInt(dynamic value) {
       if (value is int) {
         return value;
@@ -79,20 +80,21 @@ class PropertyModel {
     }
 
     return PropertyModel(
-      bathRoom: parsetoInt(json['Bath Room']),
+      bathRoom: parsetoInt(json['Features']['No. of Bathroom']),
       agentUid: json['Agent UID'] as String? ?? '',
       category: json['Category'] as String? ?? '',
-      loanAvailable: json['Loan Available'] as bool? ?? false,
-      locationPoint: json['Location Point'],
-      // Assuming this might be a complex type
+      // loanAvailable: json['Loan Available'] as bool? ?? false,
+      mapLocation: json['Location Point'],
       storeRoom: parsetoInt(json['Store Room']),
-      agentNumber: json['Agent Number'] as String? ?? '',
+      sellerEmail: json['Seller Email'],
+      sellerName: json['Seller Name'],
       agentName: json['Agent Name'] as String? ?? '',
-      sellingPrice: parsetoInt(json['Selling Price']),
-      bankName: json['Bank Name'] as String? ?? '',
+      agentEmail: json['Agent Email'] as String? ?? '',
+      sellingPrice: parsetoInt(json['Selling Price (TZS)']),
+      bankName: json['Bank'] as String? ?? '',
       listingStatus: json['Listing Status'] as String? ?? '',
-      qualityCheck: json['Quality Check'] as bool? ?? false,
-      waterAvailability: parsetoInt(json['Water Availability']),
+      qualityCheck: json['Quality Check'] as String ?? '',
+      waterAvailability: json['Water Availablity'] as String ?? '',
       images: json['Images'] as List<dynamic>? ?? [],
       electricityAvailability: parsetoInt(json['Electricity Availability']),
       title: json['Title'] as String? ?? '',
@@ -100,20 +102,19 @@ class PropertyModel {
           ? DateTime.fromMillisecondsSinceEpoch(
               (json['Post Date'] as Timestamp).seconds * 1000)
           : DateTime.now(),
-      plotNumberPoint: json['Plot Number Point'],
       // Assuming this might be a complex type
-      bedRoom: parsetoInt(json['Bed Room']),
+      bedRoom: parsetoInt(json['Features']['No. of Bedroom']),
       disclaimer: json['Disclaimer'] as String? ?? '',
       rooms: json['Rooms'] as String? ?? '',
       postBy: json['Post By'] as String? ?? '',
       services: List<String>.from(json['Services'] as List<dynamic>? ?? []),
       reraId: json['Rera ID'] as String? ?? '',
       propertyType: json['Property Type'] as String? ?? '',
-      coveredArea: parsetoInt(json['Covered Area']),
+      coveredArea: parsetoInt(json['Covered Area (sqft)']),
       kitchen: parsetoInt(json['Kitchen']),
       propertyDescription: json['Property Description'] as String? ?? '',
       livingRoom: parsetoInt(json['Living Room']),
-      location: json['Location'] as String? ?? '',
+      locality: json['Locality'] as String ?? '',
     );
   }
 
@@ -122,21 +123,22 @@ class PropertyModel {
       'Bath Room': bathRoom,
       'Agent UID': agentUid,
       'Category': category,
-      'Loan Available': loanAvailable,
-      'Location Point': locationPoint,
+      // 'Loan Available': loanAvailable,
+      'Map Location': mapLocation,
       'Store Room': storeRoom,
-      'Agent Number': agentNumber,
       'Agent Name': agentName,
-      'Selling Price': sellingPrice,
-      'Bank Name': bankName,
+      'Agent Email': agentEmail,
+      'Seller Email': sellerEmail,
+      'Seller Name': sellerName,
+      'Selling Price (TZS)': sellingPrice,
+      'Bank': bankName,
       'Listing Status': listingStatus,
       'Quality Check': qualityCheck,
-      'Water Availability': waterAvailability,
+      'Water Availablity': waterAvailability,
       'Images': images,
       'Electricity Availability': electricityAvailability,
       'Title': title,
       'Post Date': postDate.toUtc(),
-      'Plot Number Point': plotNumberPoint,
       'Bed Room': bedRoom,
       'Disclaimer': disclaimer,
       'Rooms': rooms,
@@ -144,12 +146,11 @@ class PropertyModel {
       'Services': services,
       'Rera ID': reraId,
       'Property Type': propertyType,
-      'Covered Area': coveredArea,
+      'Covered Area (sqft)': coveredArea,
       'Kitchen': kitchen,
       'Property Description': propertyDescription,
       'Living Room': livingRoom,
-      'Location': location,
-      // Add all other properties here
+      'Location': locality,
     };
   }
 
@@ -169,23 +170,24 @@ class PropertyModel {
       bathRoom: parsetoInt(data?['Bath Room']),
       agentUid: data?['Agent UID'] ?? '',
       category: data?['Category'] ?? '',
-      loanAvailable: data?['Loan Available'] ?? false,
-      locationPoint: data?['Location Point'],
+      // loanAvailable: data?['Loan Available'] ?? false,
+      mapLocation: data?['Location Point'],
+      sellerEmail: data?['Seller Email'],
+      sellerName: data?['Seller Name'],
       storeRoom: parsetoInt(data?['Store Room']),
-      agentNumber: data?['Agent Number'] ?? '',
       agentName: data?['Agent Name'] ?? '',
-      sellingPrice: parsetoInt(data?['Selling Price']),
-      bankName: data?['Bank Name'] ?? '',
+      agentEmail: data?['Agent Email'] ?? '',
+      sellingPrice: parsetoInt(data?['Selling Price (TZS)']),
+      bankName: data?['Bank'] ?? '',
       listingStatus: data?['Listing Status'] ?? '',
-      qualityCheck: data?['Quality Check'] ?? false,
-      waterAvailability: parsetoInt(data?['Water Availability']),
+      qualityCheck: data?['Quality Check'] ?? '',
+      waterAvailability: data?['Water Availablity'] ?? '',
       images: List<String>.from(data?['Images'] ?? ''),
       electricityAvailability: parsetoInt(data?['Electricity Availability']),
       title: data?['Title'] ?? '',
       postDate: data?['Post Date'] != null
           ? (data?['Post Date'] as Timestamp).toDate()
           : DateTime.now(),
-      plotNumberPoint: data?['Plot Number Point'],
       bedRoom: parsetoInt(data?['Bed Room']),
       disclaimer: data?['Disclaimer'] ?? '',
       rooms: data?['Rooms'] ?? '',
@@ -193,12 +195,11 @@ class PropertyModel {
       services: List<String>.from(data?['Services'] ?? []),
       reraId: data?['Rera ID'] ?? '',
       propertyType: data?['Property Type'] ?? '',
-      coveredArea: parsetoInt(data?['Covered Area']),
+      coveredArea: parsetoInt(data?['Covered Area (sqft)']),
       kitchen: parsetoInt(data?['Kitchen']),
       propertyDescription: data?['Property Description'] ?? '',
       livingRoom: parsetoInt(data?['Living Room']),
-      location: data?['Location'] ?? '',
-      // Add all other properties here
+      locality: data?['Locality'] ?? '',
     );
   }
 }

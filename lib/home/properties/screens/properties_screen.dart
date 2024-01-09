@@ -26,7 +26,6 @@ class PropertiesScreen extends StatelessWidget {
               child: Column(
                 children: [
                   PropertiesScreenWidget.searchBox(),
-                  // SizedBox(height: Get.height * 0.00),
                   FutureBuilder(
                     future: controller.fetchHomeImageFromFirebase(),
                     builder: (BuildContext context, snapshot) {
@@ -70,6 +69,7 @@ class PropertiesScreen extends StatelessWidget {
                       List<PropertyModel> properties = documents.map((e) {
                         Map<String, dynamic> propertyData =
                             e.data() as Map<String, dynamic>;
+                        // log(propertyData.toString());
                         return PropertyModel.fromJson(
                             propertyData); // Return the result of fromJson method
                       }).toList();
@@ -102,7 +102,7 @@ class PropertiesScreen extends StatelessWidget {
                 rooms: properties[3].rooms,
                 sellingPrice: properties[3].sellingPrice.toString(),
                 coveredArea: properties[3].coveredArea.toString(),
-                location: properties[3].location,
+                location: properties[3].locality,
                 postDate: parseDate,
                 onTap: () {
                   Get.toNamed(
@@ -113,16 +113,16 @@ class PropertiesScreen extends StatelessWidget {
               ),
               SizedBox(width: Get.width * 0.02),
               PropertiesScreenWidget.propertiesBox(
-                  image: properties[4].images[0],
-                  rooms: properties[4].rooms,
-                  sellingPrice: properties[4].sellingPrice.toString(),
-                  coveredArea: properties[4].coveredArea.toString(),
-                  location: properties[4].location,
+                  image: properties[1].images[0],
+                  rooms: properties[1].rooms,
+                  sellingPrice: properties[1].sellingPrice.toString(),
+                  coveredArea: properties[1].coveredArea.toString(),
+                  location: properties[1].locality,
                   postDate: parseDate,
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.propertiesDetailScreen,
-                      arguments: properties[4],
+                      arguments: properties[1],
                     );
                   }),
             ],
@@ -167,16 +167,16 @@ class PropertiesScreen extends StatelessWidget {
           child: Row(
             children: [
               PropertiesScreenWidget.propertiesBox(
-                image: properties[5].images[0],
-                rooms: properties[5].rooms,
-                sellingPrice: properties[5].sellingPrice.toString(),
-                coveredArea: properties[5].coveredArea.toString(),
-                location: properties[5].location,
+                image: properties[3].images[0],
+                rooms: properties[3].rooms,
+                sellingPrice: properties[3].sellingPrice.toString(),
+                coveredArea: properties[3].coveredArea.toString(),
+                location: properties[3].locality,
                 postDate: parseDate,
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.propertiesDetailScreen,
-                    arguments: properties[5],
+                    arguments: properties[3],
                   );
                 },
               ),
@@ -186,7 +186,7 @@ class PropertiesScreen extends StatelessWidget {
                   rooms: properties[4].rooms,
                   sellingPrice: properties[4].sellingPrice.toString(),
                   coveredArea: properties[4].coveredArea.toString(),
-                  location: properties[4].location,
+                  location: properties[4].locality,
                   postDate: parseDate,
                   onTap: () {
                     Get.toNamed(

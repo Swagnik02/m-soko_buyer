@@ -1,7 +1,11 @@
+import 'dart:developer';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalUtil {
   // test user credentials
@@ -13,6 +17,9 @@ class GlobalUtil {
   static const String onBordingToken = '';
   static const String demoText =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit.';
+  static const int appIdForCalling = 268260452;
+  static const String appSignForCalling =
+      '7a4f548819ac66227eab9c1f882ded0a38b3b62dd3a52f8bba75c313a015a18b';
   static const String lorem =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
@@ -31,6 +38,33 @@ class Utils {
     return const Center(
       child: CircularProgressIndicator(),
     );
+  }
+
+// Function to generate a random dark color
+  static Color generateRandomDarkColor() {
+    Random random = Random();
+    int red = random.nextInt(128); // Limiting red channel to darker shades
+    int green = random.nextInt(128); // Limiting green channel to darker shades
+    int blue = random.nextInt(128); // Limiting blue channel to darker shades
+    return Color.fromARGB(255, red, green, blue);
+  }
+
+  // Function to save color to SharedPreferences
+  static Future<void> saveColorToPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String colorHex =
+        generateRandomDarkColor().value.toRadixString(16).padLeft(8, '0');
+    await prefs.setString('storedColor', colorHex);
+  }
+
+  // Function to retrieve color from SharedPreferences
+  static Future<Color?> getColorFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? colorHex = prefs.getString('storedColor');
+    if (colorHex != null) {
+      return Color(int.parse(colorHex, radix: 16));
+    }
+    return null;
   }
 
   static int calculateColumnCount(double screenWidth) {
@@ -60,6 +94,7 @@ class Utils {
     Color? backGroundColor,
     required String title,
     isIcon = true,
+    bool isSelected = false,
     Icon? icon,
     Size? size,
   }) {
@@ -71,6 +106,9 @@ class Utils {
         // padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            width: 2,
+              color: isSelected ? ColorConstants.green700 : Colors.transparent),
           color: backGroundColor ?? ColorConstants.blue700,
         ),
         child: Row(

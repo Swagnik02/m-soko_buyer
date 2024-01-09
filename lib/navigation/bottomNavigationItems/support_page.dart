@@ -7,6 +7,10 @@ class SupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Message'),
+      ),
+      body: Center(
+        child: Text("support"),
         title: const Text('Support Page'),
       ),
       body: Center(

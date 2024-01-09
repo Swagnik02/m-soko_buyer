@@ -222,7 +222,7 @@ class ProfilePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hello ${UserDataService().userModel!.userName}!',
+                          'Hello ${UserDataService().userModel?.userName}!',
                           style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -230,7 +230,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${UserDataService().userModel!.mobile}',
+                          '${UserDataService().userModel?.mobile}',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w300,

@@ -1,11 +1,16 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_screen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_list.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
 import 'package:m_soko/navigation/bottom_nav_bar.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/paymentsPage/payments_page.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_page.dart';
@@ -13,6 +18,8 @@ import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
 import 'package:m_soko/home/properties/screens/properties_screen.dart';
 import 'package:m_soko/home/services/services_screen.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +29,39 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  String get userId => FirebaseAuth.instance.currentUser?.uid ?? "";
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  // String get userName =>
+
+  @override
+  void initState() {
+    super.initState();
+    intializeCalling(
+      userId: currentUser!.email.toString(),
+      userName: currentUser!.displayName.toString(),
+    );
+  }
+
+  void intializeCalling({
+    required String userId,
+    required String userName,
+  }) {
+    try {
+      ZegoUIKitPrebuiltCallInvitationService().init(
+        appID: GlobalUtil.appIdForCalling /*input your AppID*/,
+        appSign: GlobalUtil.appSignForCalling /*input your AppSign*/,
+        userID: userId,
+        userName: userName,
+        plugins: [
+          ZegoUIKitSignalingPlugin(),
+        ],
+      );
+    } catch (e) {
+      Logger().e(e.toString());
+    }
+  }
+
   int navBarIndex = 2; // Some Changes here
   int _topBarIndex = 0; // Some Changes here
 
@@ -99,7 +139,7 @@ class HomeScreenState extends State<HomeScreen> {
           case 0: // Products Section
             return const ChatListScreen();
           case 1: // Property Section
-            return CallPage();
+            return CallsPropertyScreen();
           case 2: // Services Section
             return SupportPage();
           default:
@@ -122,6 +162,9 @@ class HomeScreenState extends State<HomeScreen> {
       case 4:
         switch (_topBarIndex) {
           case 1: // Property Section
+            return PropertyMessageList();
+          case 2: // Services Section
+            return _home();
             return SupportPage();
 
           default:

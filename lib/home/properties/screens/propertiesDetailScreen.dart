@@ -1,13 +1,17 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/home/properties/propertyController.dart';
 import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
 import 'package:m_soko/models/property.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/PropertyMessageScreen.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 class PropertiesDetailScreen extends StatelessWidget {
   const PropertiesDetailScreen({super.key});
@@ -16,15 +20,20 @@ class PropertiesDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final PropertyModel properties = Get.arguments;
     final controller = Get.find<PropertyController>();
-    // log(properties.toString());
     return Scaffold(
       backgroundColor: ColorConstants.bgColour,
       appBar: AppBar(
         backgroundColor: ColorConstants.green800,
+        iconTheme: const IconThemeData(color: Colors.white),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: Get.width * 0.04),
-            child: const Icon(Icons.search),
+          InkWell(
+            onTap: () {
+              Fluttertoast.showToast(msg: 'Under Construction');
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: Get.width * 0.04),
+              child: const Icon(Icons.search),
+            ),
           )
         ],
       ),
@@ -75,12 +84,18 @@ class PropertiesDetailScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Fluttertoast.showToast(
+                                        msg: 'Under Construction');
+                                  },
                                   child: const Icon(Icons.share,
                                       color: Colors.white)),
                               const SizedBox(width: 8),
                               InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Fluttertoast.showToast(
+                                        msg: 'Under Construction');
+                                  },
                                   child: const Icon(Icons.bookmark_border,
                                       color: Colors.white)),
                             ],
@@ -147,38 +162,120 @@ class PropertiesDetailScreen extends StatelessWidget {
         children: [
           Expanded(
             child: InkWell(
-              onTap: () {},
-              child: Container(
-                  alignment: Alignment.center,
-                  height: Get.height * 0.08,
-                  color: Colors.white,
-                  child: const Text(
-                    'Chat Now',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  )),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () {},
+              onTap: () async {
+                // Get.toNamed(AppRoutes.propertyMessageScreen, arguments: {
+                //   "agentId": properties.agentUid,
+                //   "agentEmail": properties.sellerEmail,
+                //   "agentName": properties.agentName,
+                // });
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: Get.width * 0.02, vertical: 12),
+                        backgroundColor: ColorConstants.green50,
+                        content: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.black),
+                              onPressed: () {
+                                Get.to(
+                                  PropertyMessageScreen(
+                                    receiverEmail: properties.sellerEmail,
+                                    receiverName: properties.sellerName,
+                                    myEmail: FirebaseAuth
+                                            .instance.currentUser?.email
+                                            .toString() ??
+                                        '',
+                                    myName: FirebaseAuth
+                                            .instance.currentUser?.displayName
+                                            .toString() ??
+                                        '',
+                                    userType: 'Seller',
+                                  ),
+                                );
+                              },
+                              child: const Text('Chat Seller'),
+                            ),
+                            SizedBox(width: Get.width * 0.01),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.black),
+                              onPressed: () {
+                                Get.to(
+                                  PropertyMessageScreen(
+                                    receiverEmail: properties.agentEmail,
+                                    receiverName: properties.agentName,
+                                    myEmail: FirebaseAuth
+                                            .instance.currentUser?.email
+                                            .toString() ??
+                                        '',
+                                    myName: FirebaseAuth
+                                            .instance.currentUser?.displayName
+                                            .toString() ??
+                                        '',
+                                    userType: 'Agents',
+                                  ),
+                                );
+                              },
+                              child: const Text('Chat Agent'),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
               child: Container(
                 alignment: Alignment.center,
                 height: Get.height * 0.08,
-                color: ColorConstants.yellow400,
+                color: Colors.white,
                 child: const Text(
-                  'Call Agent',
+                  'Chat Now',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-          )
+          ),
+          Expanded(
+            child: ZegoSendCallInvitationButton(
+              onPressed: (code, message, p2) {
+                controller.uploadCallingDataToFirebase(
+                  agentName: properties.agentName,
+                  agentEmail: properties.agentEmail,
+                  userType: "",
+                );
+              },
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              borderRadius: 0,
+              buttonSize: Size(Get.width, Get.height * 0.08),
+              text: "Call Agent",
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+              iconVisible: false,
+              // notificationTitle: 'Incoming',
+              // notificationMessage:
+              //     '${FirebaseAuth.instance.currentUser!.displayName} is calling you',
+              clickableBackgroundColor: Colors.yellow,
+              isVideoCall: false,
+              resourceID: "zego_sokoni",
+              invitees: [
+                ZegoUIKitUser(
+                  id: properties.agentEmail,
+                  name: properties.agentName,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
