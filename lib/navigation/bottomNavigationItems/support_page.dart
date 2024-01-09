@@ -11,13 +11,6 @@ class SupportPage extends StatelessWidget {
       ),
       body: Center(
         child: Text("support"),
-        title: const Text('Support Page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: const Text('Go to Chat List'),
-        ),
       ),
     );
   }
