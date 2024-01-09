@@ -1,12 +1,11 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/home/properties/propertyController.dart';
-import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
+import 'package:m_soko/home/properties/property_controller.dart';
+import 'package:m_soko/home/properties/widget/properties_screen_widget.dart';
 import 'package:m_soko/models/property.dart';
 import 'package:m_soko/routes/app_routes.dart';
 

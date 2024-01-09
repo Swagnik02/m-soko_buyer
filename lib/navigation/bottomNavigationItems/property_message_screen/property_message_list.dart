@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/PropertyMessageScreen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_screen.dart';
 
 class PropertyMessageList extends StatefulWidget {
   const PropertyMessageList();

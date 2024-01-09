@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -107,7 +105,7 @@ class Utils {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            width: 2,
+              width: 2,
               color: isSelected ? ColorConstants.green700 : Colors.transparent),
           color: backGroundColor ?? ColorConstants.blue700,
         ),

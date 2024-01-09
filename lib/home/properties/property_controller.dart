@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:currency_converter/currency.dart';
 import 'package:currency_converter/currency_converter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

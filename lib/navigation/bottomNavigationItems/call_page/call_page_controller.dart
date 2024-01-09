@@ -18,5 +18,6 @@ class CallPageController extends GetxController {
     } on FirebaseFirestore catch (e) {
       log(e.toString());
     }
+    return null;
   }
 }

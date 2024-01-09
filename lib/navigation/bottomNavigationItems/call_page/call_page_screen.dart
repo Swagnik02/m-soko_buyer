@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +7,7 @@ import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_cont
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 class CallsPropertyScreen extends StatefulWidget {
-  const CallsPropertyScreen();
+  const CallsPropertyScreen({super.key});
 
   @override
   State<CallsPropertyScreen> createState() => _CallsPropertyScreenState();
@@ -149,8 +148,10 @@ class _CallsPropertyScreenState extends State<CallsPropertyScreen> {
                                             .collection('Call History')
                                             .doc()
                                             .set({
-                                          'Name': controller.currentUser?.displayName,
-                                          'CallID': controller.currentUser?.email,
+                                          'Name': controller
+                                              .currentUser?.displayName,
+                                          'CallID':
+                                              controller.currentUser?.email,
                                           'Direction': "Incoming",
                                           'Date-Time': nowTime,
                                           'User Type': "Seller"

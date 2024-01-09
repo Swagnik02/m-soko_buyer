@@ -138,9 +138,9 @@ class HomeScreenState extends State<HomeScreen> {
           case 0: // Products Section
             return const ChatListScreen();
           case 1: // Property Section
-            return CallsPropertyScreen();
+            return const CallsPropertyScreen();
           case 2: // Services Section
-            return SupportPage();
+            return const SupportPage();
           default:
             return Container();
         }
@@ -161,10 +161,9 @@ class HomeScreenState extends State<HomeScreen> {
       case 4:
         switch (_topBarIndex) {
           case 1: // Property Section
-            return PropertyMessageList();
+            return const PropertyMessageList();
           case 2: // Services Section
             return _home();
-            return SupportPage();
 
           default:
             return const SettingsPage();

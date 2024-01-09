@@ -1,15 +1,13 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/home/properties/propertyController.dart';
-import 'package:m_soko/home/properties/widget/propertiesScreenWidget.dart';
+import 'package:m_soko/home/properties/property_controller.dart';
+import 'package:m_soko/home/properties/widget/properties_screen_widget.dart';
 import 'package:m_soko/models/property.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/PropertyMessageScreen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_screen.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 

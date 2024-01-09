@@ -1,23 +1,19 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/common/utils.dart';
-import 'package:m_soko/home/products/widgets/filter_items.dart';
-import 'package:m_soko/home/properties/propertyController.dart';
+import 'package:m_soko/home/properties/property_controller.dart';
 import 'package:m_soko/models/property.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/PropertyMessageScreen.dart';
+import 'package:m_soko/navigation/bottomNavigationItems/property_message_screen/property_message_screen.dart';
 
 class PropertiesScreenWidget {
   static Widget searchBox() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Fluttertoast.showToast(msg: 'Under Construction');
       },
       child: Container(
@@ -289,13 +285,11 @@ class PropertiesScreenWidget {
                   PropertyMessageScreen(
                     receiverEmail: propertyModel.agentEmail,
                     receiverName: propertyModel.agentName,
-                    myEmail: FirebaseAuth
-                        .instance.currentUser?.email
-                        .toString() ??
-                        '',
-                    myName: FirebaseAuth
-                        .instance.currentUser?.displayName
-                        .toString() ??
+                    myEmail:
+                        FirebaseAuth.instance.currentUser?.email.toString() ??
+                            '',
+                    myName: FirebaseAuth.instance.currentUser?.displayName
+                            .toString() ??
                         '',
                     userType: 'Agents',
                   ),
