@@ -18,18 +18,18 @@ class ChatScreenController extends GetxController {
   void onInit() {
     super.onInit();
     // Delay the scroll to the bottom to allow time for the ListView to build
-    Future.delayed(const Duration(milliseconds: 500), () {
-      _scrollToBottom();
-    });
+    _scrollToBottom();
   }
 
   // scrolling function
   void _scrollToBottom() {
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    Future.delayed(const Duration(milliseconds: 500), () {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   // send message
