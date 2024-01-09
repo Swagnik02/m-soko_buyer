@@ -7,7 +7,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/home_screen.dart';
 
 class AuthHome extends StatelessWidget {
-  const AuthHome({super.key});
+  const AuthHome({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,11 @@ class AuthHome extends StatelessWidget {
       builder: (context, snapshot) {
         if (ConnectionState.waiting == snapshot.connectionState) {
           return Utils.customLoadingSpinner();
+        } else if (snapshot.hasError) {
+          // Handle error scenario
+          return const Center(
+            child: Text('An error occurred!'),
+          );
         } else if (snapshot.hasData) {
           return const HomeScreen();
         }
