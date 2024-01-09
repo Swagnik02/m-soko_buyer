@@ -1,10 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/common/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:m_soko/home/home_screen_controller.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/propertyMessageScreen/property_message_list.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
@@ -17,58 +16,18 @@ import 'package:m_soko/navigation/bottomNavigationItems/support_page.dart';
 import 'package:m_soko/home/products/screens/products_page.dart';
 import 'package:m_soko/home/properties/screens/properties_screen.dart';
 import 'package:m_soko/home/services/services_screen.dart';
-import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  HomeScreenState createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
-  String get userId => FirebaseAuth.instance.currentUser?.uid ?? "";
-  final currentUser = FirebaseAuth.instance.currentUser;
-
-  // String get userName =>
-
-  @override
-  void initState() {
-    super.initState();
-    intializeCalling(
-      userId: currentUser!.email.toString(),
-      userName: currentUser!.displayName.toString(),
-    );
-  }
-
-  void intializeCalling({
-    required String userId,
-    required String userName,
-  }) {
-    try {
-      ZegoUIKitPrebuiltCallInvitationService().init(
-        appID: GlobalUtil.appIdForCalling /*input your AppID*/,
-        appSign: GlobalUtil.appSignForCalling /*input your AppSign*/,
-        userID: userId,
-        userName: userName,
-        plugins: [
-          ZegoUIKitSignalingPlugin(),
-        ],
-      );
-    } catch (e) {
-      Logger().e(e.toString());
-    }
-  }
-
-  int navBarIndex = 2; // Some Changes here
-  int _topBarIndex = 0; // Some Changes here
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
+  final HomeScreenController controller = Get.put(HomeScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: navBarIndex == 2 ? _home() : _selectedNavHome(),
+      body: GetBuilder<HomeScreenController>(
+        builder: (_) => SafeArea(
+          child: controller.navBarIndex == 2 ? _home() : _selectedNavHome(),
+        ),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -76,8 +35,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   // conditions set to open pages
   //according to the value of indexes
-  //navBarIndex = index of bottomNavBar
-  //_topBarIndex = index of TopBar
+  //controller.navBarIndex = index of bottomNavBar
+  //controller.topBarIndex = index of TopBar
 
   Widget _selectedNavHome() {
     return Column(
@@ -85,9 +44,9 @@ class HomeScreenState extends State<HomeScreen> {
         PreferredSize(
             preferredSize: const Size.fromHeight(80.0),
             child: Container(
-              color: _getTopBarColor(_topBarIndex),
+              color: _getTopBarColor(controller.topBarIndex),
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: _customAppBar(_topBarIndex),
+              child: _customAppBar(controller.topBarIndex),
             )),
         Expanded(
           child: _selectedNavPage(),
@@ -128,13 +87,13 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _selectedNavPage() {
-    log(navBarIndex.toString());
-    log(_topBarIndex.toString());
-    switch (navBarIndex) {
+    log(controller.navBarIndex.toString());
+    log(controller.topBarIndex.toString());
+    switch (controller.navBarIndex) {
       case 0:
         return const ProfilePage();
       case 1:
-        switch (_topBarIndex) {
+        switch (controller.topBarIndex) {
           case 0: // Products Section
             return const ChatListScreen();
           case 1: // Property Section
@@ -147,7 +106,7 @@ class HomeScreenState extends State<HomeScreen> {
       case 2:
         return _home();
       case 3:
-        switch (_topBarIndex) {
+        switch (controller.topBarIndex) {
           case 0: // Products Section
             return const PaymentsPage();
           case 1: // Property Section
@@ -159,7 +118,7 @@ class HomeScreenState extends State<HomeScreen> {
             return Container();
         }
       case 4:
-        switch (_topBarIndex) {
+        switch (controller.topBarIndex) {
           case 1: // Property Section
             return const PropertyMessageList();
           case 2: // Services Section
@@ -179,9 +138,9 @@ class HomeScreenState extends State<HomeScreen> {
         PreferredSize(
             preferredSize: const Size.fromHeight(80.0),
             child: Container(
-              color: _getTopBarColor(_topBarIndex),
+              color: _getTopBarColor(controller.topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: navBarIndex == 2 ? _topNavBar() : Container(),
+              child: controller.navBarIndex == 2 ? _topNavBar() : Container(),
             )),
         Expanded(
           child: _buildBody(),
@@ -217,17 +176,13 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTopBarButton(String title, int index) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _topBarIndex = index;
-        });
-      },
+      onTap: () => controller.updateTopBarIndex(index),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: _topBarIndex == index
+              color: controller.topBarIndex == index
                   ? ColorConstants.yellow400
                   : Colors.transparent,
               width: 6.0,
@@ -247,7 +202,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody() {
-    switch (_topBarIndex) {
+    switch (controller.topBarIndex) {
       case 0:
         return const ProductsScreen();
       case 1:
@@ -264,48 +219,36 @@ class HomeScreenState extends State<HomeScreen> {
 
   // added onIndexChanged as argument changed
   Widget _buildBottomNavigationBar() {
-    switch (_topBarIndex) {
+    switch (controller.topBarIndex) {
       case 0:
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) {
-            setState(() {
-              navBarIndex = changedIndex;
-            });
-          },
-          topBarIndex: _topBarIndex,
+          onIndexChanged: (int changedIndex) =>
+              controller.updateNavBarIndex(changedIndex),
+          topBarIndex: controller.topBarIndex,
         );
       case 1:
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) {
-            setState(() {
-              navBarIndex = changedIndex;
-            });
-          },
+          onIndexChanged: (int changedIndex) =>
+              controller.updateNavBarIndex(changedIndex),
           circleIndicatorColor: ColorConstants.green800,
           iconIndex1: CupertinoIcons.phone,
           iconIndex3: Icons.bookmark_border,
           iconIndex4: CupertinoIcons.text_bubble,
-          topBarIndex: _topBarIndex,
+          topBarIndex: controller.topBarIndex,
         );
       case 2:
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) {
-            setState(() {
-              navBarIndex = changedIndex;
-            });
-          },
+          onIndexChanged: (int changedIndex) =>
+              controller.updateNavBarIndex(changedIndex),
           circleIndicatorColor: ColorConstants.orange500,
-          topBarIndex: _topBarIndex,
+          topBarIndex: controller.topBarIndex,
         );
       default:
         // return Container();
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) {
-            setState(() {
-              navBarIndex = changedIndex;
-            });
-          },
-          topBarIndex: _topBarIndex,
+          onIndexChanged: (int changedIndex) =>
+              controller.updateNavBarIndex(changedIndex),
+          topBarIndex: controller.topBarIndex,
         );
     }
   }

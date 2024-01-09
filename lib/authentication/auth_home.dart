@@ -22,7 +22,7 @@ class AuthHome extends StatelessWidget {
             child: Text('An error occurred!'),
           );
         } else if (snapshot.hasData) {
-          return const HomeScreen();
+          return HomeScreen();
         }
         return const LoginView();
       },
