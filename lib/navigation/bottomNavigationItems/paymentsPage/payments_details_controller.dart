@@ -23,7 +23,8 @@ class PaymentsDetailsController extends GetxController {
   late double totalDiscountAmnt = totalCost * (productDiscountPercentage / 100);
 
   late double totalPayable =
-      totalCost + totalDiscountAmnt + orderDeliveryCharge;
+      totalCost - totalDiscountAmnt + orderDeliveryCharge;
+
   // seller
   late String sellerName = productModel.sellerUserName.toString();
 

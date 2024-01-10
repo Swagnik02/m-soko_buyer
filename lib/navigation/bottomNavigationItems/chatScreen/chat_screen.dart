@@ -132,7 +132,7 @@ class ChatScreen extends StatelessWidget {
             isBuyer: data['buyerEmail'] == controller.currentUserEmail,
             timeAgo: timeAgo,
             orderQuantity: data['orderQuantity'],
-            orderDeliveryCharge: data['deliveryCharge'],
+            orderDeliveryCharge: (data['deliveryCharge'] as num?)!.toDouble(),
           ),
         );
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
 import 'package:m_soko/models/product_model.dart';
@@ -25,45 +24,41 @@ class PaymentsDetails extends StatelessWidget {
     controller.orderDeliveryCharge = orderDeliveryCharge;
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Payment Details'),
-        ),
-        body: GetBuilder<PaymentsDetailsController>(
-          builder: (_) => SafeArea(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    _productDetails(),
-                    _addressSelection(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: _billDetails(),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    _paymentAdvertisement(),
-                    _bottomBar(),
-                  ],
-                ),
-              ],
-            ),
+      appBar: AppBar(
+        title: const Text('Payment Details'),
+      ),
+      body: GetBuilder<PaymentsDetailsController>(
+        builder: (_) => SafeArea(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  _productDetails(),
+                  _addressSelection(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: _billDetails(),
+                  ),
+                ],
+              ),
+              _paymentAdvertisement(),
+            ],
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: _bottomBar(),
+    );
   }
 
   Widget _productDetails() {
-    return //details
-        Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
       child: SizedBox(
         height: 120,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
@@ -80,7 +75,7 @@ class PaymentsDetails extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     controller.productName,
@@ -117,8 +112,7 @@ class PaymentsDetails extends StatelessWidget {
 
   Widget _addressSelection() {
     return Container(
-      padding: const EdgeInsets.all(16),
-      // height: 180,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       color: ColorConstants.blue50,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,14 +156,11 @@ class PaymentsDetails extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16.0),
             child: Text(
               controller.orderAddressDetail,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ),
-          TextButton(
-              onPressed: () => Fluttertoast.showToast(
-                  msg:
-                      '${controller.orderAddressName}: ${controller.orderAddressDetail}'),
-              child: Text('check address')),
         ],
       ),
     );
@@ -177,22 +168,43 @@ class PaymentsDetails extends StatelessWidget {
 
   Widget _billDetails() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       color: ColorConstants.bgColour,
       child: Column(
         children: [
-          _orderPriceDetailsRow('Price Details:', '', ''),
-          _orderPriceDetailsRow('Price(${controller.orderedQuantity}pcs)',
-              controller.totalCost.toString(), ''),
           _orderPriceDetailsRow(
-              'Quantity', controller.orderedQuantity.toString(), ' pcs'),
+            'Price Details:',
+            '',
+            '',
+          ),
           _orderPriceDetailsRow(
-              'Discount', controller.totalDiscountAmnt.toString(), ''),
-          _orderPriceDetailsRow('Delivery Charges',
-              controller.orderDeliveryCharge.toString(), ''),
+            'Price(${controller.orderedQuantity}pcs)',
+            double.parse(controller.totalCost.toStringAsFixed(2)).toString(),
+            '',
+          ),
+          _orderPriceDetailsRow(
+            'Quantity',
+            controller.orderedQuantity.toString(),
+            ' pcs',
+          ),
+          _orderPriceDetailsRow(
+            'Discount',
+            double.parse(controller.totalDiscountAmnt.toStringAsFixed(2))
+                .toString(),
+            '',
+          ),
+          _orderPriceDetailsRow(
+            'Delivery Charges',
+            double.parse(controller.orderDeliveryCharge.toStringAsFixed(2))
+                .toString(),
+            '',
+          ),
           const Divider(),
           _orderPriceDetailsRow(
-              'Amount Payable', controller.totalPayable.toString(), ''),
+            'Amount Payable',
+            double.parse(controller.totalPayable.toStringAsFixed(2)).toString(),
+            '',
+          ),
         ],
       ),
     );
@@ -203,9 +215,57 @@ class PaymentsDetails extends StatelessWidget {
   }
 
   Widget _bottomBar() {
-    return Container();
+    return SizedBox(
+      height: 80,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Total Amount',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  double.parse(controller.totalPayable.toStringAsFixed(2))
+                      .toString(),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                // onTap: ,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(5),
+                    color: ColorConstants.yellow400,
+                  ),
+                  alignment: Alignment.center,
+                  height: 60,
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
+  // widgets
   Widget _orderPriceDetailsRow(
       String specName, String value, String? valueSUffix) {
     return Padding(
@@ -215,7 +275,7 @@ class PaymentsDetails extends StatelessWidget {
         children: [
           Text(
             specName,
-            style: TextStyle(fontWeight: FontWeight.w500),
+            style: const TextStyle(fontWeight: FontWeight.w500),
           ),
           Text(
             '$value$valueSUffix',
