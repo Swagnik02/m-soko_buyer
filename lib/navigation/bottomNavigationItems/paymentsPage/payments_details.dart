@@ -32,15 +32,11 @@ class PaymentsDetails extends StatelessWidget {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                children: [
-                  _productDetails(),
-                  _addressSelection(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: _billDetails(),
-                  ),
-                ],
+              _productDetails(),
+              _addressSelection(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: _billDetails(),
               ),
               _paymentAdvertisement(),
             ],
@@ -168,7 +164,7 @@ class PaymentsDetails extends StatelessWidget {
 
   Widget _billDetails() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       color: ColorConstants.bgColour,
       child: Column(
         children: [
@@ -211,7 +207,19 @@ class PaymentsDetails extends StatelessWidget {
   }
 
   Widget _paymentAdvertisement() {
-    return Container();
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Image.asset(
+          'assets/icons/payment_gateway_mpeso.png',
+          width: 45,
+          height: 45,
+        ),
+        Image.asset('assets/icons/payment_gateway_mpeso.png'),
+        Image.asset('assets/icons/payment_gateway_mpeso.png'),
+        Image.asset('assets/icons/payment_gateway_mpeso.png'),
+      ],
+    );
   }
 
   Widget _bottomBar() {
