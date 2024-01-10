@@ -1,11 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
-import 'package:m_soko/home/home_screen_controller.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_screen.dart';
-import 'package:m_soko/navigation/bottomNavigationItems/propertyMessageScreen/property_message_list.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/settingsPage/settings_page.dart';
@@ -17,17 +14,22 @@ import 'package:m_soko/home/products/screens/products_page.dart';
 import 'package:m_soko/home/properties/screens/properties_screen.dart';
 import 'package:m_soko/home/services/services_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-  final HomeScreenController controller = Get.put(HomeScreenController());
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  int navBarIndex = 2; // Some Changes here
+  int _topBarIndex = 0; // Some Changes here
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<HomeScreenController>(
-        builder: (_) => SafeArea(
-          child: controller.navBarIndex == 2 ? _home() : _selectedNavHome(),
-        ),
+      body: SafeArea(
+        child: navBarIndex == 2 ? _home() : _selectedNavHome(),
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
@@ -35,8 +37,8 @@ class HomeScreen extends StatelessWidget {
 
   // conditions set to open pages
   //according to the value of indexes
-  //controller.navBarIndex = index of bottomNavBar
-  //controller.topBarIndex = index of TopBar
+  //navBarIndex = index of bottomNavBar
+  //_topBarIndex = index of TopBar
 
   Widget _selectedNavHome() {
     return Column(
@@ -44,9 +46,9 @@ class HomeScreen extends StatelessWidget {
         PreferredSize(
             preferredSize: const Size.fromHeight(80.0),
             child: Container(
-              color: _getTopBarColor(controller.topBarIndex),
+              color: _getTopBarColor(_topBarIndex),
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: _customAppBar(controller.topBarIndex),
+              child: _customAppBar(_topBarIndex),
             )),
         Expanded(
           child: _selectedNavPage(),
@@ -65,24 +67,35 @@ class HomeScreen extends StatelessWidget {
               : 'assets/soko-logo.png',
           height: 51,
         ),
-        InkWell(
-          onTap: () {
-            // Handle notification icon tap
-          },
-          child: const Icon(Icons.notifications, color: Colors.white),
+        Row(
+          children: [
+            InkWell(
+              onTap: () {
+                // Handle notification icon tap
+              },
+              child: const Icon(Icons.notifications, color: Colors.white),
+            ),
+            const SizedBox(width: 16),
+            InkWell(
+              onTap: () {
+                // Handle search icon tap
+              },
+              child: const Icon(Icons.search, color: Colors.white),
+            ),
+          ],
         ),
       ],
     );
   }
 
   Widget _selectedNavPage() {
-    log(controller.navBarIndex.toString());
-    log(controller.topBarIndex.toString());
-    switch (controller.navBarIndex) {
+    log(navBarIndex.toString());
+    log(_topBarIndex.toString());
+    switch (navBarIndex) {
       case 0:
         return const ProfilePage();
       case 1:
-        switch (controller.topBarIndex) {
+        switch (_topBarIndex) {
           case 0: // Products Section
             return const ChatListScreen();
           case 1: // Property Section
@@ -95,7 +108,7 @@ class HomeScreen extends StatelessWidget {
       case 2:
         return _home();
       case 3:
-        switch (controller.topBarIndex) {
+        switch (_topBarIndex) {
           case 0: // Products Section
             return const PaymentsPage();
           case 1: // Property Section
@@ -107,11 +120,9 @@ class HomeScreen extends StatelessWidget {
             return Container();
         }
       case 4:
-        switch (controller.topBarIndex) {
+        switch (_topBarIndex) {
           case 1: // Property Section
-            return const PropertyMessageList();
-          case 2: // Services Section
-            return _home();
+            return const SupportPage();
 
           default:
             return const SettingsPage();
@@ -127,9 +138,9 @@ class HomeScreen extends StatelessWidget {
         PreferredSize(
             preferredSize: const Size.fromHeight(80.0),
             child: Container(
-              color: _getTopBarColor(controller.topBarIndex),
+              color: _getTopBarColor(_topBarIndex),
               // padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: controller.navBarIndex == 2 ? _topNavBar() : Container(),
+              child: navBarIndex == 2 ? _topNavBar() : Container(),
             )),
         Expanded(
           child: _buildBody(),
@@ -165,13 +176,17 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildTopBarButton(String title, int index) {
     return GestureDetector(
-      onTap: () => controller.updateTopBarIndex(index),
+      onTap: () {
+        setState(() {
+          _topBarIndex = index;
+        });
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: controller.topBarIndex == index
+              color: _topBarIndex == index
                   ? ColorConstants.yellow400
                   : Colors.transparent,
               width: 6.0,
@@ -191,7 +206,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    switch (controller.topBarIndex) {
+    switch (_topBarIndex) {
       case 0:
         return const ProductsScreen();
       case 1:
@@ -208,36 +223,48 @@ class HomeScreen extends StatelessWidget {
 
   // added onIndexChanged as argument changed
   Widget _buildBottomNavigationBar() {
-    switch (controller.topBarIndex) {
+    switch (_topBarIndex) {
       case 0:
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) =>
-              controller.updateNavBarIndex(changedIndex),
-          topBarIndex: controller.topBarIndex,
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
+          },
+          topBarIndex: _topBarIndex,
         );
       case 1:
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) =>
-              controller.updateNavBarIndex(changedIndex),
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
+          },
           circleIndicatorColor: ColorConstants.green800,
           iconIndex1: CupertinoIcons.phone,
           iconIndex3: Icons.bookmark_border,
           iconIndex4: CupertinoIcons.text_bubble,
-          topBarIndex: controller.topBarIndex,
+          topBarIndex: _topBarIndex,
         );
       case 2:
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) =>
-              controller.updateNavBarIndex(changedIndex),
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
+          },
           circleIndicatorColor: ColorConstants.orange500,
-          topBarIndex: controller.topBarIndex,
+          topBarIndex: _topBarIndex,
         );
       default:
         // return Container();
         return BottomNavBar(
-          onIndexChanged: (int changedIndex) =>
-              controller.updateNavBarIndex(changedIndex),
-          topBarIndex: controller.topBarIndex,
+          onIndexChanged: (int changedIndex) {
+            setState(() {
+              navBarIndex = changedIndex;
+            });
+          },
+          topBarIndex: _topBarIndex,
         );
     }
   }

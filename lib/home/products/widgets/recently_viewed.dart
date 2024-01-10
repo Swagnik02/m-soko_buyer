@@ -3,7 +3,7 @@ import 'package:m_soko/home/products/widgets/products_main_categories.dart';
 
 Widget recentlyViewed(bool showLabel) {
   return Container(
-    height: 200,
+    // height: 200,
     width: double.infinity,
     // color: Colors.red,
     child: Column(
