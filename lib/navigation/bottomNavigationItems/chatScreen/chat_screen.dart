@@ -131,6 +131,8 @@ class ChatScreen extends StatelessWidget {
             message: data['message'],
             isBuyer: data['buyerEmail'] == controller.currentUserEmail,
             timeAgo: timeAgo,
+            orderQuantity: data['orderQuantity'],
+            orderDeliveryCharge: data['deliveryCharge'],
           ),
         );
 

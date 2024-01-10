@@ -120,6 +120,8 @@ class ConfirmationChatBubble extends StatelessWidget {
   final String imageUrl;
   final String message;
   final String timeAgo;
+  final int orderQuantity;
+  final double orderDeliveryCharge;
   final bool isBuyer;
 
   const ConfirmationChatBubble({
@@ -129,6 +131,8 @@ class ConfirmationChatBubble extends StatelessWidget {
     required this.message,
     required this.timeAgo,
     required this.isBuyer,
+    required this.orderQuantity,
+    required this.orderDeliveryCharge,
   });
 
   @override
@@ -219,6 +223,8 @@ class ConfirmationChatBubble extends StatelessWidget {
                                     (context, animation, secondaryAnimation) {
                                   return PaymentsDetails(
                                     productModel: productModel,
+                                    orderQuantity: orderQuantity,
+                                    orderDeliveryCharge: orderDeliveryCharge,
                                   );
                                 },
                                 transitionsBuilder:
