@@ -36,6 +36,13 @@ class PaymentsDetailsController extends GetxController {
 
   // Function to update selected address
 
+  @override
+  void onInit() {
+    super.onInit();
+    orderAddressName = userAddress!.entries.first.key.toString();
+    orderAddressDetail = userAddress!.entries.first.value.toString();
+  }
+
   void updateSelectedAddress(String key, String address) {
     orderAddressName = key;
     orderAddressDetail = address;

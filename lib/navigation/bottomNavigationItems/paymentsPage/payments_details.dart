@@ -30,7 +30,7 @@ class PaymentsDetails extends StatelessWidget {
       body: GetBuilder<PaymentsDetailsController>(
         builder: (_) => SafeArea(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _productDetails(),
               _addressSelection(),
