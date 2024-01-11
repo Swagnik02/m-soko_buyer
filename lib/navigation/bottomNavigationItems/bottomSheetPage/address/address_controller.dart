@@ -162,7 +162,7 @@ class AddressController extends GetxController {
       title: Text(key),
       content: TextField(
         controller: descriptionController,
-        decoration: InputDecoration(labelText: 'New Description'),
+        decoration: const InputDecoration(labelText: 'New Description'),
         maxLines: null,
       ),
       actions: <Widget>[
@@ -170,11 +170,11 @@ class AddressController extends GetxController {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: onTapAction,
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );
