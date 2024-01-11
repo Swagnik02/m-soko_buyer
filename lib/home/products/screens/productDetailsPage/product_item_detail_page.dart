@@ -13,17 +13,15 @@ class ProductItemDetailPage extends StatelessWidget {
   final String pId;
   final ProductModel productModel;
 
-  const ProductItemDetailPage({
+  ProductItemDetailPage({
     super.key,
     required this.pId,
     required this.productModel,
   });
-
+  final ProductItemDetailController controller =
+      Get.put(ProductItemDetailController());
   @override
   Widget build(BuildContext context) {
-    final ProductItemDetailController controller =
-        Get.put(ProductItemDetailController());
-
     controller.context = context;
     return WillPopScope(
       onWillPop: controller.onWillPop,
@@ -61,56 +59,7 @@ class ProductItemDetailPage extends StatelessWidget {
           ),
           bottomNavigationBar: controller.selectedSectionIndex == 2
               ? null
-              : BottomAppBar(
-                  elevation: 0,
-                  clipBehavior: Clip.antiAlias,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            if (productModel.sellerEmail.toString() != 'null' &&
-                                productModel.sellerUid.toString() != 'null') {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                          productModel.itemName ?? 'product'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () => controller.pop(),
-                                          child: Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () => controller.startChat(
-                                              productModel, pId),
-                                          child: Text('Start'),
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: 'SellerID doesnt exists');
-                            }
-                          },
-                          child: Container(
-                            color: Colors.white,
-                            child: const Center(child: Text('Chat Now')),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          color: Colors.amber[500],
-                          child: const Center(child: Text('Send Inquiry')),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              : _bottomAppBar(context),
         ),
       ),
     );
@@ -127,5 +76,47 @@ class ProductItemDetailPage extends StatelessWidget {
       default:
         return Container();
     }
+  }
+
+  Widget _bottomAppBar(BuildContext context) {
+    return SizedBox(
+      height: 55,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                if (productModel.sellerEmail.toString() != 'null' &&
+                    productModel.sellerUid.toString() != 'null') {
+                  controller.chatNow(productModel, pId);
+                } else {
+                  Fluttertoast.showToast(msg: 'SellerID doesnt exists');
+                }
+              },
+              child: Container(
+                color: Colors.white,
+                child: const Center(
+                    child: Text(
+                  'Chat Now',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.amber[500],
+              child: const Center(
+                  child: Text(
+                'Send Inquiry',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

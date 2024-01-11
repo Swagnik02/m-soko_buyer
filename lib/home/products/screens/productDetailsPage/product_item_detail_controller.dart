@@ -50,6 +50,31 @@ class ProductItemDetailController extends GetxController
     );
   }
 
+  void chatNow(ProductModel productModel, String pId) {
+    Get.defaultDialog(
+      titlePadding: EdgeInsets.all(16),
+      title: productModel.itemName ?? 'product',
+      titleStyle: TextStyle(fontSize: 20),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              startChat(productModel, pId);
+            },
+            child: Text('Start'),
+          ),
+        ],
+      ),
+    );
+  }
+
   // send enquiry
   void sendEnquiry() {}
 
