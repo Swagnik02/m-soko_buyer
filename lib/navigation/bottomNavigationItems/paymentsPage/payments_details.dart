@@ -23,27 +23,30 @@ class PaymentsDetails extends StatelessWidget {
     controller.orderedQuantity = orderQuantity;
     controller.orderDeliveryCharge = orderDeliveryCharge;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment Details'),
-      ),
-      body: GetBuilder<PaymentsDetailsController>(
-        builder: (_) => SafeArea(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _productDetails(),
-              _addressSelection(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: _billDetails(),
-              ),
-              _paymentAdvertisement(),
-            ],
+    return WillPopScope(
+      onWillPop: controller.onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Payment Details'),
+        ),
+        body: GetBuilder<PaymentsDetailsController>(
+          builder: (_) => SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _productDetails(),
+                _addressSelection(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: _billDetails(),
+                ),
+                _paymentAdvertisement(),
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: _bottomBar(),
       ),
-      bottomNavigationBar: _bottomBar(),
     );
   }
 
@@ -149,7 +152,7 @@ class PaymentsDetails extends StatelessWidget {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(right: 0.0),
             child: Text(
               controller.orderAddressDetail,
               overflow: TextOverflow.ellipsis,
@@ -210,14 +213,10 @@ class PaymentsDetails extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Image.asset(
-          'assets/icons/payment_gateway_mpeso.png',
-          width: 45,
-          height: 45,
-        ),
+        Image.asset('assets/icons/payment_gateway_tico.png'),
         Image.asset('assets/icons/payment_gateway_mpeso.png'),
-        Image.asset('assets/icons/payment_gateway_mpeso.png'),
-        Image.asset('assets/icons/payment_gateway_mpeso.png'),
+        Image.asset('assets/icons/payment_gateway_airtel.png'),
+        Image.asset('assets/icons/payment_gateway_cards.png'),
       ],
     );
   }
@@ -251,7 +250,7 @@ class PaymentsDetails extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                // onTap: ,
+                onTap: () => controller.continuePayment,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.transparent),

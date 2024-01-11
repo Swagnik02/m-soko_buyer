@@ -37,9 +37,10 @@ class _ResultPageState extends State<ResultPage> {
         appBar: AppBar(
           title: Text(widget.keyword),
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.camera_alt_outlined)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.mic)),
-            IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.cart)),
+            IconButton(
+                onPressed: () {}, icon: const Icon(Icons.camera_alt_outlined)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.mic)),
+            IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.cart)),
           ],
         ),
         body: SingleChildScrollView(
@@ -81,20 +82,20 @@ class _ResultPageState extends State<ResultPage> {
           padding: const EdgeInsets.only(top: 20.0, right: 25, left: 25),
           child: Container(
             alignment: Alignment.centerLeft,
-            child: Text(
+            child: const Text(
               'Filter',
               style: TextStyle(fontSize: 23),
             ),
           ),
         ),
-        Divider(),
+        const Divider(),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: ListView(
               // body
               children: <Widget>[
-                Text(
+                const Text(
                   'Price',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -106,7 +107,7 @@ class _ResultPageState extends State<ResultPage> {
                   children: [
                     DropdownMenu<double>(
                       hintText: 'MaxPrice',
-                      textStyle: TextStyle(fontSize: 15),
+                      textStyle: const TextStyle(fontSize: 15),
                       onSelected: (double? value) {
                         filteredMaxPrice = value!;
                       },
@@ -131,7 +132,7 @@ class _ResultPageState extends State<ResultPage> {
                 ),
                 SelectableRow(
                   title: 'Brand',
-                  items: [
+                  items: const [
                     'Realme',
                     'OnePlus',
                     'Sony',
@@ -142,7 +143,7 @@ class _ResultPageState extends State<ResultPage> {
                 ),
                 SelectableRow(
                   title: 'Ram',
-                  items: [
+                  items: const [
                     '2 GB',
                     '4 GB',
                     '6 GB',
@@ -153,7 +154,7 @@ class _ResultPageState extends State<ResultPage> {
                 ),
                 SelectableRow(
                   title: 'Rom',
-                  items: [
+                  items: const [
                     '64 GB',
                     '128 GB',
                     '256 GB',
@@ -162,7 +163,7 @@ class _ResultPageState extends State<ResultPage> {
                 ),
                 SelectableRow(
                   title: 'ScreenSize',
-                  items: [
+                  items: const [
                     '6.2 inch',
                     '6.5 inch',
                     '6.8 inch',
@@ -191,8 +192,8 @@ class _ResultPageState extends State<ResultPage> {
             alignment: Alignment.center,
             height: 60,
             width: double.infinity,
-            color: Color(0xFFFA7023),
-            child: Text(
+            color: const Color(0xFFFA7023),
+            child: const Text(
               'Apply',
               style: TextStyle(
                   color: Colors.white,
@@ -229,11 +230,11 @@ class _ResultPageState extends State<ResultPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Sort by',
               style: TextStyle(fontSize: 20),
             ),
-            Divider(),
+            const Divider(),
             Column(
               children: <Widget>[
                 buildSortOption(context, SortOptions.relevance, 'Relevance'),
@@ -332,7 +333,7 @@ class _ResultPageState extends State<ResultPage> {
                     builder:
                         (BuildContext context, BoxConstraints constraints) {
                       return Container(
-                        constraints: BoxConstraints(
+                        constraints: const BoxConstraints(
                           maxHeight: 500,
                         ),
                         child: filtersBottomSheet(),
@@ -376,7 +377,7 @@ class _ResultPageState extends State<ResultPage> {
           return Text('Error: ${snapshot.error}');
         } else {
           List<Map<String, dynamic>> products = snapshot.data!;
-          return Container(
+          return SizedBox(
             // color: Colors.red,
             height: (products.length / 2) * 700,
             child: GridView.builder(
@@ -423,9 +424,9 @@ class _ResultPageState extends State<ResultPage> {
           return Text('Error: ${snapshot.error}');
         } else {
           List<Map<String, dynamic>> products = snapshot.data!;
-          return Container(
+          return SizedBox(
             // color: Colors.red,
-            height: (products.length / 2) * 700,
+            height: (products.length / 2) * 500,
             child: GridView.builder(
               primary: false,
               physics: const NeverScrollableScrollPhysics(),
@@ -464,17 +465,18 @@ class SelectableRow extends StatefulWidget {
   final Set<String> selectedItems;
   final String title;
 
-  SelectableRow({
+  const SelectableRow({
+    super.key,
     required this.items,
     required this.selectedItems,
     required this.title,
   });
 
   @override
-  _SelectableRowState createState() => _SelectableRowState();
+  SelectableRowState createState() => SelectableRowState();
 }
 
-class _SelectableRowState extends State<SelectableRow> {
+class SelectableRowState extends State<SelectableRow> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -483,7 +485,7 @@ class _SelectableRowState extends State<SelectableRow> {
       children: [
         Text(
           widget.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -509,11 +511,13 @@ class _SelectableRowState extends State<SelectableRow> {
                     });
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 9),
-                    margin: EdgeInsets.only(right: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 25, vertical: 9),
+                    margin: const EdgeInsets.only(right: 8),
                     decoration: BoxDecoration(
-                      color:
-                          isSelected ? Color(0xFF3072D4) : Colors.transparent,
+                      color: isSelected
+                          ? const Color(0xFF3072D4)
+                          : Colors.transparent,
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5),
                     ),
