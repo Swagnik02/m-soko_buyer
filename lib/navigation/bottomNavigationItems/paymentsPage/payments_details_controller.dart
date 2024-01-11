@@ -61,6 +61,8 @@ class PaymentsDetailsController extends GetxController {
     Get.delete<PaymentsDetailsController>();
     return true;
   }
+
+  void continuePayment() {}
   //
 
   //

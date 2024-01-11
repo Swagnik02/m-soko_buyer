@@ -250,7 +250,7 @@ class PaymentsDetails extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                // onTap: ,
+                onTap: () => controller.continuePayment,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.transparent),
