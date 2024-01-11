@@ -56,6 +56,15 @@ class PaymentsDetailsController extends GetxController {
     );
   }
 
+  Future<bool> onWillPop() async {
+    Get.back();
+    Get.delete<PaymentsDetailsController>();
+    return true;
+  }
+  //
+
+  //
+
   // Change Addrress Dialogue
   Widget _changeAddrressDialogue() {
     return GetBuilder<PaymentsDetailsController>(builder: (controller) {

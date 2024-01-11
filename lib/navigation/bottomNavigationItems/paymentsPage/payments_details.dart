@@ -23,27 +23,30 @@ class PaymentsDetails extends StatelessWidget {
     controller.orderedQuantity = orderQuantity;
     controller.orderDeliveryCharge = orderDeliveryCharge;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment Details'),
-      ),
-      body: GetBuilder<PaymentsDetailsController>(
-        builder: (_) => SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _productDetails(),
-              _addressSelection(),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: _billDetails(),
-              ),
-              _paymentAdvertisement(),
-            ],
+    return WillPopScope(
+      onWillPop: controller.onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Payment Details'),
+        ),
+        body: GetBuilder<PaymentsDetailsController>(
+          builder: (_) => SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _productDetails(),
+                _addressSelection(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: _billDetails(),
+                ),
+                _paymentAdvertisement(),
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: _bottomBar(),
       ),
-      bottomNavigationBar: _bottomBar(),
     );
   }
 
