@@ -95,6 +95,8 @@ class AddressController extends GetxController {
           .set({
         'addressLines': newAddressLine,
       }, SetOptions(merge: true));
+      UserModel updatedUserData = getUserDataFromEditedValues();
+      await UserDataService().updateUserData(updatedUserData);
     } else {
       log('Name and address cannot be empty.');
     }
@@ -117,6 +119,8 @@ class AddressController extends GetxController {
           'addressLines': addressLinesMap,
         });
 
+        UserModel updatedUserData = getUserDataFromEditedValues();
+        await UserDataService().updateUserData(updatedUserData);
         Fluttertoast.showToast(msg: 'Address removed');
       } catch (error) {
         log('Error removing address: $error');
@@ -141,6 +145,7 @@ class AddressController extends GetxController {
             update();
             // update in firebase
             await addAddressToFirestore(addressLinesMap);
+
             Navigator.of(context).pop();
           },
         );
@@ -172,6 +177,23 @@ class AddressController extends GetxController {
           child: Text('Save'),
         ),
       ],
+    );
+  }
+
+  UserModel getUserDataFromEditedValues() {
+    Map<String, dynamic> updatedaddressLinesMap = addressLinesMap;
+
+    return UserModel(
+      addressLines: updatedaddressLinesMap,
+
+      // pre-existing data
+      userName: UserDataService().userModel!.userName,
+      country: UserDataService().userModel!.country,
+      pin: UserDataService().userModel!.pin,
+      city: UserDataService().userModel!.city,
+      mobile: UserDataService().userModel!.mobile,
+      state: UserDataService().userModel!.state,
+      email: UserDataService().userModel!.email,
     );
   }
 }

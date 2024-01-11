@@ -131,16 +131,12 @@ class UserDataService {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
-        // User not authenticated
         return;
       }
-
       String userEmail = currentUser.email ?? "";
       if (userEmail.isEmpty) {
-        // Email not available
         return;
       }
-
       CollectionReference usersCollection = FirebaseFirestore.instance
           .collection(FirestoreCollections.usersCollection);
       await usersCollection.doc(userEmail).update({
@@ -170,29 +166,13 @@ class UserDataService {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
-        // User not authenticated
         return;
       }
 
       String userEmail = currentUser.email ?? "";
       if (userEmail.isEmpty) {
-        // Email not available
         return;
       }
-
-      CollectionReference usersCollection = FirebaseFirestore.instance
-          .collection(FirestoreCollections.usersCollection);
-      await usersCollection.doc(userEmail).update({
-        'addressLines'
-            'country': updatedUserData.country,
-        // 'uid': updatedUserData.uid,
-        'pin': updatedUserData.pin,
-        'city': updatedUserData.city,
-        'mobile': updatedUserData.mobile,
-        'state': updatedUserData.state,
-        'userName': updatedUserData.userName,
-        // 'email': updatedUserData.email,
-      });
 
       // Update local data
       _userModel = updatedUserData;
