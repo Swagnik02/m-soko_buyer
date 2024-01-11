@@ -425,7 +425,7 @@ class _ResultPageState extends State<ResultPage> {
           List<Map<String, dynamic>> products = snapshot.data!;
           return Container(
             // color: Colors.red,
-            height: (products.length / 2) * 700,
+            height: (products.length / 2) * 500,
             child: GridView.builder(
               primary: false,
               physics: const NeverScrollableScrollPhysics(),
