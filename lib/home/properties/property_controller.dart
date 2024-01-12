@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:m_soko/models/user_model.dart';
 
 class PropertyController extends GetxController {
   late TextEditingController searchController;
@@ -120,15 +121,14 @@ class PropertyController extends GetxController {
         'Date-Time': nowTime,
         'User Type': 'Agents',
       });
-      final userType = await fetchData();
+      // final userType = await fetchData();
       await FirebaseFirestore.instance
-          .collection(
-              (userType[0]['User Type'] == "Seller") ? "users" : "Agents")
+          .collection("Agents")
           .doc(agentEmail)
           .collection('Call History')
           .doc()
           .set({
-        'Name': FirebaseAuth.instance.currentUser?.displayName.toString() ?? '',
+        'Name': UserDataService().userModel!.userName.toString(),
         'CallID': FirebaseAuth.instance.currentUser?.email.toString() ?? '',
         'Direction': "Incoming",
         'Date-Time': nowTime,

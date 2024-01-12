@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/zego_init.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/chatScreen/chat_list_screen.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/property_saved_screen.dart';
@@ -33,6 +35,16 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final zego = CallInitPage();
+    zego.onUserLogin(FirebaseAuth.instance.currentUser?.email.toString() ?? '',
+        FirebaseAuth.instance.currentUser?.displayName.toString() ?? '');
+    // UserDataService().userModel!.userName.toString() ?? ''
+    //changed "swagnik" to the above  statement"
   }
 
   // conditions set to open pages

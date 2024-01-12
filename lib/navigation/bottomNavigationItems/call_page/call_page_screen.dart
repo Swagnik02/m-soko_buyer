@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/home/zego_init.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/call_page/call_page_controller.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:m_soko/models/user_model.dart';
 
 class CallsPropertyScreen extends StatefulWidget {
   const CallsPropertyScreen({super.key});
@@ -14,6 +17,13 @@ class CallsPropertyScreen extends StatefulWidget {
 }
 
 class _CallsPropertyScreenState extends State<CallsPropertyScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final zego = CallInitPage();
+    zego.onUserLogin(FirebaseAuth.instance.currentUser?.email.toString() ?? '',
+      UserDataService().userModel!.userName.toString());
+  }
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CallPageController());
@@ -148,13 +158,12 @@ class _CallsPropertyScreenState extends State<CallsPropertyScreen> {
                                             .collection('Call History')
                                             .doc()
                                             .set({
-                                          'Name': controller
-                                              .currentUser?.displayName,
+                                          'Name': UserDataService().userModel!.userName.toString(),
                                           'CallID':
                                               controller.currentUser?.email,
                                           'Direction': "Incoming",
                                           'Date-Time': nowTime,
-                                          'User Type': "Seller"
+                                          'User Type': "Buyers"
                                         });
                                         setState(() {});
                                       },
@@ -238,6 +247,7 @@ class _CallsPropertyScreenState extends State<CallsPropertyScreen> {
               );
             }
           },
-        ));
+        )
+      );
   }
 }

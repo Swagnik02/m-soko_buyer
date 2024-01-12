@@ -25,6 +25,15 @@ class GlobalUtil {
   static const String visitUrl = 'https://help.sokoni.com';
   static const String contactEmail = 'customercare@sokoni.com';
   static const String contactMobile = '+91 6257899906';
+
+  static String userName = "empty";
+  static void setuserName(String value) {
+    userName = value;
+  }
+
+  static String fetchuserName() {
+    return userName;
+  }
 }
 
 class FirestoreCollections {

@@ -74,6 +74,8 @@ class RegisterController extends GetxController {
           'userName': name.text,
           'email': value.user!.email,
         });
+        await FirebaseAuth.instance.currentUser
+            ?.updateProfile(displayName: name.text);
         toggleLoading();
         FirebaseAuth.instance
             .signOut()
