@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:m_soko/common/colors.dart';
@@ -32,6 +33,10 @@ class FirestoreCollections {
 }
 
 class Utils {
+  void underConstruction() {
+    Fluttertoast.showToast(msg: 'UnderConstruction');
+  }
+
   static Widget customLoadingSpinner() {
     return const Center(
       child: CircularProgressIndicator(),

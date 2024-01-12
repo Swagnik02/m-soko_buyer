@@ -26,7 +26,28 @@ class ChatScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: Text(sellerUserName),
+            backgroundColor: Theme.of(context).primaryColor,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: IconButton(
+                  icon: Icon(Icons.call),
+                  color: Colors.white,
+                  onPressed: () => Utils().underConstruction(),
+                ),
+              )
+            ],
+            title: Text(
+              sellerUserName,
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           body: GetBuilder<ChatScreenController>(
             builder: (_) => Container(
@@ -180,6 +201,7 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
 
+          // attachments
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Material(
@@ -188,7 +210,7 @@ class ChatScreen extends StatelessWidget {
               child: Transform.rotate(
                 angle: (45 * 3) * (3.14 / 180), // Specify the angle in radians
                 child: IconButton(
-                  onPressed: () => controller.sendMessage,
+                  onPressed: () => Utils().underConstruction(),
                   icon: const Icon(
                     Icons.attachment_outlined,
                     size: 30,
@@ -197,27 +219,30 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
           ),
-          if (controller.isLoading.value)
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Utils.customLoadingSpinner(),
-            )
-          else
-            Material(
-              borderRadius: BorderRadius.circular(50),
-              elevation: 5,
-              child: IconButton(
-                onPressed: () => controller.sendMessage(
-                  sellerUserID,
-                  sellerUserEmail,
-                  sellerUserName,
-                ),
-                icon: const Icon(
-                  Icons.send,
-                  size: 30,
-                ),
+          // send button
+
+          // if (controller.isLoading.value)
+          //   Padding(
+          //     padding: const EdgeInsets.all(10.0),
+          //     child: Utils.customLoadingSpinner(),
+          //   )
+          // else
+
+          Material(
+            borderRadius: BorderRadius.circular(50),
+            elevation: 5,
+            child: IconButton(
+              onPressed: () => controller.sendMessage(
+                sellerUserID,
+                sellerUserEmail,
+                sellerUserName,
+              ),
+              icon: const Icon(
+                Icons.send,
+                size: 30,
               ),
             ),
+          ),
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +29,7 @@ class ChatService extends ChangeNotifier {
   ) async {
     // get current user info
     final String currentUserId = UserDataService().userModel!.uid.toString();
+    log('currentUserId = $currentUserId');
     final String currentUserEmail =
         UserDataService().userModel!.email.toString();
     final Timestamp timestamp = Timestamp.now();

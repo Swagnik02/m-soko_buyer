@@ -39,8 +39,8 @@ class ChatScreenController extends GetxController {
     String sellerUserName,
   ) async {
     if (messageController.text.isNotEmpty) {
-      isLoading(true);
-      update();
+      // isLoading(true);
+      // update();
       await chatService.sendMessage(
         sellerUserID,
         sellerUserEmail,
@@ -52,8 +52,8 @@ class ChatScreenController extends GetxController {
 
       messageController.clear();
       _scrollToBottom();
-      isLoading(false);
-      update();
+      // isLoading(false);
+      // update();
     }
   }
 

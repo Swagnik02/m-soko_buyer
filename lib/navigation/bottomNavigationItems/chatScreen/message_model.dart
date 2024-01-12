@@ -27,18 +27,32 @@ class Message {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'buyerId': buyerId,
-      'buyerEmail': buyerEmail,
-      'sellerId': sellerId,
-      'sellerEmail': sellerEmail,
-      'message': message,
-      'imageUrl': imageUrl,
+    if (messageType == 0) {
+      return {
+        'buyerId': buyerId,
+        'buyerEmail': buyerEmail,
+        'sellerId': sellerId,
+        'sellerEmail': sellerEmail,
+        'message': message,
 
-      //
-      'timestamp': timestamp,
-      'messageType': messageType,
-      'productId': productId,
-    };
+        //
+        'timestamp': timestamp,
+        'messageType': messageType,
+      };
+    } else {
+      return {
+        'buyerId': buyerId,
+        'buyerEmail': buyerEmail,
+        'sellerId': sellerId,
+        'sellerEmail': sellerEmail,
+        'message': message,
+        'imageUrl': imageUrl,
+
+        //
+        'timestamp': timestamp,
+        'messageType': messageType,
+        'productId': productId,
+      };
+    }
   }
 }

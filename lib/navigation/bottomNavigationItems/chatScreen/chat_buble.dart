@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_soko/common/colors.dart';
@@ -33,28 +32,96 @@ class ChatBubble extends StatelessWidget {
           mainAxisAlignment:
               (isBuyer) ? MainAxisAlignment.start : MainAxisAlignment.end,
           children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: isBuyer ? ColorConstants.blue50 : ColorConstants.blue600,
+            ClipPath(
+              clipper: ChatBubbleClipper(isBuyer: isBuyer),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color:
+                      isBuyer ? ColorConstants.blue50 : ColorConstants.blue600,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      message,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: isBuyer ? Colors.black : Colors.white,
+                      ),
+                    ),
+                    Text(
+                      timeAgo,
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: isBuyer ? Colors.black : Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Text(
-                message,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: isBuyer ? Colors.black : ColorConstants.blue50),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(timeAgo),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class ChatBubbleClipper extends CustomClipper<Path> {
+  final double radius;
+  final double nipHeight;
+  final double nipWidth;
+  final double nipRadius;
+  final bool isBuyer;
+
+  ChatBubbleClipper({
+    this.radius = 15,
+    this.nipHeight = 18,
+    this.nipWidth = 10,
+    this.nipRadius = 5,
+    required this.isBuyer,
+  });
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    if (isBuyer) {
+      path.lineTo(size.width - radius, 0);
+      path.arcToPoint(Offset(size.width, radius),
+          radius: Radius.circular(radius));
+      path.lineTo(size.width, size.height - radius);
+      path.arcToPoint(Offset(size.width - radius, size.height),
+          radius: Radius.circular(radius));
+      path.lineTo(radius + nipWidth, size.height);
+      path.arcToPoint(Offset(nipWidth, size.height - radius),
+          radius: Radius.circular(radius));
+      path.lineTo(nipWidth, nipHeight);
+      path.lineTo(nipRadius, nipRadius);
+      path.arcToPoint(Offset(nipRadius, 0), radius: Radius.circular(nipRadius));
+    } else {
+      path.lineTo(size.width - nipRadius, 0);
+      path.arcToPoint(Offset(size.width - nipRadius, nipRadius),
+          radius: Radius.circular(nipRadius));
+      path.lineTo(size.width - nipWidth, nipHeight);
+      path.lineTo(size.width - nipWidth, size.height - radius);
+      path.arcToPoint(Offset(size.width - nipWidth - radius, size.height),
+          radius: Radius.circular(radius));
+      path.lineTo(radius, size.height);
+      path.arcToPoint(Offset(0, size.height - radius),
+          radius: Radius.circular(radius));
+      path.lineTo(0, radius);
+      path.arcToPoint(Offset(radius, 0), radius: Radius.circular(radius));
+    }
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
 
@@ -82,7 +149,7 @@ class BannerChatBubble extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 290,
+            height: 300,
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -100,14 +167,17 @@ class BannerChatBubble extends StatelessWidget {
                   message,
                   style: const TextStyle(fontSize: 16, color: Colors.black),
                 ),
+                Text(
+                  timeAgo,
+                  style: TextStyle(
+                    fontSize: 9,
+                    color: isBuyer ? Colors.black : Colors.white,
+                  ),
+                ),
               ],
             ),
           ),
           const SizedBox(height: 4),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(timeAgo),
-          ),
         ],
       ),
     );
@@ -184,6 +254,13 @@ class ConfirmationChatBubble extends StatelessWidget {
                               style:
                                   TextStyle(fontSize: 14, color: Colors.green),
                             ),
+                            Text(
+                              timeAgo,
+                              style: TextStyle(
+                                fontSize: 9,
+                                color: isBuyer ? Colors.black : Colors.white,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -251,11 +328,6 @@ class ConfirmationChatBubble extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 4),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(timeAgo),
           ),
         ],
       ),
