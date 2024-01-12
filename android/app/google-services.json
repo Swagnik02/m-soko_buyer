@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1050375667505:android:8296936e3ad63cc2387a10",
+        "mobilesdk_app_id": "1:1050375667505:android:0a2c8c8549213ec4387a10",
         "android_client_info": {
-          "package_name": "com.example.msoko_seller"
+          "package_name": "com.example.agentapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBlaQ_2bifPPGaAv3W34veUOfCREfvO2IU"
@@ -20,7 +25,86 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050375667505:android:dc50cab8d93adfd8387a10",
+        "android_client_info": {
+          "package_name": "com.example.m_soko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlaQ_2bifPPGaAv3W34veUOfCREfvO2IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050375667505:android:8296936e3ad63cc2387a10",
+        "android_client_info": {
+          "package_name": "com.example.msoko_seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050375667505-fool1rmu47f9s6prjolgl0m3frbosnon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.msoko_seller",
+            "certificate_hash": "27df7c91ba849cc8c2729e188cc8815db04e0f26"
+          }
+        },
+        {
+          "client_id": "1050375667505-s68aqaov1qt1gus909okkcv23ra0g63g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.msoko_seller",
+            "certificate_hash": "e4d2b02f1d29ba304bd1624b2eca29d045837401"
+          }
+        },
+        {
+          "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlaQ_2bifPPGaAv3W34veUOfCREfvO2IU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +115,12 @@
           "package_name": "in.riggroup.m_soko"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBlaQ_2bifPPGaAv3W34veUOfCREfvO2IU"
@@ -39,7 +128,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050375667505-cbc3mrgaho6svsi3lriobcgvn2gl0l06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

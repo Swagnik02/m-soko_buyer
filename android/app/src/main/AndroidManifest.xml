@@ -16,9 +16,6 @@
     <!--for bring app to foreground from background in Android 10 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-
-
-
     <application
         android:label="m_soko"
         android:name="${applicationName}"
