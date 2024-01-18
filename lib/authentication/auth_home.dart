@@ -5,7 +5,7 @@ import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/home_screen.dart';
 
 class AuthHome extends StatelessWidget {
-  const AuthHome({Key? key});
+  const AuthHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class AuthHome extends StatelessWidget {
             child: Text('An error occurred!'),
           );
         } else if (snapshot.hasData) {
-          return HomeScreen();
+          return const HomeScreen();
         }
         return const LoginView();
       },

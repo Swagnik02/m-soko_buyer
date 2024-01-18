@@ -27,6 +27,7 @@ class GlobalUtil {
   static const String contactMobile = '+91 6257899906';
 
   static String userName = "empty";
+
   static void setuserName(String value) {
     userName = value;
   }
@@ -34,6 +35,14 @@ class GlobalUtil {
   static String fetchuserName() {
     return userName;
   }
+}
+
+double getScreenHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height;
+}
+
+double getScreenWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
 }
 
 class FirestoreCollections {

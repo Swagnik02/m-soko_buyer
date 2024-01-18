@@ -17,12 +17,12 @@ class OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OnBoardingController());
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xFF08215E),
-        body: GetBuilder<OnBoardingController>(
-          builder: (_) {
-            return Stack(
+    return Scaffold(
+      backgroundColor: const Color(0xFF08215E),
+      body: GetBuilder<OnBoardingController>(
+        builder: (_) {
+          return SafeArea(
+            child: Stack(
               alignment: Alignment.center,
               children: [
                 PageView(
@@ -56,9 +56,9 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                   ],
                 ),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

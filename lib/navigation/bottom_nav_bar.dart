@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/bottomSheetPage/bottom_sheet_menu.dart';
 import 'package:m_soko/navigation/bottomNavigationItems/profilePage/profile_controller.dart';
 
@@ -111,10 +112,10 @@ class BottomNavBarState extends State<BottomNavBar> {
   }
 
   Widget _buildSelectedLabelIndicator() {
-    double itemWidth = MediaQuery.of(context).size.width / 8.5;
+    double screenWidth = getScreenWidth(context);
+    double itemWidth = screenWidth / 8.5;
     double indicatorPosition =
-        mainNavBarIndex * MediaQuery.of(context).size.width / 5 +
-            itemWidth / 2.8;
+        mainNavBarIndex * screenWidth / 5 + itemWidth / 2.8;
 
     return Positioned(
       bottom: 2,
@@ -128,13 +129,13 @@ class BottomNavBarState extends State<BottomNavBar> {
   }
 
   Widget _buildCircleIndicator() {
-    double itemWidth = MediaQuery.of(context).size.width / 5;
-    double indicatorPosition =
-        mainNavBarIndex * MediaQuery.of(context).size.width / 5 +
-            itemWidth / 5.5;
+    double screenWidth = getScreenWidth(context);
+    double itemWidth = screenWidth / 5;
+    double indicatorPosition = mainNavBarIndex * screenWidth / 5 +
+        itemWidth / (screenWidth > 400 ? 4.5 : 5.5);
 
     return Positioned(
-      bottom: 20,
+      bottom: screenWidth > 400 ? 14 : 20,
       left: indicatorPosition,
       child: Container(
         width: 50.0,

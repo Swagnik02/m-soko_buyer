@@ -25,11 +25,13 @@ class OnboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final onBoardingController = Get.find<OnBoardingController>();
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Image.asset(
-          imageUrl,
+        Container(
           width: MediaQuery.of(context).size.width,
+          child: Image.asset(
+            imageUrl,
+            fit: BoxFit.contain,
+          ),
         ),
         const SizedBox(height: 10),
         Column(
