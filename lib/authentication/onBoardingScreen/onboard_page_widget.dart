@@ -30,6 +30,7 @@ class OnboardPage extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: Image.asset(
             imageUrl,
+            height: MediaQuery.of(context).size.height < 700 ? 350 : null,
             fit: BoxFit.contain,
           ),
         ),

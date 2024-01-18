@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_soko/common/colors.dart';
+import 'package:m_soko/common/utils.dart';
 import 'package:m_soko/home/products/products_bloc.dart';
 import 'package:m_soko/home/products/widgets/product_thumbnails.dart';
 import 'package:m_soko/home/products/widgets/products_advertisement.dart';
@@ -365,6 +366,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Widget _searchBody(String searchKeyword) {
+    double aspectRatio = ((getScreenWidth(context) - 18.0 * 3) / 2) / 300;
     return FutureBuilder<List<Map<String, dynamic>>>(
       // future: fetchSortedProducts(searchKeyword, false),
       future: fetchFilteredProducts(searchKeyword),
@@ -383,9 +385,9 @@ class _ResultPageState extends State<ResultPage> {
             child: GridView.builder(
               primary: false,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.58,
+                childAspectRatio: aspectRatio,
                 crossAxisSpacing: 18.0,
                 mainAxisSpacing: 20.0,
               ),
@@ -413,6 +415,7 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Widget _categorisedBody(String title) {
+    double aspectRatio = ((getScreenWidth(context) - 18.0 * 3) / 2) / 300;
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: fetchSortedProducts(title, true),
       builder: (context, snapshot) {
@@ -430,9 +433,9 @@ class _ResultPageState extends State<ResultPage> {
             child: GridView.builder(
               primary: false,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.58,
+                childAspectRatio: aspectRatio,
                 crossAxisSpacing: 18.0,
                 mainAxisSpacing: 20.0,
               ),
